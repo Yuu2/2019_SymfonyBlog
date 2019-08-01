@@ -1,0 +1,40 @@
+/* 게시판 */
+.articles_nav {
+  background: -webkit-linear-gradient(top, rgba(65,202,250,1) 0%,rgb(102, 198, 236) 100%);
+  border-radius: 10px 10px 0 0;
+
+  text-align: right;
+  
+  padding: 3px;
+}
+.articles_nav img {
+  cursor: pointer;
+}
+
+.articles_nav_slide {
+  display: none;
+  background: -webkit-linear-gradient(top, rgb(187, 234, 252) 0%,rgb(207, 241, 253) 20%);
+
+  width: 100%;
+}
+
+.articles_box {
+  text-align: left;
+}
+.articles {
+  height: 200px;
+  margin: 10px 0 10px 0;
+  border-bottom: 0.5px dashed skyblue;  
+}
+.articles_image {
+  display: inline-block;
+}
+.articles_info {
+  
+  display: inline-block;
+
+
+}
+.articles_info .article_created_at {
+  
+}

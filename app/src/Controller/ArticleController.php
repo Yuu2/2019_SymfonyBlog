@@ -4,29 +4,46 @@ namespace App\Controller;
 
 use App\Form\ArticleType;
 use App\Service\ArticleService;
+use App\Service\AsideService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController {
-  
-    /**
-     * @Route("/article", name="article")
+    /** 
+     * @var Array $data
      */
-    public function index() {
+    private $data;
+
+    /**
+     * 게시판 일람
+     * @Route("/article", name="article")
+     * @access public
+     */
+    function index() {
       
       $entityManager = $this->getDoctrine()->getManager();
-
-      $service = new ArticleService($entityManager);
-
-      $data = $service->generate('article_index', null, null);
+      $request = Request::createFromGlobals();
       
-      return $this->render('article/index.html.twig', ['Articles' => $data]);
+      $aside = new AsideService($entityManager);
+      $data['Aside'] = $aside->execute();
+
+      $article = new ArticleService($entityManager);
+      
+      $data['Articles'] = $article->execute('index', $request, null);
+      $data['PageInfo'] = $article->execute('paging', $request, null);
+      
+      dump($data); // TEMP
+      
+      return $this->render('article/index.html.twig', $data);
     }
+    
     /**
      * @Route("/article/page/{article_id}", name="article_show")
+     * @access public
+     * @todo 미완성
      */
-    public function show($article_id) {
+    function show($article_id) {
       $entityManager = $this->getDoctrine()->getManager(); 
       $service = new ArticleService($entityManager);
 
@@ -36,12 +53,16 @@ class ArticleController extends AbstractController {
     }
     /**
      * @Route("/article/new", name="article_new")
+     * @access public
+     * @todo 미완성
      */
-    public function new(Request $request) {
-
+    function new(Request $request) {
+      $entityManager = $this->getDoctrine()->getManager();
       $form = $this->createForm(ArticleType::class)->handleRequest($request);
       
       $data = ['form' => $form->createView(), 'error' => ''];
+      $aside = new AsideService($entityManager);
+      $data['Aside'] = $aside->execute();
 
       $form_result = $form->isSubmitted() && $form->isValid(); 
 
@@ -51,10 +72,9 @@ class ArticleController extends AbstractController {
 
       $form_data = $form->getData();
 
-      $entityManager = $this->getDoctrine()->getManager();
 
       $service = new ArticleService($entityManager);
-      $service->generate('article_new', $request, $form_data);
+      $service->execute('article_new', $request, $form_data);
 
       return $this->redirectToRoute('article');
   }

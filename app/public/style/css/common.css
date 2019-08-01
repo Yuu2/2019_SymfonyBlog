@@ -43,7 +43,14 @@ hr {
 .side_container a {
   color: white;
 }
-.side_container a:hover {
+.side_container .a {
+  color: silver;
+  text-decoration: none;
+}
+.side_container .category_box a {
+  color: black;
+}
+.side_container .category_box a:hover {
   color: silver;
   text-decoration: none;
 }
@@ -75,32 +82,14 @@ hr {
 }
 .side_container .category_slide {
   display: none;
+  margin-bottom: 10px;
 }
 
 /* [2] 메인 컨테이너 */
 .main_container {
-  text-align: center;
-  
-  width: 70%;
-  
-  margin: 50px;
+  margin: 0 5px 0 5px;
+
+  min-width: 800px;
+  max-width: 100vw;
 }
 
-
-/* -------------------------------------------- */
-/* .form {
-  margin: 0 auto;
-  width: 550px;
-}
-.form_box {
-  display: flex;
-  flex-direction: column;
-}
-.form_box_recaptcha {
-  float: right;
-  margin: 5px 0;
-}
-.form_box_btnSet {
-  float: right;
-  margin: 15px 0;
-} */
