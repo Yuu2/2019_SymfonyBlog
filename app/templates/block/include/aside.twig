@@ -1,0 +1,28 @@
+<div class="side_container">
+  <ul>
+    <li><img class="view" src="/style/images/home.gif" alt="home"></li>
+    
+    {% if Account is not null %}
+    <li>{{ Account.username }}</li>
+    <li>{{ Account.email }}</li>
+    {% endif %}
+    <hr>
+    <li><a href="{{ path('route') }}"><h5>Home</h5></a></li>
+    <li class="categories"><h5>Category</h5></li>
+    <div class="category_box">
+    {% if Categories is not null %}
+      {% for Category in Categories %}
+        <div class="category"><h5>{{ Category.title }}</h5>
+          <ul class="category_slide">
+          {% for Board in Boards %}
+            {% if Category.id == Board.category.id %}
+              <p>{{ Board.subject }}</p>
+            {% endif %}
+          {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    {% endif %}
+    </div>
+  </ul>
+</div>

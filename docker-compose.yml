@@ -1,0 +1,30 @@
+version: '3.4'
+
+volumes:
+  vendor:
+
+services: 
+  apache:
+    image: apache
+    container_name: apache
+    ports:
+      - 80:80
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/app/public
+    build:
+      context: .
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www
+      - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
+      - vendor:/var/www/app/vendor
+ 
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: myblog_db
+      MYSQL_ROOT_PASSWORD: 1056dkdl      
+    ports:
+      - 3306:33060 

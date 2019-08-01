@@ -1,0 +1,9 @@
+<header>  
+  {% if app.session.get('email') is defined %}
+    <button class="btn btn-primary btn-sm" onclick=move('/signin') >SignIn</button>
+    <button class="btn btn-success btn-sm" onclick=move('/signup') >SignUp</button>
+  {% else %}
+    <button type="button" class="btn btn-success btn-sm" onclick=move('/signin') >{{ app.session.get('email') }}</button>
+    <button type="button" class="btn btn-primary btn-sm" onclick=move('/signup') >Logout</button>
+  {% endif %}
+</header>
