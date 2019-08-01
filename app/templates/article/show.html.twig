@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+{% block main %}
+  <h3>
+  {% if Article is not null  %}
+    {{ Article.subject }}
+  {% endif %}
+  </h3>
+  <hr>
+  <div class="card">
+    <h5 class="card-header">{{ Article.title }}</h5>
+    <div class="card-body">{{ Article.content }}</div>
+  </div>
+  <div class="form_box_btnSet" >
+    <button class="btn btn-primary btn-sm">Back</button>
+    <button class="btn btn-info btn-sm">Edit</button>
+    <button class="btn btn-danger btn-sm">Delete</button>
+  </div>
+{% endblock %}

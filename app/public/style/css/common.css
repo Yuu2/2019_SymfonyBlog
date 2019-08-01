@@ -1,0 +1,106 @@
+* {
+  margin: 0; 
+  padding: 0;
+}
+header {
+  margin: 5px 0;
+  text-align: right;
+}
+hr {
+  border: dashed 0.5px white;
+  margin: 20px 20px;
+}
+/* [0] 전체 컨테이너 */
+.container {
+  display: flex;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+}
+
+/* [1] 사이드바 */
+.side_container {
+  background: -webkit-linear-gradient(top, rgba(65,202,250,1) 0%,rgba(44,175,227,1) 100%);
+  border-radius: 10px;
+  
+  margin: 0;
+  padding: 0;
+
+  max-width: 250px;
+  min-width: 250px;
+
+  min-height: 100vh;
+  text-align: center;
+}
+.side_container li {
+  list-style: none;
+  color: white;
+}
+.side_container a {
+  color: white;
+}
+.side_container a:hover {
+  color: silver;
+  text-decoration: none;
+}
+.side_container img {
+  border-radius: 10px;
+
+  width: 200px;
+  height: 200px;
+
+  margin: 20px;
+}
+.side_container .categories {
+  cursor: pointer;
+}
+.side_container .categories:hover {
+  color: silver;
+}
+.side_container .category_box {
+  display: none;
+
+  background: white;
+  border-radius: 20px;
+  
+  margin: 5px;
+  padding: 5px;
+}
+.side_container .category {
+  cursor: pointer;
+}
+.side_container .category_slide {
+  display: none;
+}
+
+/* [2] 메인 컨테이너 */
+.main_container {
+  text-align: center;
+  
+  width: 70%;
+  
+  margin: 50px;
+}
+
+
+/* -------------------------------------------- */
+/* .form {
+  margin: 0 auto;
+  width: 550px;
+}
+.form_box {
+  display: flex;
+  flex-direction: column;
+}
+.form_box_recaptcha {
+  float: right;
+  margin: 5px 0;
+}
+.form_box_btnSet {
+  float: right;
+  margin: 15px 0;
+} */
