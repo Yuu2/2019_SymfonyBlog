@@ -10,18 +10,29 @@ use Doctrine\ORM\EntityManagerInterface;
 class AsideService {
 
   /**
-   * @access public
-   * @static
+   * @var EntityManagerInterface
    */
-  function get(EntityManagerInterface $entityManager) {
+  private $entityManager;
 
-    $account = $entityManager->getRepository(Account::class);
+  /**
+   * @param EntityManagerInterface $entityManager;
+   */
+  public function __construct($entityManager) {
+    $this->entityManager = $entityManager;
+  }
+
+  /**
+   * @access public
+   */
+  function execute() {
+
+    $account = $this->entityManager->getRepository(Account::class);
     $data['Account'] = $account->find(1);
     
-    $category = $entityManager->getRepository(Category::class);
+    $category = $this->entityManager->getRepository(Category::class);
     $data['Categories'] = $category->findAll();
 
-    $board = $entityManager->getRepository(Board::class);
+    $board = $this->entityManager->getRepository(Board::class);
     $data['Boards'] = $board->findAll();
    
     return $data;

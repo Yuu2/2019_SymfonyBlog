@@ -1,11 +1,11 @@
 {% extends "base.html.twig" %}
 {% block main %}
-  <h3> Board </h3>
-  <hr>
-  <center class="form">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ include('block/button/article/new.btn.twig') }}
-    {{ form_end(form) }}
-  </center>
+<div class="main_container">
+  
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  {{ include('block/button/article/new.btn.twig') }}
+  {{ form_end(form) }}
+
+</div>
 {% endblock %}

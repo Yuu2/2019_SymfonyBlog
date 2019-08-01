@@ -1,28 +1,31 @@
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-  <link rel="stylesheet" href={{ asset('style/css/article.css') }} tyle="text/css">
+  <link rel="stylesheet" href={{ asset('style/css/article/article.css') }} tyle="text/css">
 {% endblock %}
+
 {% block javascripts %}
    <script src={{ asset('style/js/article/slider.js') }} ></script>
 {% endblock %}
 
 {% block main %}
-  <div class="articles_nav"><img src={{ asset('style/images/icon/plusicon.png') }}></div>
-  <div class="articles_slide">
-    <table>
-    {% for Article in Articles %}
-      <tr>
-        <td>{{ Article.title }}</td>
-        <td>{{ Article.created_at|date('Y-m-d H:i:s') }}</td>
-      </tr> 
-    {% endfor %}
-    </table>
-    
-  </div>
-  <hr>
+  <div class="main_container">
+    <div class="articles_nav"><img src={{ asset('style/images/icon/plusicon.png') }}></div>
+    <div class="articles_nav_slide">
+      <table>
+      {% for Article in Articles %}
+        <tr>
+          <td>{{ Article.title }}</td>
+          <td>{{ Article.created_at|date('Y-m-d H:i:s') }}</td>
+        </tr> 
+      {% endfor %}
+      </table>
+    </div>
+    <div class="articles_box">
     {% for Article in Articles %}
       <div class="articles">
-        <img src="https://via.placeholder.com/200x200" alt="View"/>
+        <div class="articles_image"> 
+          <img src="https://via.placeholder.com/200x200" alt="View"/>
+        </div>
         <div class="articles_info">
           <div class="article_name">
             <span>Writer : </span>
@@ -43,8 +46,10 @@
         </div>
       </div>
     {% endfor %}
-  <div class="form_box_btnSet">
-    <button class="btn btn-primary btn-sm" onclick=move('/article/new') >作成</button>
+    </div>
+    <div class="form_box_btnSet">
+      <button class="btn btn-primary btn-sm" onclick=move('/article/new') >作成</button>
+    </div>
+    {{ include('block/pagenation.twig') }}
   </div>
-  {{ include('block/pagenation.twig') }}
 {% endblock %}

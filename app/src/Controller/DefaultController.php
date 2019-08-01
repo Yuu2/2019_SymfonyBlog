@@ -22,9 +22,11 @@ class DefaultController extends AbstractController {
      */
     function profile() {
       
-      $this->data = AsideService::get($this->getDoctrine()->getManager());
+      $entityManager = $this->getDoctrine()->getManager();
+      $aside = new AsideService($entityManager);
+      $data['Aside'] = $aside->execute();
       
-      return $this->render('profile.html.twig', $this->data);
+      return $this->render('profile.html.twig', $data);
     }
 
     /**
@@ -32,10 +34,12 @@ class DefaultController extends AbstractController {
      * @Route("/about", name="about")
      */
     function about() {
-      
-      $this->data = AsideService::get($this->getDoctrine()->getManager());
-      
-      return $this->render('abount.html.twig', $this->data);
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $aside = new AsideService($entityManager);
+      $data['Aside'] = $aside->execute();
+
+      return $this->render('abount.html.twig', $data);
     }
 }
 
