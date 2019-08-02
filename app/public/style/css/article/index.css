@@ -7,6 +7,7 @@
   
   padding: 3px;
 }
+
 .articles_nav img {
   cursor: pointer;
 }
@@ -29,12 +30,10 @@
 .articles_image {
   display: inline-block;
 }
-.articles_info {
-  
+.articles_info {  
   display: inline-block;
-
-
 }
-.articles_info .article_created_at {
-  
+.article-btn-index {
+  margin: 10px 0;
+  text-align: right;
 }

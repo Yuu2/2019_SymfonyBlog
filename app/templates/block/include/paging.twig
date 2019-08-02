@@ -1,0 +1,19 @@
+{% if PageInfo is not null %}
+<div class="pageing">
+  <a href="{{ path('article_index', {'board': PageInfo.board , 'page': 1 })}}">[&lt&lt]</a>
+  {% if PageInfo.curPage != PageInfo.firstPage %}
+  <a href="{{ path('article_index', {'board': PageInfo.board , 'page': PageInfo.prevPage })}}">[&lt]</a>
+  {% else %}
+  [&lt]
+  {% endif %}
+  {% for i in 1..PageInfo.lastPage %}
+    <a href="{{ path('article_index', {'board': PageInfo.board , 'page': i })}}">[{{ i }}]</a>
+  {% endfor %}
+  {% if PageInfo.curPage != PageInfo.lastPage %}
+  <a href="{{ path('article_index', {'board': PageInfo.board , 'page': PageInfo.nextPage })}}">[&gt]</a>
+  {% else %}
+  [&gt]
+  {% endif %}
+  <a href="{{ path('article_index', {'board': PageInfo.board , 'page': PageInfo.lastPage })}}">[&gt&gt]</a>
+</div>
+{% endif %}

@@ -37,6 +37,16 @@ class Account
      * @ORM\Column(type="date", nullable=true)
      */
     private $birth;
+    
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $profile;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin;
 
     /**
      * @ORM\Column(type="datetime")
@@ -179,6 +189,30 @@ class Account
                 $article->setAccount(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfile(): ?string
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?string $profile): self
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function getAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
 
         return $this;
     }
