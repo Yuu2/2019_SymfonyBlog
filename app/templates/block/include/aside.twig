@@ -16,7 +16,7 @@
           <ul class="category_slide">
           {% for Board in Aside.Boards %}
             {% if Category.id == Board.category.id %}
-              <li><a href='article?board={{ Board.id }}&page=1'>{{ Board.subject }}</a></li>
+              <li><a href="{{ path('article_index', {'board': Board.id, 'page': 1 })}}">{{ Board.subject }}</a></li>
             {% endif %}
           {% endfor %}
           </ul>

@@ -14,8 +14,12 @@ class Validator {
     if(empty($num)) {
       return false;
     }
-    
+
     if(!is_numeric($num)) {
+      return false;
+    }
+
+    if($num < 0) {
       return false;
     }
   

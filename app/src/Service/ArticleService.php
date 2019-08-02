@@ -87,20 +87,19 @@ class ArticleService {
                 ->getRepository(Article::class)
                 ->total($board);
     
-    $pageInfo = new Paginator($page, $row['total']);
+    $pageInfo = new Paginator($board, $page, $row['total']);
     
     return $pageInfo->data;
   }  
   /* --------------------------------------------- */
   /**
-   * TODO: 미완성
    * @access private
    */
-  function show($article_id) {
+  function show($id) {
     
     return $this->entityManager
                 ->getRepository(Article::class)
-                ->show($article_id);
+                ->show($id);
   }
   /* --------------------------------------------- */
   /**

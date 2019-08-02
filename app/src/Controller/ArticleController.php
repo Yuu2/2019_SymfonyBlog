@@ -17,7 +17,7 @@ class ArticleController extends AbstractController {
 
     /**
      * 게시판 일람
-     * @Route("/article", name="article")
+     * @Route("/article", name="article_index")
      * @access public
      */
     function index() {
@@ -33,36 +33,38 @@ class ArticleController extends AbstractController {
       $data['Articles'] = $article->execute('index', $request, null);
       $data['PageInfo'] = $article->execute('paging', $request, null);
       
-      dump($data); // TEMP
-      
       return $this->render('article/index.html.twig', $data);
     }
     
     /**
-     * @Route("/article/page/{article_id}", name="article_show")
+     * @Route("/article/view{id}", name="article_show")
      * @access public
-     * @todo 미완성
      */
-    function show($article_id) {
+    function show($id) {
       $entityManager = $this->getDoctrine()->getManager(); 
-      $service = new ArticleService($entityManager);
 
-      $article = $service->generate('article_show', null, $article_id);
+      $aside = new AsideService($entityManager);
+      $data['Aside'] = $aside->execute();
 
-      return $this->render('article/show.html.twig', [ 'Article' => $article[0] ]);
+      $article = new ArticleService($entityManager);
+      $data['Article'] = $article->execute('show', null, $id);
+      
+      return $this->render('article/show.html.twig', $data);
     }
     /**
      * @Route("/article/new", name="article_new")
      * @access public
-     * @todo 미완성
      */
     function new(Request $request) {
+
       $entityManager = $this->getDoctrine()->getManager();
-      $form = $this->createForm(ArticleType::class)->handleRequest($request);
-      
-      $data = ['form' => $form->createView(), 'error' => ''];
+
       $aside = new AsideService($entityManager);
       $data['Aside'] = $aside->execute();
+
+      $form = $this->createForm(ArticleType::class)->handleRequest($request);
+      $data['form'] = $form->createView();
+      $data['error'] = null;
 
       $form_result = $form->isSubmitted() && $form->isValid(); 
 
@@ -71,7 +73,6 @@ class ArticleController extends AbstractController {
       }
 
       $form_data = $form->getData();
-
 
       $service = new ArticleService($entityManager);
       $service->execute('article_new', $request, $form_data);
