@@ -27,7 +27,7 @@ class AsideService {
   function execute() {
 
     $account = $this->entityManager->getRepository(Account::class);
-    $data['Account'] = $account->find(1);
+    $data['Account'] = $account->find_aside(1);
     
     $category = $this->entityManager->getRepository(Category::class);
     $data['Categories'] = $category->findAll();

@@ -11,13 +11,6 @@ class DefaultController extends AbstractController {
 
     /**
      * @access public
-     */
-    function __construct() {
-     
-    }
-
-    /**
-     * @access public
      * @Route("/", name="route")
      */
     function profile() {
@@ -39,7 +32,7 @@ class DefaultController extends AbstractController {
       $aside = new AsideService($entityManager);
       $data['Aside'] = $aside->execute();
 
-      return $this->render('abount.html.twig', $data);
+      return $this->render('about.html.twig', $data);
     }
 }
 

@@ -23,17 +23,24 @@
   text-align: left;
 }
 .articles {
+  display:flex; 
   height: 200px;
+  width: 100%;
   margin: 10px 0 10px 0;
   border-bottom: 0.5px dashed skyblue;  
+  
 }
 .articles_image {
-  display: inline-block;
+  margin-right: 10px;
 }
-.articles_info {  
-  display: inline-block;
+
+.articles_info {   
+
 }
+
 .article-btn-index {
   margin: 10px 0;
   text-align: right;
+
+  width: 100%;
 }

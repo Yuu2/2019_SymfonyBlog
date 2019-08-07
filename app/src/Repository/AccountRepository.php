@@ -22,7 +22,7 @@ class AccountRepository extends ServiceEntityRepository {
      * @access public
      * @param Integer $id
      */
-    function find($id) {
+    function find_aside($id) {
       return $this->createQueryBuilder('a')
                   ->select('a.username, a.email')
                   ->where('a.id = :id')
