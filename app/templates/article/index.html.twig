@@ -15,7 +15,7 @@
       {% for Article in Articles %}
         <tr>
           <td>{{ Article.username }}</td>
-          <td><a href={{ path( 'article_show', {'id': Article.id})}}>{{ Article.title }}</a></td>
+          <td><a href={{ path( 'article_show', {'target_id': Article.id})}}>{{ Article.title }}</a></td>
           <td>{{ Article.created_at|date('Y-m-d H:i:s') }}</td>
         </tr> 
       {% endfor %}
@@ -34,11 +34,11 @@
           </div>
           <div class="article_title">
             <span>Title : </span>
-            <a href={{ path( 'article_show', {'id': Article.id})}}>{{ Article.title }}</a>
+            <a href={{ path( 'article_show', {'target_id': Article.id})}}>{{ Article.title }}</a>
           </div>
           <div class="article_content">
             <span>Content : </span>
-            <a href={{ path( 'article_show', {'id': Article.id})}}>{{ Article.content }}</a>
+            <a href={{ path( 'article_show', {'target_id': Article.id})}}>{{ Article.content | striptags}}</a>
           </div>
           <div class="article_created_at">
             <span>Date : </span>

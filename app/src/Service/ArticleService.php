@@ -37,8 +37,9 @@ class ArticleService {
    * @param String $action
    * @param Request $request
    * @param Array $data
+   * @param Session $session
    */ 
-  function execute($action, $request, $data) {
+  function execute($action, $request, $data, $session) {
     
     switch($action) {
       case "index":
@@ -48,7 +49,7 @@ class ArticleService {
       case "show" :
         return $this->show($data); break;
       case "new"  :
-        $this->new($data); break;
+        $this->new($data, $session); break;
     }
   }
 
@@ -103,24 +104,27 @@ class ArticleService {
   }
   /* --------------------------------------------- */
   /**
-   * TODO: 미완성
    * @access public
    */
-  function new($data) {
-    
+  function new($data, $session) {
+
     $article = new Article();
     $article = $data;
+
     $article->setCreatedAt(new \DateTime());
-
+  
     $entityManager = $this->entityManager;
-
-    $board = $entityManager->getRepository(Board::class)->find(1);
-    $article->setBoard($board); 
-
-    $session = new Session();
-    $account = $entityManager->getRepository(Account::class)->find($session->get('id'));
-    $article->setAccount($account);
     
+    $account = $entityManager->getRepository(Account::class)->find(1);
+    $board = $entityManager->getRepository(Board::class)->find($article->getBoard()->getId());
+    
+    if(empty($account)) { 
+      return; 
+    }
+
+    $article->setAccount($account);
+    $article->setBoard($board);
+
     $entityManager->persist($account);
     $entityManager->persist($board);
     $entityManager->persist($article);

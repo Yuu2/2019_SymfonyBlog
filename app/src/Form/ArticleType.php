@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Board;
+use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,21 +18,15 @@ class ArticleType extends AbstractType {
   
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('title', ChoiceType::class, array(
-              'choices' => [
-                new Category('Cat1'),
-                new Category('Cat2'),
-                new Category('Cat3')
-              ]
+            ->add('board', EntityType::class, array(
+              'class' => Board::class,
+              'choice_label' => 'subject'
             ))
             ->add('title', TextType::class, array(
-              'label' => '題名',
               'attr'  => [ 'placeholder' => 'タイトルを入力してください (100文字)' ]
             ))
-            ->add('content', TextareaType::class, array(
-              'label' => '内容',
-              'attr'  => [ 'placeholder' => '本文を記載してください (1000文字)' ]
-            ));
+            ->add('content', FroalaEditorType::class
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver) {

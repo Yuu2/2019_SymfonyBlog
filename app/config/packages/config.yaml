@@ -1,0 +1,7 @@
+kms_froala_editor:
+  
+  language: "ko"
+
+  pluginsDisabled: [ "save", "fullscreen" ]
+
+  publicDir: "/public"
