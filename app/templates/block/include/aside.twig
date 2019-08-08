@@ -1,12 +1,12 @@
-<div class="side_container">
+<div class="side-container">
   <ul>
     <li><img class="view" src="/style/images/home.gif" alt="home"></li>
-    
     {% if Aside.Account is not null %}
-    <li>{{ Aside.Account.username }}</li>
-    <li>{{ Aside.Account.email }}</li>
+    <div class="info">
+      <span>{{ Aside.Account.email }}</span>
+      <span>({{ Aside.Account.username }})</span>
+    </div>
     {% endif %}
-    <hr>
     <li><a href="{{ path('route') }}"><h5>Home</h5></a></li>
     <li class="categories"><h5>Category</h5></li>
     <div class="category_box">
