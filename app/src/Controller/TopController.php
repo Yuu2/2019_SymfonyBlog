@@ -7,7 +7,7 @@ use App\Service\AsideService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController {
+class TopController extends AbstractController implements ApplicationController {
 
     /**
      * @access public
