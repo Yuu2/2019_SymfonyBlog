@@ -1,9 +1,11 @@
-<header>  
-  {% if app.session.get('email') is defined %}
-    <button class="btn btn-primary btn-sm" onclick=move('/signin') >SignIn</button>
-    <button class="btn btn-success btn-sm" onclick=move('/signup') >SignUp</button>
-  {% else %}
-    <button type="button" class="btn btn-success btn-sm" onclick=move('/signin') >{{ app.session.get('email') }}</button>
-    <button type="button" class="btn btn-primary btn-sm" onclick=move('/signup') >Logout</button>
-  {% endif %}
+<header id="header">
+  <div class="inner">
+    <a href={{ url('home') }} class="logo">Symfony Blog</a>
+    <nav id="nav">
+      <a href={{ url('home') }} >Home</a>
+      <a href={{ url('home') }} >Contact</a>
+      <a href={{ url('home') }} >Blog</a>
+    </nav>
+  </div>
 </header>
+<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>

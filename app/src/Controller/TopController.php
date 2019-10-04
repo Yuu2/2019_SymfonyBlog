@@ -4,22 +4,34 @@ namespace App\Controller;
 
 use App\Service\AsideService;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TopController extends AbstractController implements ApplicationController {
+class TopController extends AbstractController {
 
     /**
-     * @access public
-     * @Route("/", name="route")
+     * @access public 
+     * 
      */
-    function profile() {
+    public function __construct() {
+      
+    }
+
+    /**
+     * 메인화면
+     * @access public
+     * @Route("/", name="home")
+     * @Template("home.twig")
+     */
+    function main() {
       
       $entityManager = $this->getDoctrine()->getManager();
       $aside = new AsideService($entityManager);
-      $data['Aside'] = $aside->execute();
-      
-      return $this->render('profile.html.twig', $data);
+
+      return array(
+        'Aside' => $aside->execute()
+      );
     }
 
     /**

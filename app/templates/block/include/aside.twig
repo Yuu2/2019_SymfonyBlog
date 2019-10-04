@@ -1,4 +1,7 @@
-<div class="side-container">
+
+
+
+{# <div class="side-container">
   <ul>
     <li><img class="view" src="/style/images/home.gif" alt="home"></li>
     {% if Aside.Account is not null %}
@@ -7,7 +10,7 @@
       <span>({{ Aside.Account.username }})</span>
     </div>
     {% endif %}
-    <li><a href="{{ path('route') }}"><h5>Home</h5></a></li>
+    <li><a href="{{ url('home') }}"><h5>Home</h5></a></li>
     <li class="categories"><h5>Category</h5></li>
     <div class="category_box">
     {% if Aside.Categories is not null %}
@@ -25,4 +28,4 @@
     {% endif %}
     </div>
   </ul>
-</div>
+</div> #}
