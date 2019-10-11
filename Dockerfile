@@ -7,8 +7,8 @@ RUN apt-get install -y git libzip-dev unzip \
     && docker-php-ext-install pdo_mysql zip \
     && a2enmod rewrite headers
 
-COPY . /var/www
-WORKDIR /var/www/app
+COPY . /var/www/html
+WORKDIR /var/www/html/app
 RUN composer install
 # app -> "composer install" 
 

@@ -3546,12 +3546,7 @@
     z-index: 9999;
   }
   #banner .inner {
-    position: relative;
-  }
-  #banner .inner .view img {
     position: absolute;
-    margin: 0;
-    z-index: 1;
   }
 
   #banner input, #banner select, #banner textarea {
