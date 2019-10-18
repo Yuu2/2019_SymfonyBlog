@@ -3,10 +3,8 @@
 namespace App\Subscribers;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use EventDispatcher\Events\AsideEvent;
 
-
-class AsideSubscriber implements EventSubscriberInterface {
+class CategorySubscriber implements EventSubscriberInterface {
 
   /**
    * @access public
@@ -27,7 +25,7 @@ class AsideSubscriber implements EventSubscriberInterface {
   /**
    * @access public
    */
-  public function serve(AsideEvent $event) {
+  public function OnServeCategory() {
     
   }
 
