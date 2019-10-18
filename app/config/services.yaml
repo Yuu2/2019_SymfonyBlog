@@ -27,15 +27,3 @@ services:
     #   resource: ../Repository
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\AccountService\:
-        resource: '../src/Service/AccountService.php'
-        factory: ["@doctrine.orm.default_entity_manager", getRepository]
-
-    App\Service\ArticleService\:
-        resource: '../src/Service/ArticleService.php'
-        factory: ["@doctrine.orm.default_entity_manager", getRepository]
-    
-    App\Service\AsideService\:
-        resource: '../src/Service/AsideService.php'
-        factory: ["@doctrine.orm.default_entity_manager", getRepository]
-
