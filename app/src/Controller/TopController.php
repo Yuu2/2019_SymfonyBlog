@@ -7,6 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @author yuu2
+ */
 class TopController extends AbstractController implements ApplicationController {
 
     /**
@@ -29,7 +32,7 @@ class TopController extends AbstractController implements ApplicationController 
      */
     public function main() {
       $em = $this->entityManager;
-      
+
       return array();
     }
 

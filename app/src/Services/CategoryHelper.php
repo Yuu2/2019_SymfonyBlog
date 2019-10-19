@@ -1,43 +1,31 @@
-<?php 
+<?php
+
 namespace App\Services;
 
-use App\Entity\Account;
-use App\Entity\Board;
-use App\Entity\Category;
-use App\Repository\CategoryRepository;
-
-use Doctrine\ORM\EntityManagerInterface;
-
 class CategoryHelper {
+    
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
-  /**
-   * @var EntityManagerInterface
-   */
-  private $entityManager;
-  /**
-   * @var CategoryRepository $categoryRepository
-   */
-  private $categoryRepository;
+    /**
+     * @access public
+     * @param CategoryRepository $categoryRepository
+     */
+    public function __construct(
+      CategoryRepository $categoryRepository
+    ) {
+      $this->categoryRepository = $categoryRepository;
+    }
 
-  /**
-   * @param EntityManagerInterface $entityManager;
-   */
-  public function __construct(EntityManagerInterface $entityManager) {
-    $this->entityManager = $entityManager;
-  }
+    /**
+     * @access public
+     */
+    public function onHeader() {
+        return $this->$categoryRepository;
+    }
+    
+    
 
-  /**
-   * @access public
-   * @param String $command
-   * @return array
-   */
-  function exec() {
-
-    $category = $this->entityManager->getRepository(Category::class);
-    $data['Categories'] = $category->findAll();
-
-  
-    return $data;
-  }
 }
-?>
