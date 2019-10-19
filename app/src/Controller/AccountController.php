@@ -16,8 +16,8 @@ use ReCaptcha\ReCaptcha;
 
 
 /**
+ * [리팩토링]
  * @author Yuu2
- * 리팩토링중 ...
  */
 class AccountController extends AbstractController {
     
