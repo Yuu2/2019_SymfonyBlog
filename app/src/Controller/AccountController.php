@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Account;
 use App\Form\SignInType;
 use App\Form\SignUpType;
-use App\Service\AccountService;
+// use App\Service\AccountService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpClient\HttpClient;
@@ -15,12 +15,17 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use ReCaptcha\ReCaptcha;
 
 
+/**
+ * @author Yuu2
+ * 리팩토링중 ...
+ */
 class AccountController extends AbstractController {
     
     /**
-     * @Route("/signin", name="signin")
+     * 로그인
+     * @Route("/login", name="signin")
      */
-    public function signin(Request $request) {
+    public function login(Request $request) {
 
       $form = $this->createForm(SignInType::class)->handleRequest($request);
 
@@ -51,6 +56,7 @@ class AccountController extends AbstractController {
     }
 
     /**
+     * 회원가입
      * @Route("/signup", name="signup")
      */
     public function signup(Request $request):Response {
@@ -81,9 +87,10 @@ class AccountController extends AbstractController {
       }
     }
     /**
-     * @Route("/signout", name="signout")
+     * 로그아웃
+     * @Route("/logout", name="logout")
      */
-    public function signout() {
+    public function logout() {
 
       $service = new AccountService(null);
       $service->execute('signout', null, null, null);
@@ -91,12 +98,3 @@ class AccountController extends AbstractController {
       return $this->redirectToRoute('route');
     }
 }
-
-
-
-
-
-// *** with Rails API ***
-// $httpClient = HttpClient::create();
-// $response = $httpClient->request('GET', 'http://localhost:3001/tests');
-        
