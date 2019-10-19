@@ -1,0 +1,17 @@
+
+
+###> symfony/framework-bundle ###
+app/.env
+app/.env.test
+app/.env.local
+app/.env.local.php
+app/symfony.lock
+
+app/public/bundles/
+app/var/
+app/vendor/
+
+###> symfony/phpunit-bridge ###
+app/.phpunit
+app/phpunit.xml
+app/.web-server-pid
