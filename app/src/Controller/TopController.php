@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @author yuu2
+ * @author Yuu2
  */
 class TopController extends AbstractController implements ApplicationController {
 
