@@ -11,6 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+
+/**
+ * [리팩토링]
+ * @author Yuu2
+ */
 class ArticleController extends AbstractController {
     /** 
      * @var Array $data
