@@ -2,12 +2,21 @@
   <div class="inner">
     <a href={{ url('home') }} class="logo">My Blog</a>
     <nav id="nav">
-      <a href="#" >ABOUT</a>
-      <a href="#" >SKILL</a>
+      <a href="#">
+        <div class="user">
+          <img src="{{ asset('upload/falcon.jpeg') }}" alt="USER">
+          <p>안녕하세요</p>
+        </div>
+      </a>
+      <a href="{{ url('about') }}" >ABOUT</a>
+      <a href="{{ url('skill') }}" >SKILL</a>
       <a href="#" >PORTFOLIO</a>
-      <a href="#" >GUESTBOOK</a>
-      <a href="#" >COMTACT</a>
+      <a href="{{ url('guestbook') }}">GUESTBOOK</a>
+      <a href="{{ url('contact') }}">CONTACT</a>
+      <a href="{{ url('account_signin') }}"><img class="navicon" src="{{ asset('style/images//icon/signup.png') }}"></a>
     </nav>
   </div>
 </header>
-<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+<a href="#" class="navPanelToggle">
+  <span class="fa fa-bars"></span>
+</a>

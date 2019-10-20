@@ -20,7 +20,7 @@ class GuestBookController extends AbstractController implements ApplicationContr
     /**
      * 방명록 일람
      * @access public
-     * @Route("/guestbook/index", name="guestbook", methods={"GET"})
+     * @Route("/guestbook", name="guestbook", methods={"GET"})
      * @Template("/guestbook/guestbook.twig")
      */
     public function guestbooks() {

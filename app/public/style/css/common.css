@@ -1781,7 +1781,7 @@
 	}
 
 	a {
-		color: #e5474b;
+		color: #ffffff;
 	}
 
 	strong, b {
@@ -3102,7 +3102,7 @@
 
 
 
-/* Header */
+/* 헤더 */
 
 body {
   position: relative;
@@ -3155,7 +3155,7 @@ body {
 }
 
 #header .logo:hover {
-  color: rgba(224, 224, 224, 0.856);
+  color: #e0e0e0da;
 }
 
 #header a {
@@ -3164,7 +3164,7 @@ body {
   -ms-transition: color 0.2s ease-in-out;
   transition: color 0.2s ease-in-out;
   display: inline-block;
-  padding: 0 2em;
+  padding: 0 1.5em;
   color: #ffffff;
   text-decoration: none;
   text-transform: uppercase;
@@ -3192,7 +3192,7 @@ body {
   }
 }
 
-/* Menu */
+/* 네비 */
 
 #nav {
   display: inline-block;
@@ -3202,6 +3202,22 @@ body {
   #nav {
     display: none;
   }
+}
+#nav .navicon {
+  margin: -5px;				
+}
+
+#nav .user {
+	display: none;
+}
+
+#navPanel div img {
+	width: 100%;
+	border-radius: 5px;
+}
+#navPanel div img {
+	width: 100%;
+	border-radius: 5px;
 }
 
 .navPanelToggle {
@@ -3647,16 +3663,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 
 #banner .inner {
   max-width: 65em;
-  width: calc(100% - 6em);
+  width: calc(100% - 2em);
   margin: 0 auto;
   position: absolute;
   z-index: 9998;
   line-height: 1.5;
-  top: 50%;
+  bottom: 10%;
   left: 10%;
 }
 #banner img {
-  height: 550px;
+  height: 100%;
   width: 100%;
 }
 
