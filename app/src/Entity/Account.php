@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  */
@@ -29,24 +31,9 @@ class Account implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private $username;
-    
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $birth;
-    
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $profile;
-
-    /**
      * @ORM\Column(type="boolean")
      */
-    private $admin;
+    private $adminflag;
 
     /**
      * @ORM\Column(type="datetime")
@@ -67,6 +54,11 @@ class Account implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="account")
      */
     private $articles;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="account", cascade={"persist", "remove"})
+     */
+    private $profile;
 
     public function __construct()
     {
@@ -98,30 +90,6 @@ class Account implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getBirth(): ?\DateTimeInterface
-    {
-        return $this->birth;
-    }
-
-    public function setBirth(?\DateTimeInterface $birth): self
-    {
-        $this->birth = $birth;
 
         return $this;
     }
@@ -193,27 +161,34 @@ class Account implements UserInterface
         return $this;
     }
 
-    public function getProfile(): ?string
+    public function getProfile(): ?Profile
     {
         return $this->profile;
     }
 
-    public function setProfile(?string $profile): self
+    public function setProfile(Profile $profile): self
     {
         $this->profile = $profile;
 
-        return $this;
-    }
-
-    public function getAdmin(): ?bool
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin(bool $admin): self
-    {
-        $this->admin = $admin;
+        // set the owning side of the relation if necessary
+        if ($this !== $profile->getAccount()) {
+            $profile->setAccount($this);
+        }
 
         return $this;
     }
+
+    public function getRoles() {
+
+        return array(
+            'ROLE_USER'
+        );
+    }
+
+    public function getUsername() {}
+
+    public function getSalt() {}
+
+    public function eraseCredentials() {}
+
 }
