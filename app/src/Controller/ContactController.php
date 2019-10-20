@@ -20,7 +20,7 @@ class ContactController extends AbstractController implements ApplicationControl
     /**
      * 입력 폼
      * @access public
-     * @Route("/contact/form", name="contact", methods={"GET"})
+     * @Route("/contact", name="contact", methods={"GET"})
      * @Template("/contact/contact.twig")
      */
     public function contact() {
