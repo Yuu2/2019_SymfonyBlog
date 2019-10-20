@@ -9,7 +9,10 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class CategorySubscriber implements EventSubscriberInterface {
+/**
+ * @author Yuu2
+ */
+class ApplicationSubscriber implements EventSubscriberInterface {
 
   /**
    * @var CategoryRepository
@@ -32,17 +35,16 @@ class CategorySubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents() {
 
     return array(
-      KernelEvents::RESPONSE => 'onApplicationController'
+      KernelEvents::RESPONSE => 'onHeader'
     );
   }
 
   /**
+   * 템플릿헤더 리스폰스 전처리
    * @access public
    * @param ResponseEvent $event
    */
-  public function onApplicationController(ResponseEvent $event) {
+  public function onHeader(ResponseEvent $event) {
 
   }
-
-
 }

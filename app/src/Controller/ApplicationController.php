@@ -3,6 +3,6 @@
 namespace App\Controller;
 
 /**
- * @author yuu2
+ * @author Yuu2
  */
 interface ApplicationController {}

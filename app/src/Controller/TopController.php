@@ -27,7 +27,7 @@ class TopController extends AbstractController implements ApplicationController 
     /**
      * 메인
      * @access public
-     * @Route("/", name="home")
+     * @Route("/", name="home", methods={"GET"})
      * @Template("home.twig")
      */
     public function main() {
@@ -39,7 +39,7 @@ class TopController extends AbstractController implements ApplicationController 
     /**
      * 자기 소개
      * @access public
-     * @Route("/about", name="about")
+     * @Route("/about", name="about", methods={"GET"})
      * @Template("about.twig")
      */
     public function about() {
@@ -50,21 +50,10 @@ class TopController extends AbstractController implements ApplicationController 
     /**
      * 보유 기술
      * @access public
-     * @Route("/skill", name="skill")
+     * @Route("/skill", name="skill", methods={"GET"})
      * @Template("skill.twig")
      */
     public function skill() {
-      
-      return array();
-    }
-
-    /**
-     * 방명록
-     * @access public
-     * @Route("/guestbook", name="guestbook")
-     * @Template("/guestbook.twig")
-     */
-    public function guestbook() {
       
       return array();
     }
