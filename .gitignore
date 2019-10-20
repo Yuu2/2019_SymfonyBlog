@@ -1,4 +1,6 @@
 
+.DS_Store
+app/.DS_Store
 
 ###> symfony/framework-bundle ###
 app/.env
