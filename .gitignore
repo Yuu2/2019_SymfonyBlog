@@ -8,6 +8,7 @@ app/.env.test
 app/.env.local
 app/.env.local.php
 app/symfony.lock
+app/composer.lock
 
 app/public/bundles/
 app/var/
@@ -17,3 +18,5 @@ app/vendor/
 app/.phpunit
 app/phpunit.xml
 app/.web-server-pid
+
+.vscode/

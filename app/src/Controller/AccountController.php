@@ -24,13 +24,15 @@ class AccountController extends AbstractController implements ApplicationControl
      */
     public function signin(AuthenticationUtils $authenticationUtils) {
         
-      if($this->getUser()) {$this->redirectToRoute('account_signin');}
+      if($this->getUser()) {
+        $this->redirectToRoute('account_signin');
+      }
 
       $error = $authenticationUtils->getLastAuthenticationError();
 
       $lastUsername = $authenticationUtils->getLastUsername();
 
-      return  array (
+      return array (
         'last_username' => $lastUsername, 
         'error' => $error
       );
@@ -38,7 +40,6 @@ class AccountController extends AbstractController implements ApplicationControl
 
     /**
      * 로그아웃
-     * 
      * @access public
      * @Route("/account/signout", name="account_signout")
      */
