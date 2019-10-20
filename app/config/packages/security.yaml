@@ -1,18 +1,28 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        my_provider:
+            entity:
+                class: App\Entity\Account
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+
+            form_login:
+                login_path: account_signin
+                check_path: account_signin
+                provider: my_provider
             guard:
                 authenticators:
                     - App\Security\AccountAuthenticator
             logout:
+                # 로그아웃 루트
                 path: account_signout
+                # 로그아웃 리다이렉팅
                 target: home
 
             # activate different ways to authenticate
@@ -25,4 +35,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
