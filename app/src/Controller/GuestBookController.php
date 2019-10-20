@@ -54,7 +54,7 @@ class GuestBookController extends AbstractController implements ApplicationContr
      * 방명록 댓글 작성 및 수정
      * @access public
      * @Route("/guestbook/comment/new", name="guestbook_cooment_new", methods={"POST"})
-     * @Route("/guestbook/comment/edit/{$id}", name="guestbook_comment_edit", methods={"POST"})
+     * @Route("/guestbook/comment/edit/{$id}", name="guestbook_comment_edit", methods={"POST"}) 
      */
     public function writeComment() {
 
