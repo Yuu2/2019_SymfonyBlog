@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  */
-class Account implements UserInterface
+class Account implements UserInterface 
 {
     /**
      * @ORM\Id()
@@ -31,12 +31,12 @@ class Account implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
-    private $adminflag;
+    private $adminflag = false;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $created_at;
 
@@ -63,6 +63,7 @@ class Account implements UserInterface
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int
@@ -184,8 +185,10 @@ class Account implements UserInterface
             'ROLE_USER'
         );
     }
-
-    public function getUsername() {}
+    
+    public function getUsername() {
+        return $this->email;
+    }
 
     public function getSalt() {}
 
