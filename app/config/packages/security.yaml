@@ -1,4 +1,7 @@
 security:
+    encoders:
+            App\Entity\Account:
+                algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         my_provider:
@@ -15,6 +18,8 @@ security:
             form_login:
                 login_path: account_signin
                 check_path: account_signin
+                username_parameter: email
+                password_parameter: password
                 provider: my_provider
             guard:
                 authenticators:
@@ -35,4 +40,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/account/signin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
