@@ -10,10 +10,15 @@
       </a>
       <a href="{{ url('about') }}" >ABOUT</a>
       <a href="{{ url('skill') }}" >SKILL</a>
-      <a href="#" >PORTFOLIO</a>
+      <a href="#" >CATEGORY</a>
       <a href="{{ url('guestbook') }}">GUESTBOOK</a>
       <a href="{{ url('contact') }}">CONTACT</a>
-      <a href="{{ url('account_signin') }}"><img class="navicon" src="{{ asset('style/images//icon/signup.png') }}"></a>
+      {% if app.user %}
+        <!-- TODO: 로그아웃 아이콘 추가 -->
+        <a href="{{ url('account_signout') }}"><!-- <img class="navicon" alt="Log out"> --> Logout</a>
+      {% else %}
+        <a href="{{ url('account_signin') }}"><img class="navicon" src="{{ asset('style/images//icon/signup.png') }}" alt="Log In"></a>
+      {% endif %}
     </nav>
   </div>
 </header>

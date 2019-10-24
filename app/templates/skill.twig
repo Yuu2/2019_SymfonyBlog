@@ -1,137 +1,15 @@
+{% extends "default.twig" %}
 {% block main %}
   <section id="skill">
     <div class="inner">
-      <article>
-        <div class="content">
-          <img src="{{ asset('style/images/skill/java.png') }}">
-          <header>
-            <h3>Java</h3>
-          </header>
-          <p>
-            : 클래스, 인터페이스, 지네릭, <br>
-              람다식, 디자인패턴 공부함.
-          </p>
-        </div>
-      </article>
-      <article>
-        <div class="content">
-          <img src="{{ asset('style/images/skill/php.png') }}">
-          <header>
-            <h3>Php</h3>
-          </header>
-        </div>
-      </article>
-      <article>
-        <div class="content">
-          <img src="{{ asset('style/images/skill/spring.png') }}">
-          <header>
-            <h3>Spring</h3>
-          </header>
-          <p>
-          : MVC, Boot를 이용하여 <br> 
-            개인프로젝트 경험함.
-          </p>
-        </div>
-      </article>
-      <article>
-        <div class="content">
-          <img src="{{ asset('style/images/skill/symfony.png') }}">
-          <header>
-            <h3>Symfony(Php)</h3>
-          </header>
-          <p>
-            : CMS사이트를 커스터마이징 <br> 
-              및 플러그인 실무 경험함 <br>
-          </p>
-        </div>
-      </article>
-      <article>
-        <div class="content">
-          <img src="{{ asset('style/images/skill/react.png') }}">
-          <header>
-            <h3>React.js</h3>
-          </header>
-          <p>
-            : nodejs, sqlite를 이용해서 <br>
-              사내 연수 팀프로젝트 개발.
-          </p>
-        </div>
-      </article>
-      {# <article>
-      <div class="content">
-          <span class="icon fa-laptop"></span>
-          <header>
-            <h3>Sed Magna</h3>
-          </header>
-          <p>Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vehicula.</p>
-          <ul class="actions">
-            <li><a href="#" class="button alt">Learn More</a></li>
-          </ul>
-        </div>
-      </article> #}
-    </div>
-    <div class="inner">
-      <article>
-          <div class="content">
-            <img src="{{ asset('style/images/skill/oracle.png') }}">
-            <header>
-              <h3>Oracle</h3>
-            </header>
-            <p>
-              : 오라클 데이터베이스로 <br>
-                DDL, DML, DCL등 기본적인 <br>
-                쿼리사용가능.
-            </p>
-          </div>
-        </article>
+      {% for Skill in Skills %}
         <article>
           <div class="content">
-            <img src="{{ asset('style/images/skill/mysql.png') }}">
-            <header>
-              <h3>MySQl</h3>
-            </header>
+            <img src="{{ Skill.img }}">
+            <header><h3>{{ Skill.name }}</h3></header>
+            <p>{{ Skill.description }}</p>
           </div>
         </article>
-        <article>
-          <div class="content">
-            <img src="{{ asset('style/images/skill/docker.png') }}">
-            <header>
-              <h3>Docker</h3>
-            </header>
-            <p>
-              : 이미지 빌드, DockerFile 작성 <br>
-                실제 배포 경험.
-            </p>
-          </div>
-        </article>
-        <article>
-          <div class="content">
-            <img src="{{ asset('style/images/skill/gcp.png') }}">
-            <header>
-              <h3>GCP</h3>
-            </header>
-          </div>
-        </article>
-        <article>
-          <div class="content">
-            <img src="{{ asset('style/images/skill/git.png') }}">
-            <header>
-              <h3>GIT</h3>
-            </header>
-          </div>
-        </article>
-      {# <article>
-      <div class="content">
-          <span class="icon fa-laptop"></span>
-          <header>
-            <h3>Sed Magna</h3>
-          </header>
-          <p>Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vehicula.</p>
-          <ul class="actions">
-            <li><a href="#" class="button alt">Learn More</a></li>
-          </ul>
-        </div>
-      </article> #}
-    </div>
+      {% endfor %}
   </section>
 {% endblock %}

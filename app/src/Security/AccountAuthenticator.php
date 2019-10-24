@@ -67,6 +67,7 @@ class AccountAuthenticator extends AbstractFormLoginAuthenticator {
 
     /**
      * @access public
+     * @param Request $request
      */
     public function getCredentials(Request $request) {
      
@@ -85,28 +86,35 @@ class AccountAuthenticator extends AbstractFormLoginAuthenticator {
 
     /**
      * @access public
+     * @param Request $request
      */
     public function supports(Request $request) {
         return 'account_signin' === $request->attributes->get('_route') && $request->isMethod('POST');
     }
 
     /**
+     * [유저정보 취득]
      * @access public
      */
     public function getUser($credentials, UserProviderInterface $userProvider) {
 
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         
-        if (!$this->csrfTokenManager->isTokenValid($token)) { throw new InvalidCsrfTokenException(); }
+        if (!$this->csrfTokenManager->isTokenValid($token)) { 
+            throw new InvalidCsrfTokenException("유효하지 않은 토큰입니다."); 
+        }
 
         $user = $this->entityManager->getRepository(Account::class)->findOneBy(['email' => $credentials['email']]);
 
-        if (!$user) { throw new CustomUserMessageAuthenticationException('존재하지 않는 이메일 입니다.'); }
+        if (!$user) { 
+            throw new CustomUserMessageAuthenticationException('존재하지 않는 이메일 입니다.'); 
+        }
 
         return $user;
     }
 
     /**
+     * [인증 검사]
      * @access public
      */
     public function checkCredentials($credentials, UserInterface $user) {
@@ -114,10 +122,13 @@ class AccountAuthenticator extends AbstractFormLoginAuthenticator {
     }
 
     /**
+     * [인증 성공]
      * @access public
+     * @param Request $request
+     * @param TokenInterface $token
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
-        
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
