@@ -179,7 +179,11 @@ class Account implements UserInterface
         return $this;
     }
 
-    public function getRoles() {
+    /**
+     * @access public
+     * @return array
+     */
+    public function getRoles():array {
 
         return array(
             'ROLE_USER'

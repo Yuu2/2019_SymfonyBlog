@@ -23,9 +23,9 @@ class AccountController extends AbstractController implements ApplicationControl
      * @Template("/account/signin.twig")
      */
     public function signin(AuthenticationUtils $authenticationUtils) {
-        
+
       if($this->getUser()) {
-        $this->redirectToRoute('account_signin');
+        return $this->redirectToRoute('home');
       }
 
       $error = $authenticationUtils->getLastAuthenticationError();
@@ -41,9 +41,7 @@ class AccountController extends AbstractController implements ApplicationControl
     /**
      * 로그아웃
      * @access public
-     * @Route("/account/signout", name="account_signout")
+     * @Route("/account/signout", name="account_signout", methods={"GET"})
      */
-    public function signout() {
-        throw new \Exception();
-    }
+    public function signout() {}
 }
