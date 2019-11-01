@@ -5,7 +5,7 @@ services:
     container_name: busybox
     image: busybox
     volumes:
-      - ./app:/var/www/html
+      - ./app:/var/www/app
     working_dir: /var/www
 
   server:
@@ -14,27 +14,28 @@ services:
     ports:
       - 80:80
     environment:
-      - APACHE_DOCUMENT_ROOT=/var/www/html/app/public
-    build:
-      context: .
+      - APACHE_DOCUMENT_ROOT=/var/www/app/public
+    build: ./app
     depends_on:
-      - database
+      - db
     volumes:
-      - ./app:/var/www/html
+      - ./app:/var/www/app
       - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
 
-  database:
+  db:
     image: mysql:5.7
-    container_name: mysql
+    container_name: db
     environment:
       MYSQL_DATABASE: portfolioblog_db
       MYSQL_ROOT_PASSWORD: root
     ports:
       - 3306:3306
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
 
-  mailcatcher:
-    container_name: mailcatcher
-    image: schickling/mailcatcher
-    ports:
-      - 1080:1080
-      - 1025:1025
+#  mailcatcher:
+#    container_name: mailcatcher
+#    image: schickling/mailcatcher
+#    ports:
+#      - 1080:1080
+#      - 1025:1025
