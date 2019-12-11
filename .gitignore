@@ -1,22 +1,22 @@
 
 .DS_Store
-app/.DS_Store
+.vscode/
+.idea/
 
 ###> symfony/framework-bundle ###
+app/.DS_Store
 app/.env
 app/.env.test
 app/.env.local
 app/.env.local.php
-app/symfony.lock
 app/composer.lock
-
+app/symfony.lock
+app/templates/index.html
 app/public/bundles/
 app/var/
 app/vendor/
-
+app/node_modules/
 ###> symfony/phpunit-bridge ###
 app/.phpunit
 app/phpunit.xml
 app/.web-server-pid
-
-.vscode/

@@ -24,9 +24,7 @@ class AccountController extends AbstractController implements ApplicationControl
      */
     public function signin(AuthenticationUtils $authenticationUtils) {
 
-      if($this->getUser()) {
-        return $this->redirectToRoute('home');
-      }
+      if($this->getUser()) {return $this->redirectToRoute('home');}
 
       $error = $authenticationUtils->getLastAuthenticationError();
 

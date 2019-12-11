@@ -1,27 +1,57 @@
-<header id="header">
-  <div class="inner">
-    <a href={{ url('home') }} class="logo">My Blog</a>
-    <nav id="nav">
-      <a href="#">
-        <div class="user">
-          <img src="{{ asset('upload/falcon.jpeg') }}" alt="USER">
-          <p>안녕하세요</p>
-        </div>
-      </a>
-      <a href="{{ url('about') }}" >ABOUT</a>
-      <a href="{{ url('skill') }}" >SKILL</a>
-      <a href="#" >CATEGORY</a>
-      <a href="{{ url('guestbook') }}">GUESTBOOK</a>
-      <a href="{{ url('contact') }}">CONTACT</a>
-      {% if app.user %}
-        <!-- TODO: 로그아웃 아이콘 추가 -->
-        <a href="{{ url('account_signout') }}"><!-- <img class="navicon" alt="Log out"> --> Logout</a>
-      {% else %}
-        <a href="{{ url('account_signin') }}"><img class="navicon" src="{{ asset('style/images//icon/signup.png') }}" alt="Log In"></a>
-      {% endif %}
-    </nav>
-  </div>
+<header class="intelligent-header">
+	<div class="header-area">
+    <div class="container">
+      <div class="row">
+          <div class="col-md-3 col-xs-12">
+            <div class="logo">
+              <a href="{{ path('home') }}">Yuu2</a>
+            </div>
+          </div>
+          <div class="col-md-9 col-xs-12">
+            <div class="main-menu text-right main-menu-shadow">
+              <nav>
+                <ul class="menu">
+                  <li><a href="about-me.html">About Me</a></li>
+                  
+                  <li class="angel-down"><a href="#">Portfolio</a>
+                      <ul>
+                      <li><a href="portfolio-1.html">Masonry</a></li>
+                      <li><a href="portfolio-2.html">Boxed</a>
+                      </li>
+                      <li class="angel-right"><a href="single-portfolio.html">Portfolio Details</a>
+                          <ul>
+                          <li><a href="single-portfolio.html">Portfolio Details</a></li>
+                          <li><a href="single-portfolio-slide.html">Portfolio Detail (Slide)</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  
+                  <li class="angel-down"><a href="#">BLOG</a>
+                      <ul>
+                      <li><a href="blog-2-column.html">blog-2-column</a></li>
+                      <li class="angel-right"><a href="single-blog.html">Blog Details</a>
+                          <ul>
+                              <li><a href="single-blog-full.html">single-blog-full</a></li>
+                              <li><a href="single-blog-audio.html">single-blog-audio</a></li>
+                              <li><a href="single-blog-no-media.html">single-blog-no-media</a></li>
+                              <li><a href="single-blog-soundcloud.html">single-blog-soundcloud</a></li>
+                              <li><a href="single-blog-video.html">single-blog-video</a></li>
+                              <li><a href="single-blog-vimeo.html">single-blog-vimeo</a></li>
+                              <li><a href="single-blog-youtube.html">single-blog-youtube</a></li>
+                              <li><a href="single-blog-slider.html">single-blog-slider</a></li>
+                          </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a href="#">CONTACT</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="mobile-menu"></div>
+          </div>
+      </div>
+    </div>
+	</div>
 </header>
-<a href="#" class="navPanelToggle">
-  <span class="fa fa-bars"></span>
-</a>
+<div class="free-space"></div>
