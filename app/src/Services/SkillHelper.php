@@ -26,7 +26,7 @@ class SkillHelper {
      * @param int $offset
      * @param int @limit
      */
-    public function top(int $offset, int $limit) {
+    public function getMost(int $offset, int $limit) {
         return $this->skillRepository->findBy(
           array(),
           array('id' => 'DESC'),
@@ -38,7 +38,7 @@ class SkillHelper {
     /**
      * @access public
      */
-    public function skill() {
+    public function getList() {
       return $this->skillRepository->findAll();
     }
     
