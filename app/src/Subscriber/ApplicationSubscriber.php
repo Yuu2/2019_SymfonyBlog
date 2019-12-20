@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Subscribers;
+namespace App\Subscriber;
 
 use App\Repository\CategoryRepository;
 
