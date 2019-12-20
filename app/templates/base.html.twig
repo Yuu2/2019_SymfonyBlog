@@ -9,15 +9,9 @@
     <title>포트폴리오 블로그</title>
     <link rel="icon" type="image/png" href="{{ asset('style/img/favicon.png') }}" /> 
 
-    <script src="{{ asset('style/js/vendor/modernizr-2.8.3.min.js') }}"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <link rel="stylesheet" href="{{ asset('style/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('style/material-design-iconic-font.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('style/css/section/shortcodes.css') }}">
-    <link rel="stylesheet" href="{{ asset('style/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('style/css/responsive.css') }}">
     
     {% block stylesheets %}
     {% endblock %}
@@ -41,10 +35,6 @@
     {{ include('block/include/footer.twig') }}
     {% endblock %}
   
-    <script src="{{ asset('style/js/vendor/jquery-1.12.0.min.js') }}"></script>
-    <script src="{{ asset('style/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('style/js/main.js') }}"></script>
-
     {% block javascripts %}
     {% endblock %}
   
