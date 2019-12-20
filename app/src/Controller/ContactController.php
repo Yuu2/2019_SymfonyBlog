@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @author Yuu2
  */
-class ContactController extends AbstractController implements ApplicationController {
+class ContactController extends AbstractController {
 
     /**
      * @access public
