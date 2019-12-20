@@ -12,12 +12,21 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    
+    <link rel="icon" href="{{ asset('style/img/favicon.png') }}" /> 
+
+    <link rel="stylesheet" href="{{ asset('style/lib/bootstrap/css/bootstrap.min.css.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/animate/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/lightbox/css/lightbox.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('style/css/style.css') }}">
+
     {% block stylesheets %}
     {% endblock %}
     
   </head>
-  <body>
+  <body id="page-top">
     <!-- header -->
     {% block header %}
     {{ include('block/include/header.twig') }}
@@ -34,7 +43,18 @@
     {% block footer %}
     {{ include('block/include/footer.twig') }}
     {% endblock %}
-  
+
+    <script src="{{ asset('style/lib/jquery/js/jquery-migrate.min.js') }}"></script>
+    <script src="{{ asset('style/lib/popper/js/popper.min.js') }}"></script>
+    <script src="{{ asset('style/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('style/lib/easing/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('style/lib/counterup/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('style/lib/counterup/js/jquery.counterup.js') }}"></script>
+    <script src="{{ asset('style/lib/lightbox/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('style/lib/typed/js/typed.min.js') }}"></script>
+
+    <script src="{{ asset('style/js/main.js') }}"></script>
+
     {% block javascripts %}
     {% endblock %}
   
