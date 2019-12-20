@@ -14,7 +14,7 @@ use ReCaptcha\ReCaptcha;
  * 2019.10.20
  * @author Yuu2
  */
-class AccountController extends AbstractController implements ApplicationController {
+class AccountController extends AbstractController {
 
     /**     
      * 로그인

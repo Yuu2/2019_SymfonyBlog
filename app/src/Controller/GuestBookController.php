@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @author Yuu2
  */
-class GuestBookController extends AbstractController implements ApplicationController {
+class GuestBookController extends AbstractController {
     
     /**
      * @access public
