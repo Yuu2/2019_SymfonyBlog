@@ -12,6 +12,9 @@ app/.env.local.php
 app/composer.lock
 app/symfony.lock
 app/templates/index.html
+app/templates/bloge/
+app/templates/backup/
+app/templates/backup.html.twig
 app/public/bundles/
 app/var/
 app/vendor/
