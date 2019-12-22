@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front\Blog;
 
 use App\Form\ArticleType;
 use App\Service\ArticleService;
@@ -13,10 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- * [리팩토링]
  * @author Yuu2
  */
-class ArticleController extends AbstractController {
+class BlogController extends AbstractController {
     /** 
      * @var Array $data
      */

@@ -1,4 +1,9 @@
-administrator: Yuu2
-title: 포트폴리오 블로그
+administrator.id: Yuu2
+administrator.email: myco8332v2@gmail.com
+administrator.github: https://github.com/Yuu2/portfolio-blog
 
-default.intro.text: 포트폴리오 블로그에 오신 것을 환영합니다.
+common.title: 포트폴리오 블로그
+
+front.intro.text: 포트폴리오 블로그에 오신 것을 환영합니다.
+front.about.skill: 자신있습니다.
+front.about.introduction: 자기소개

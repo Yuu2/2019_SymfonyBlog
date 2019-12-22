@@ -16,8 +16,8 @@ security:
             anonymous: true
 
             form_login:
-                login_path: account_signin
-                check_path: account_signin
+                login_path: sec_login
+                check_path: sec_login
                 username_parameter: email
                 password_parameter: password
                 provider: my_provider
@@ -26,7 +26,7 @@ security:
                     - App\Security\AccountAuthenticator
             logout:
                 # 로그아웃 루트
-                path: account_signout
+                path: sec_logout
                 # 로그아웃 리다이렉팅
                 target: home
 
@@ -39,5 +39,4 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/account/signin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/admin, roles: ROLE_ADMIN }

@@ -2,17 +2,21 @@
 
 {% block main %}
   <!-- INTRO -->
-  <div id="home" class="intro route bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
+  <div id="intro" class="intro route bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
     <div class="overlay-itro"></div>
     <div class="intro-content display-table">
       <div class="table-cell">
         <div class="container">
-          <h1 class="intro-title mb-4">{{ 'administrator'|trans }}</h1>
-          <p class="intro-subtitle"><span class="text-slider-items">{{ 'default.intro.text'|trans}}</span><strong class="text-slider"></strong></p>
+          <h1 class="intro-title mb-4">{{ 'administrator.id'|trans }}</h1>
+          <p class="intro-subtitle">
+            <span class="text-slider-items">{{ 'front.intro.text'|trans }}</span>
+            <strong class="text-slider"></strong>
+          </p>
         </div>
       </div>
     </div>
   </div>
+  <!-- ABOUT -->
   <section id="about" class="about-mf sect-pt4 route">
     <div class="container">
       <div class="row">
@@ -23,19 +27,27 @@
                 <div class="row">
                   <div class="col-sm-6 col-md-5">
                     <div class="about-img">
-                      <img src="img/testimonial-2.jpg" class="img-fluid rounded b-shadow-a" alt="">
+                      <img src="#" class="img-fluid rounded b-shadow-a" alt="">
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-7">
                     <div class="about-info">
-                      <p><span class="title-s">Name: </span> <span>YU MIN SANG/span></p>
-                      <p><span class="title-s">Profile: </span> <span>Full stack developer</span></p>
-                      <p><span class="title-s">Email: </span> <span>myco8332v2@gmail.com</span></p>
+                      <p>
+                        <span class="title-s">Name: </span> 
+                        <span>{{ 'administrator.id'|trans }}</span>
+                      </p>
+                      <p>
+                        <span class="title-s">Email: </span>
+                        <span>{{ 'administrator.email'|trans }}</span>
+                      </p>
                     </div>
                   </div>
                 </div>
+
+                <!-- TODO: 동적 처리 -->
                 <div class="skill-mf">
-                  <p class="title-s">Skill</p>
+                  <p class="title-s">{{ 'front.about.skill'|trans }}</p>
+
                   <span>JAVA</span> <span class="pull-right">상</span>
                   <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0"
@@ -53,12 +65,11 @@
                   </div>
                 </div>
               </div>
+              <!-- -->
               <div class="col-md-6">
                 <div class="about-me pt-4 pt-md-0">
                   <div class="title-box-2">
-                    <h5 class="title-left">
-                      About me
-                    </h5>
+                    <h5 class="title-left">{{ 'front.about.introduction'|trans }}</h5>
                   </div>
                   <p class="lead">
                     만들기 귀찮타...
