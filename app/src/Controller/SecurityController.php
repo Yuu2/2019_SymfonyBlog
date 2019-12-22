@@ -8,23 +8,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-use ReCaptcha\ReCaptcha;
-
 /**
- * 2019.10.20
+ * updated 2019.12.22
  * @author Yuu2
  */
-class AccountController extends AbstractController {
+class SecurityController extends AbstractController {
 
     /**     
      * 로그인
      * @access public
-     * @Route("/account/signin", name="account_signin", methods={"GET", "POST"})
-     * @Template("/account/signin.twig")
+     * @Route("/login", name="sec_login", methods={"GET", "POST"})
+     * @Template("/front/login.twig")
      */
-    public function signin(AuthenticationUtils $authenticationUtils) {
+    public function login(AuthenticationUtils $authenticationUtils) {
 
-      if($this->getUser()) {return $this->redirectToRoute('home');}
+      if($this->getUser()) return $this->redirectToRoute('home');
 
       $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -39,7 +37,7 @@ class AccountController extends AbstractController {
     /**
      * 로그아웃
      * @access public
-     * @Route("/account/signout", name="account_signout", methods={"GET"})
+     * @Route("/logout", name="sec_logout", methods={"GET"})
      */
     public function signout() {}
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <!-- <meta name="keywords" content=""> -->
         
-    <title>{{ 'title'|trans }}</title>
+    <title>{{ 'common.title'|trans }}</title>
     <link rel="icon" type="image/png" href="{{ asset('style/img/favicon.png') }}" /> 
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -27,12 +27,26 @@
     
   </head>
   <body id="page-top">
+
     <!-- header -->
     {% block header %}
     {% endblock %}
-
+    <!-- NAV -->
     {% block nav %}
-    {{ include('block/include/header.twig') }}
+    <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll" href="{{ path('home') }}">PortfolioBlog</a>
+        <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link js-scroll active" href="#home">Home</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll" href="#intro">About</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll" href="#blog">Portfolio</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll" href="#blog">Blog</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll" href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     {% endblock %}
     
     {% block main %}
@@ -44,7 +58,20 @@
 
     <!-- footer -->  
     {% block footer %}
-    {{ include('block/include/footer.twig') }}
+    <section class="paralax-mf footer-paralax bg-image sect-mt4 route">
+      <div class="overlay-mf" style="background-image: url({{ asset('style/img/intro.jpeg') }})"></div>
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="copyright-box">
+                <p class="copyright">&copy; Copyright <strong><a href="{{ 'administrator.github'|trans }}">{{ 'administrator.id'|trans }}</a></strong>. All Rights Reserved</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
     {% endblock %}
 
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>

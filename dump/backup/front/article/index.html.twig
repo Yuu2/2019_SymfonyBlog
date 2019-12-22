@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+  <link rel="stylesheet" href={{ asset('style/css/article/index.css') }} tyle="text/css">
+{% endblock %}
+
+{% block javascripts %}
+   <script src={{ asset('style/js/article/index.js') }} ></script>
+{% endblock %}
+
+{% block main %}
+  <div class="main_container">
+    <div class="articles_nav"><img src={{ asset('style/images/icon/plusicon.png') }}></div>
+    <div class="articles_nav_slide">
+      <table>
+      {% for Article in Articles %}
+        <tr>
+          <td>{{ Article.username }}</td>
+          <td><a href={{ path( 'article_show', {'target_id': Article.id})}}>{{ Article.title }}</a></td>
+          <td>{{ Article.created_at|date('Y-m-d H:i:s') }}</td>
+        </tr> 
+      {% endfor %}
+      </table>
+    </div>
+    <div class="articles_box">
+    {% for Article in Articles %}
+      <div class="articles">
+        <div class="articles_image"> 
+          <img src="https://via.placeholder.com/200x200" alt="View"/>
+        </div>
+        <div class="articles_info">
+          <div class="article_name">
+            <span>Writer : </span>
+            <span>{{ Article.username }}</span>
+          </div>
+          <div class="article_title">
+            <span>Title : </span>
+            <a href={{ path( 'article_show', {'target_id': Article.id})}}>{{ Article.title }}</a>
+          </div>
+          <div class="article_content">
+            <span>Content : </span>
+            <a href={{ path( 'article_show', {'target_id': Article.id})}}>{{ Article.content | striptags}}</a>
+          </div>
+          <div class="article_created_at">
+            <span>Date : </span>
+            <span>{{ Article.created_at|date('Y-m-d H:i:s') }}</span>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    {{ include('block/include/paging.twig') }}
+    {{ include('block/button/article/index.btn.twig') }}
+  </div>
+{% endblock %}
