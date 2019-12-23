@@ -5,5 +5,16 @@ administrator.github: https://github.com/Yuu2/portfolio-blog
 common.title: ポートフォリオブログ
 
 front.intro.text: 私のポートフォリオブログにようこそ
-front.about.skill: 自身あるスキル！
+
+front.about.skill: 自身あるスキル
+front.about.email: メール
 front.about.introduction: 自己紹介
+front.about.description: 福岡 ソリューション会社 バックエンドエンジニア\n 
+
+front.work.year: #
+front.work.project: #
+front.work.1: #
+front.work.2: #
+
+front.portfolio.title: #
+front.portfolio.subtitle: #

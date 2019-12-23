@@ -5,5 +5,16 @@ administrator.github: https://github.com/Yuu2/portfolio-blog
 common.title: Portfolio Blog
 
 front.intro.text: Welcome to the portfolio blog
-front.about.skill: My Skill　
+
+front.about.skill: My Skill
+front.about.email: E-mail
 front.about.introduction: Self-Introduction
+front.about.description: #
+
+front.work.year: #
+front.work.project: #
+front.work.1: #
+front.work.2: #
+
+front.portfolio.title: #
+front.portfolio.subtitle: #

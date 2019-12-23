@@ -22,19 +22,14 @@ class Skill
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $description;
+    private $percentage;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=1)
      */
     private $level;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $img;
 
     public function getId(): ?int
     {
@@ -52,39 +47,25 @@ class Skill
 
         return $this;
     }
-
-    public function getDescription(): ?string
+    public function getPercentage(): ?int
     {
-        return $this->description;
+        return $this->percentage;
     }
 
-    public function setDescription(?string $description): self
+    public function setPercentage(?int $percentage): self
     {
-        $this->description = $description;
+        $this->percentage = $percentage;
 
         return $this;
     }
-
-    public function getLevel(): ?int
+    public function getLevel(): ?string
     {
         return $this->level;
     }
 
-    public function setLevel(?int $level): self
+    public function setLevel(?string $level): self
     {
         $this->level = $level;
-
-        return $this;
-    }
-
-    public function getImg(): ?string
-    {
-        return $this->img;
-    }
-
-    public function setImg(?string $img): self
-    {
-        $this->img = $img;
 
         return $this;
     }

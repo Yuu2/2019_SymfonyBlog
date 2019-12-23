@@ -3,11 +3,9 @@
 namespace App\Controller\Front\Blog;
 
 use App\Form\ArticleType;
-use App\Service\ArticleService;
-use App\Service\AsideService;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -16,37 +14,24 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @author Yuu2
  */
 class BlogController extends AbstractController {
-    /** 
-     * @var Array $data
-     */
-    private $data;
 
     /**
      * 게시글 일람
-     * @Route("/article", name="article_index")
+     * @Route("/blog", name="blog_index")
+     * @Template("front/Blog/index.twig")
      * @access public
      */
     function index() {
-      
-      $entityManager = $this->getDoctrine()->getManager();
-      $request = Request::createFromGlobals();
-      
-      $aside = new AsideService($entityManager);
-      $data['Aside'] = $aside->execute();
 
-      $article = new ArticleService($entityManager);
-      
-      $data['Articles'] = $article->execute('index', $request, null, null);
-      $data['PageInfo'] = $article->execute('paging', $request, null, null);
-      
-      return $this->render('article/index.html.twig', $data);
+      return array();
     }
-    
+
     /**
      * 게시글 상세
      * @Route("/article/view{target_id}", name="article_show")
      * @access public
      */
+    /* 
     function show($target_id) {
       $entityManager = $this->getDoctrine()->getManager(); 
 
@@ -63,6 +48,7 @@ class BlogController extends AbstractController {
      * @Route("/article/new", name="article_new")
      * @access public
      */
+    /*
     function new(Request $request) {
     
       $entityManager = $this->getDoctrine()->getManager();
@@ -88,5 +74,6 @@ class BlogController extends AbstractController {
       $article->execute('new', $request, $form_data, $session);
 
       return $this->redirectToRoute('article_index');
-  }
+    }
+    */
 }
