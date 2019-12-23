@@ -3,7 +3,22 @@ administrator.email: myco8332v2@gmail.com
 administrator.github: https://github.com/Yuu2/portfolio-blog
 
 common.title: 포트폴리오 블로그
+common.null: 데이터가 존재하지 않습니다.
 
 front.intro.text: 포트폴리오 블로그에 오신 것을 환영합니다.
-front.about.skill: 자신있습니다.
+
+front.about.skill: 경험한 스킬
+front.about.email: 이메일
+front.about.cert: <p><small>- 계명대학교 인문국제학대학 일본학 전공</small></br><small>- 정보처리기사</small><br><small>- TOEIC 723</small><br><small>- JLPT N1</small></p>
 front.about.introduction: 자기소개
+front.about.description: <p class="lead"><small>일본 후쿠오카 솔루션 회사 1년차 PHP 개발자</br></small></p>
+
+front.work.year: 경력
+front.work.year.cnt: 1
+front.work.project: 참여 프로젝트
+front.work.project.cnt: 3
+front.work.1: #
+front.work.2: #
+
+front.portfolio.title: 포트폴리오
+front.portfolio.subtitle: #
