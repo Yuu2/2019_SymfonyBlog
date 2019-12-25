@@ -3,12 +3,4 @@
 
 ![screenshot1](./screenshot/localhost.png) <br>
 
-#  Technical Factor
-```
-PHP7 / Symfony4
-MySQL 5.7
-GoogleCloudPlatform
-Docker
-```
-
 
