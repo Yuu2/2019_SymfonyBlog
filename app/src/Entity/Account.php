@@ -60,6 +60,11 @@ class Account implements UserInterface
      */
     private $profile;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Work", cascade={"persist", "remove"})
+     */
+    private $work;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -197,5 +202,17 @@ class Account implements UserInterface
     public function getSalt() {}
 
     public function eraseCredentials() {}
+
+    public function getWork(): ?Work
+    {
+        return $this->work;
+    }
+
+    public function setWork(?Work $work): self
+    {
+        $this->work = $work;
+
+        return $this;
+    }
 
 }

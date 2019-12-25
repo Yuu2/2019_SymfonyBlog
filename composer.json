@@ -1,5 +1,0 @@
-{
-    "require": {
-        "symfony/translation": "^4.4"
-    }
-}
