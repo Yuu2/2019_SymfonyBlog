@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Skill;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -61,14 +62,15 @@ class Account implements UserInterface
     private $profile;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Work", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="account")
      */
-    private $work;
+    private $skill;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->created_at = new \DateTime();
+        $this->skill = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,16 +205,34 @@ class Account implements UserInterface
 
     public function eraseCredentials() {}
 
-    public function getWork(): ?Work
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkill(): Collection
     {
-        return $this->work;
+        return $this->skill;
     }
 
-    public function setWork(?Work $work): self
+    public function addSkill(Skill $skill): self
     {
-        $this->work = $work;
+        if (!$this->skill->contains($skill)) {
+            $this->skill[] = $skill;
+            $skill->setAccount($this);
+        }
 
         return $this;
     }
 
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skill->contains($skill)) {
+            $this->skill->removeElement($skill);
+            // set the owning side to null (unless already changed)
+            if ($skill->getAccount() === $this) {
+                $skill->setAccount(null);
+            }
+        }
+
+        return $this;
+    }
 }
