@@ -38,7 +38,8 @@
                 </div>
                 <div class="skill-mf">
                   <p class="title-s">{{ 'front.about.skill'|trans }}</p>
-                  {% if Skills is not null %}
+                  {% if Skills is defined and 
+                        Skills is not null %}
                     {% for Skill in Skills %}
                       <span>{{ Skill.name }}</span> <span class="pull-right">{{ Skill.level }}</span>
                       <div class="progress">
@@ -66,7 +67,9 @@
     </div>
   </section>
   <!-- WORK -->
-  <div class="section-counter paralax-mf bg-image" style="background-image: url(img/counters-bg.jpg)">
+  {% if Work is defined and
+        Work is not null %}
+  <div class="section-counter paralax-mf bg-image">
     <div class="overlay-mf"></div>
     <div class="container">
       <div class="row">
@@ -76,7 +79,7 @@
               <span class="ico-circle"><i class="ion-ios-calendar-outline"></i></span>
             </div>
             <div class="counter-num">
-              <p class="counter">{{ 'front.work.year.cnt'|trans }}</p>
+              <p class="counter">{{ Work.join_year }}</p>
               <span class="counter-text">{{ 'front.work.year'|trans }}</span>
             </div>
           </div>
@@ -87,7 +90,7 @@
               <span class="ico-circle"><i class="ion-checkmark-round"></i></span>
             </div>
             <div class="counter-num">
-              <p class="counter">{{ 'front.work.project.cnt'|trans }}</p>
+              <p class="counter">{{ Work.join_project }}</p>
               <span class="counter-text">{{ 'front.work.project'|trans }}</span>
             </div>
           </div>
@@ -117,6 +120,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
   <!-- PORTFOLIO -->
   <section id="work" class="portfolio-mf sect-pt4 route">
     <div class="container">

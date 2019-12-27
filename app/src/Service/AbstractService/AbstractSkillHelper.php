@@ -22,10 +22,4 @@ abstract class AbstractSkillHelper {
   public function __construct(SkillRepository $skillRepository) {
     $this->skillRepository = $skillRepository;
   }
-
-  /** 
-   * @abstract
-   * @access public
-   */
-  abstract public function getList();
 }

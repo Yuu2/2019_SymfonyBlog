@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Service\TopSkillHelper;
+use App\Service\TopWorkHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,17 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TopController extends AbstractController {
 
-  /**
-   * 홈
-   * @access public
-   * 
-   * @Route({"ko": "/", "jp": "/"}, name="home", methods={"GET"})
-   * @Template("front/home.twig")
-   */
-  public function home(TopSkillHelper $topSkillHelper) {
-    
-    return array(
-      'Skills' => $topSkillHelper->getList()
-    );
+    /**
+     * 홈
+     * @access public
+     *
+     * @Route({"ko": "/", "jp": "/"}, name="home", methods={"GET"})
+     * @Template("front/home.twig")
+     * @param TopSkillHelper $topSkillHelper
+     * @return array
+     */
+  public function home(TopSkillHelper $skillHelper, TopWorkHelper $workHelper) {
+
+    return array();
   }
 }
