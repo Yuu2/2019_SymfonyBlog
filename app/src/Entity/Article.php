@@ -41,18 +41,6 @@ class Article
      */
     private $deleted_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Board", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $board;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Account", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $account;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -114,30 +102,6 @@ class Article
     public function setDeletedAt(?\DateTimeInterface $deleted_at): self
     {
         $this->deleted_at = $deleted_at;
-
-        return $this;
-    }
-
-    public function getBoard(): ?board
-    {
-        return $this->board;
-    }
-
-    public function setBoard(?board $board): self
-    {
-        $this->board = $board;
-
-        return $this;
-    }
-
-    public function getAccount(): ?account
-    {
-        return $this->account;
-    }
-
-    public function setAccount(?account $account): self
-    {
-        $this->account = $account;
 
         return $this;
     }

@@ -18,10 +18,6 @@ class ArticleType extends AbstractType {
   
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('board', EntityType::class, array(
-              'class' => Board::class,
-              'choice_label' => 'subject'
-            ))
             ->add('title', TextType::class, array(
               'attr'  => [ 'placeholder' => 'タイトルを入力してください (100文字)' ]
             ))

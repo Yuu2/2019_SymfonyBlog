@@ -1,42 +1,33 @@
 security:
     encoders:
-            App\Entity\Account:
-                algorithm: bcrypt
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+        App\Entity\User:
+            algorithm: bcrypt
+
     providers:
-        my_provider:
+        app_user_provider:
             entity:
-                class: App\Entity\Account
+                class: App\Entity\User
                 property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
-
             form_login:
-                login_path: sec_login
-                check_path: sec_login
-                username_parameter: email
-                password_parameter: password
-                provider: my_provider
-            guard:
-                authenticators:
-                    - App\Security\AccountAuthenticator
+                check_path: login
+                login_path: login
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: home
+                username_parameter: _email
             logout:
-                # 로그아웃 루트
                 path: sec_logout
-                # 로그아웃 리다이렉팅
                 target: home
+            remember_me: 
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
