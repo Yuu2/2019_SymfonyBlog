@@ -1,21 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-  <!-- INTRO -->
-  <div id="intro" class="intro route bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
-    <div class="overlay-itro"></div>
-    <div class="intro-content display-table">
-      <div class="table-cell">
-        <div class="container">
-          <h1 class="intro-title mb-4">{{ 'administrator.id'|trans }}</h1>
-          <p class="intro-subtitle">
-            <span class="text-slider-items">{{ 'front.intro.text'|trans }}</span>
-            <strong class="text-slider"></strong>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- ABOUT -->
   <section id="about" class="about-mf sect-pt4 route">
     <div class="container">
@@ -39,7 +24,7 @@
                 <div class="skill-mf">
                   <p class="title-s">{{ 'front.about.skill'|trans }}</p>
                   {% if Skills is defined and 
-                        Skills is not null %}
+                        Skills is not empty %}
                     {% for Skill in Skills %}
                       <span>{{ Skill.name }}</span> <span class="pull-right">{{ Skill.level }}</span>
                       <div class="progress">
@@ -47,6 +32,7 @@
                           aria-valuemax="100"></div>
                       </div>
                     {% endfor %}
+                    {{ dump(Skills) }}
                   {% else %}
                   {{ 'common.null'|trans|raw }}
                   {% endif %}
@@ -68,7 +54,7 @@
   </section>
   <!-- WORK -->
   {% if Work is defined and
-        Work is not null %}
+        Work is not empty %}
   <div class="section-counter paralax-mf bg-image">
     <div class="overlay-mf"></div>
     <div class="container">

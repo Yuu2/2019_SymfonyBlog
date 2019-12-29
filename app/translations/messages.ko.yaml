@@ -2,7 +2,13 @@ administrator.id: Yuu2
 administrator.email: myco8332v2@gmail.com
 administrator.github: https://github.com/Yuu2/portfolio-blog
 
-common.title: 포트폴리오 블로그
+common.title.home: 포트폴리오 블로그
+common.title.about: 소개
+common.title.portfolio: 포트폴리오
+common.title.blog: 블로그
+common.title.contact: 컨택트
+common.title.membership: 멤버 등록
+
 common.null: 데이터가 존재하지 않습니다.
 
 front.intro.text: 포트폴리오 블로그에 오신 것을 환영합니다.

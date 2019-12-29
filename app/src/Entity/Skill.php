@@ -31,6 +31,11 @@ class Skill
      */
     private $level;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Portfolio", inversedBy="skill")
+     */
+    private $portfolio;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -66,6 +71,18 @@ class Skill
     public function setLevel(?string $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getPortfolio(): ?Portfolio
+    {
+        return $this->portfolio;
+    }
+
+    public function setPortfolio(?Portfolio $portfolio): self
+    {
+        $this->portfolio = $portfolio;
 
         return $this;
     }
