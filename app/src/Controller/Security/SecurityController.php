@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Security;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
- * updated 2019.12.22
+ * updated 2019.12.30
  * @author Yuu2
  */
 class SecurityController extends AbstractController {
@@ -18,7 +18,7 @@ class SecurityController extends AbstractController {
      * 로그인
      * @access public
      * @Route("/login", name="sec_login", methods={"GET", "POST"})
-     * @Template("/front/login.twig")
+     * @Template("/security/login.twig")
      */
     public function login(AuthenticationUtils $authenticationUtils) {
 
@@ -39,5 +39,7 @@ class SecurityController extends AbstractController {
      * @access public
      * @Route("/logout", name="sec_logout", methods={"GET"})
      */
-    public function signout() {}
+    public function signout() {
+      
+    }
 }

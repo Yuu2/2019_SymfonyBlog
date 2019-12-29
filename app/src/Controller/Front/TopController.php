@@ -25,6 +25,9 @@ class TopController extends AbstractController {
      */
   public function home(TopSkillHelper $skillHelper, TopWorkHelper $workHelper) {
 
-    return array();
+    return array(
+      'Skills' => $skillHelper->all(),
+      'Work'   => $skillHelper->all()
+    );
   }
 }

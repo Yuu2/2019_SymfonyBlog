@@ -19,18 +19,23 @@ class Category
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=30)
      */
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Board", mappedBy="category")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subcategories")
      */
-    private $boards;
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
+     */
+    private $subcategories;
 
     public function __construct()
     {
-        $this->boards = new ArrayCollection();
+        $this->subcategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,31 +55,43 @@ class Category
         return $this;
     }
 
-    /**
-     * @return Collection|Board[]
-     */
-    public function getBoards(): Collection
+    public function getParent(): ?self
     {
-        return $this->boards;
+        return $this->parent;
     }
 
-    public function addBoard(Board $board): self
+    public function setParent(?self $parent): self
     {
-        if (!$this->boards->contains($board)) {
-            $this->boards[] = $board;
-            $board->setCategory($this);
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getSubcategories(): Collection
+    {
+        return $this->subcategories;
+    }
+
+    public function addSubcategory(self $subcategory): self
+    {
+        if (!$this->subcategories->contains($subcategory)) {
+            $this->subcategories[] = $subcategory;
+            $subcategory->setParent($this);
         }
 
         return $this;
     }
 
-    public function removeBoard(Board $board): self
+    public function removeSubcategory(self $subcategory): self
     {
-        if ($this->boards->contains($board)) {
-            $this->boards->removeElement($board);
+        if ($this->subcategories->contains($subcategory)) {
+            $this->subcategories->removeElement($subcategory);
             // set the owning side to null (unless already changed)
-            if ($board->getCategory() === $this) {
-                $board->setCategory(null);
+            if ($subcategory->getParent() === $this) {
+                $subcategory->setParent(null);
             }
         }
 
