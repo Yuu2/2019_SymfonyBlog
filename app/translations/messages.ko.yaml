@@ -6,8 +6,8 @@ common.title.home: 포트폴리오 블로그
 common.title.about: 소개
 common.title.portfolio: 포트폴리오
 common.title.blog: 블로그
-common.title.contact: 컨택트
-common.title.membership: 멤버 등록
+common.title.contact: 질문하기
+common.title.membership: 로그인
 
 common.null: 데이터가 존재하지 않습니다.
 

@@ -39,7 +39,7 @@ class SecurityController extends AbstractController {
      * @access public
      * @Route("/logout", name="sec_logout", methods={"GET"})
      */
-    public function signout() {
+    public function logout() {
       
     }
 }
