@@ -58,11 +58,15 @@ class SecurityController extends AbstractController {
   public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder): ?array {
 
     $user = new User;
+
     $form = $this->createForm(UserType::class, $user);
     $form->handleRequest($request);
 
     if($form->isSubmitted() && $form->isValid()) {
-      dd('Submitted!');
+      
+      $token = $request->request->get('_token');
+
+      // if($this->isCsrfTokenValid('user', $token)) {}
     }
 
     return array(
