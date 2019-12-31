@@ -43,6 +43,11 @@ class Portfolio
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="portfolio")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->skill = new ArrayCollection();
@@ -128,6 +133,18 @@ class Portfolio
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

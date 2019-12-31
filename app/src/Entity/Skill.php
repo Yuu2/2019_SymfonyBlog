@@ -36,6 +36,11 @@ class Skill
      */
     private $portfolio;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="skill")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -83,6 +88,18 @@ class Skill
     public function setPortfolio(?Portfolio $portfolio): self
     {
         $this->portfolio = $portfolio;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
