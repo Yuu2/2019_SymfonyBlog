@@ -64,11 +64,6 @@ class User implements UserInterface {
     private $updated_at;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Work", cascade={"persist", "remove"}, fetch="LAZY")
-     */
-    private $work;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="user", fetch="LAZY")
      */
     private $skill;
@@ -82,6 +77,11 @@ class User implements UserInterface {
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user", fetch="LAZY")
      */
     private $article;
+
+    /**
+     * @ORM\Embedded(class = "App\Entity\Work", columnPrefix = false) 
+     */
+    private $work;
 
     public function __construct()
     {
@@ -215,18 +215,6 @@ class User implements UserInterface {
         // $this->plainPassword = null;
     }
     
-    public function getWork(): ?Work
-    {
-        return $this->work;
-    }
-
-    public function setWork(?Work $work): self
-    {
-        $this->work = $work;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Skill[]
      */

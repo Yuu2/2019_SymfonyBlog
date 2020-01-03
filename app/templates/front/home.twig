@@ -34,7 +34,7 @@
                     {% endfor %}
                     {{ dump(Skills) }}
                   {% else %}
-                  {{ 'common.null'|trans|raw }}
+                  {{ 'common.message.null'|trans|raw }}
                   {% endif %}
                 </div>
               </div>
@@ -107,6 +107,8 @@
     </div>
   </div>
   {% endif %}
+  {% if Portfolio is defined and
+        Portfolio is not empty %}
   <!-- PORTFOLIO -->
   <section id="work" class="portfolio-mf sect-pt4 route">
     <div class="container">
@@ -147,4 +149,5 @@
       </div>
     </div>
   </section>
+  {% endif %}
 {% endblock %}

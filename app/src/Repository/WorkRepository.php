@@ -12,12 +12,39 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Work[]    findAll()
  * @method Work[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WorkRepository extends ServiceEntityRepository {
-
-    /**
-     * @access public
-     */
-    public function __construct(RegistryInterface $registry) {
+class WorkRepository extends ServiceEntityRepository
+{
+    public function __construct(RegistryInterface $registry)
+    {
         parent::__construct($registry, Work::class);
     }
+
+    // /**
+    //  * @return Work[] Returns an array of Work objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('w.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Work
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }
