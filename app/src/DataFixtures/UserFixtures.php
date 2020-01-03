@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * 테스트 계정 생성
  * 
- * updated 2019.12.31
+ * updated 2020.01.02
  * @author Yuu2
  */
 class UserFixtures extends Fixture {
@@ -59,6 +59,8 @@ class UserFixtures extends Fixture {
     );
 
     $admin ? $user->setRoles(['ROLE_ADMIN']) : $user->setRoles(['ROLE_USER']);
+
+    $user->setCreatedAt(new \DateTime);
 
     $manager->persist($user);
     $manager->flush();

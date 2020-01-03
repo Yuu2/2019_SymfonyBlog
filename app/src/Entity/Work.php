@@ -5,52 +5,35 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
+ * @ORM\Embeddable
  */
 class Work
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $join_year;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $join_project;
 
-    public function getId(): ?int
-    {
-        return $this->id;
+    public function getJoinYear(): ?\DateTimeInterface {
+      return $this->join_year;
     }
 
-    public function getJoinYear(): ?string
-    {
-        return $this->name;
+    public function setJoinYear(\DateTimeInterface $join_year): self {
+      $this->join_year = $join_year;
+      return $this;
     }
 
-    public function setJoinYear(int $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-    public function getJoinProject(): ?int
-    {
-        return $this->join_project;
+    public function getJoinProject(): ?\DateTimeInterface {
+      return $this->join_project;
     }
 
-    public function setJoinProejct(?int $join_project): self
-    {
-        $this->join_project = $join_project;
-
-        return $this;
+    public function setJoinProject(\DateTimeInterface $join_project): self {
+      $this->join_project = $join_project;
+      return $this;
     }
 }

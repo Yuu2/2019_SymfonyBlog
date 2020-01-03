@@ -1,8 +1,7 @@
 administrator.id: Yuu2
 administrator.email: myco8332v2@gmail.com
-administrator.github: https://github.com/Yuu2/portfolio-blog
 
-common.title: ポートフォリオブログ
+common.title.home: ポートフォリオブログ
 
 front.intro.text: 私のポートフォリオブログにようこそ
 
