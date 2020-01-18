@@ -29,6 +29,16 @@ class Article
     private $content;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbnail;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -52,11 +62,6 @@ class Article
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategory", mappedBy="article", orphanRemoval=true)
      */
     private $article_category;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $visible;
 
     public function __construct()
     {
@@ -125,18 +130,6 @@ class Article
     public function setDeletedAt(?\DateTimeInterface $deleted_at): self
     {
         $this->deleted_at = $deleted_at;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }
@@ -211,6 +204,18 @@ class Article
     public function setVisible(bool $visible): self
     {
         $this->visible = $visible;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }

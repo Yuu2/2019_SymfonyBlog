@@ -6,9 +6,9 @@ use App\Repository\PortfolioRepository;
 
 /**
  * @author Yuu2
- * updated 2020.01.18
+ * updated 2020.01.19
  */
-class PortfolioService extends AbstractService {
+class PortfolioService {
 
   /**
    * @var PortfolioRepository

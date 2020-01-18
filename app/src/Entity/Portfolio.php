@@ -42,7 +42,7 @@ class Portfolio
     /**
      * @ORM\Column(type="datetime")
      */
-    private $create_at;
+    private $created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -117,14 +117,14 @@ class Portfolio
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->create_at;
+        return $this->created_at;
     }
 
-    public function setCreateAt(\DateTimeInterface $create_at): self
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
-        $this->create_at = $create_at;
+        $this->created_at = $created_at;
 
         return $this;
     }
