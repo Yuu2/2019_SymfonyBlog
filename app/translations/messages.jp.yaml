@@ -1,19 +1,49 @@
+# 관리자정보
 administrator.id: Yuu2
 administrator.email: myco8332v2@gmail.com
 
+# 네비게이션
 common.title.home: ポートフォリオブログ
+common.title.about:　自己紹介
+common.title.portfolio: ポートフォリオ
+common.title.blog: ブログ
+common.title.contact: 問い合わせ
+common.title.membership: ログイン
 
-front.intro.text: 私のポートフォリオブログにようこそ
+# 공통
+common.message.null: データなし
 
-front.about.skill: 自身あるスキル
-front.about.email: メール
+# 보안
+security.login.title: ログイン
+security.login.email: メール
+security.login.password: パスワード
+security.login.remember: ログイン状態を維持
+security.login.submit: ログイン
+
+# 인트로
+front.intro.text: ポートフォリオブログにようこそ、おいでくださいました。
+
+# 홈 - 자기소개
+front.about.skill: 自信あるスキル
+front.about.email: メールアドレス
+front.about.cert: 
+  <p>
+    <small> - 啓明学大学 人文国際学部 日本学専門</small></br>
+    <small> - 情報処理騎士 (応用情報技術者）</small><br>
+    <small> - TOEIC 723 </small><br>
+    <small> - JLPT N1 </small>
+  </p>
 front.about.introduction: 自己紹介
-front.about.description: 福岡 ソリューション会社 バックエンドエンジニア\n 
+front.about.description: 
+  <p class="lead">
+    <small>
+      日本福岡所在のソリューション会社でPHP・JAVA エンジニアです。</br>
+    </small>
+  </p>
 
-front.work.year: #
-front.work.project: #
-front.work.1: #
-front.work.2: #
+# 메인 - 경력정보
+front.work.year: 経歴
+front.work.project: 参加プロジェクト
 
-front.portfolio.title: #
-front.portfolio.subtitle: #
+# Home - 포트폴리오
+front.portfolio.title: ポートフォリオ
