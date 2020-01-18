@@ -5,9 +5,13 @@ namespace App\Repository;
 use App\Entity\Article;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
+ * @author Yuu2
+ * updated 2020.01.19
+ *
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
  * @method Article|null findOneBy(array $criteria, array $orderBy = null)
  * @method Article[]    findAll()
@@ -17,29 +21,30 @@ class ArticleRepository extends ServiceEntityRepository {
 
   /**
    * @access public
+   * @param RegistryInterface $registry
+   * @param PaginatorInterface $paginatorInterface
    */
-  function __construct(RegistryInterface $registry) {
+  public function __construct(RegistryInterface $registry, PaginatorInterface $paginator) {
     parent::__construct($registry, Article::class);
+    $this->paginator = $paginator;
   }
-
+  
   /**
    * 게시글 일람 쿼리
    * @access public
-   * @param Integer $board
-   * @param Integer $page
+   * @param int $page
+   * @return Object
    */
-  function index($board, $page) {
-    return $this->createQueryBuilder('at')
-                ->select('at.id, at.title, at.content, at.created_at', 'ac.username', 'b.subject')
-                ->innerJoin('at.account', 'ac')
-                ->innerJoin('at.board', 'b')
-                ->where('at.board = :board')
-                ->setParameter('board', $board)
-                ->addOrderBy('at.id', 'DESC')
-                ->getQuery()
-                ->setFirstResult(($page * 10) - 10)
-                ->setMaxResults(10)
-                ->getResult();
+  public function paging(int $page): ?Object {
+
+    $query = $this->createQueryBuilder('a')
+      ->andWhere('a.visible = :visible')
+      ->setParameter('visible', true)
+      ->addOrderBy('a.id', 'DESC')
+      ->getQuery()
+      ->getResult();
+    ;
+    return $this->paginator->paginate($query, $page, 3);
   }
 
   /**
@@ -69,17 +74,5 @@ class ArticleRepository extends ServiceEntityRepository {
                 ->setParameter('id', $id)
                 ->getQuery()
                 ->getOneOrNullResult();
-  }
-  
-  /**
-   * @access public
-   * @todo 미완성
-   */
-  function findArticleTotal() {
-    return $this->createQueryBuilder('at')
-                ->select('count(at.id)')
-                ->getQuery()
-                ->getResult();
-
   }
 }

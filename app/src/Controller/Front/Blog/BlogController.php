@@ -3,6 +3,7 @@
 namespace App\Controller\Front\Blog;
 
 use App\Entity\Article;
+use App\Service\ArticleService;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @author Yuu2
+ * updated 2020.01.18
  */
 class BlogController extends AbstractController {
 
@@ -20,11 +22,18 @@ class BlogController extends AbstractController {
      * @Route("/blog", name="blog_index", methods={"GET"})
      * @Template("front/Blog/index.twig")
      * @access public
+     * @param ArticleService $articleService
+     * @return array
      */
-    public function index() {
+    public function index(Request $request, ArticleService $articleService): ?array {
       
-      return array();
+      $page = $request->get('page');
+
+      return array(
+        'Articles' => $articleService->all($page)
+      );
     }
+
     /**
      * 블로그 게시물 상세
      * @Route("/blog/{id}", name="blog_show", methods={"GET"})

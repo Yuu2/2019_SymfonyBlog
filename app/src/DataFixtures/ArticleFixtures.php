@@ -6,6 +6,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * @author Yuu2
+ * updated 2020.01.18
+ */
 class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterface {
 
   /**
@@ -17,7 +21,7 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
     $count = 50;
 
     for ($i = 1; $i <= $count; $i++) {
-      $this->createArticle($manager, $i, $i);
+      $this->createArticle($manager, $i, $i, "work-2.jpg");
     }
 
     $manager->flush();

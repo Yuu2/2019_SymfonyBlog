@@ -138,7 +138,7 @@
                       {{ PortfolioSkill.Skill.name }}
                       {% endfor %}
                       </span>/
-                      <span class="w-date">{{ Portfolio.createAt|date("Y.m.d") }}</span>
+                      <span class="w-date">{{ Portfolio.createdAt|date("Y.m.d.l") }}</span>
                     </div>
                   </div>
                   <div class="col-sm-4">

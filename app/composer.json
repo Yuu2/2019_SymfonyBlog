@@ -8,6 +8,7 @@
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "google/recaptcha": "^1.2",
         "kms/froala-editor-bundle": "dev-master",
+        "knplabs/knp-paginator-bundle": "^4.1",
         "sensio/framework-extra-bundle": "^5.3",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.3.*",

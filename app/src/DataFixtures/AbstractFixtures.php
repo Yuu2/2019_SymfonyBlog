@@ -94,7 +94,7 @@ abstract class AbstractFixtures extends Fixture {
     $portfolio->setSubtitle($subtitle);
     $portfolio->setUrl($url);
     $portfolio->setVisible($visible);
-    $portfolio->setCreateAt(new \DateTime);
+    $portfolio->setCreatedAt(new \DateTime);
     
     $manager->persist($portfolio);
 
@@ -121,14 +121,16 @@ abstract class AbstractFixtures extends Fixture {
    * @param ObjectManager $manager
    * @param string $title
    * @param string $content
+   * @param string thumbnail
    * @param bool $visible
    * @return Article $article
    */
-  protected function createArticle(ObjectManager $manager, ?string $title, ?string $content, bool $visible = true): ?Article{
+  protected function createArticle(ObjectManager $manager, string $title, string $content, string $thumbnail, bool $visible = true): ?Article{
     
     $article = new Article();
     $article->setTitle($title);
     $article->setContent($content);
+    $article->setThumbnail($thumbnail);
     $article->setVisible($visible);
     $article->setCreatedAt(new \DateTime);
 
