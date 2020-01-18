@@ -17,13 +17,13 @@ class ArticleTag
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", inversedBy="article_tag")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", inversedBy="article_tag", fetch="LAZY")
      * @ORM\JoinColumn(nullable=false)
      */
     private $tag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="article_tag")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="article_tag", fetch="LAZY")
      * @ORM\JoinColumn(nullable=false)
      */
     private $article;
