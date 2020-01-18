@@ -30,6 +30,16 @@ class Portfolio
     private $subtitle;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbnail;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $create_at;
@@ -45,9 +55,9 @@ class Portfolio
     private $portfolio_skill;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="boolean", options={"default": true})
      */
-    private $description;
+    private $visible = true;
 
     public function __construct()
     {
@@ -79,6 +89,30 @@ class Portfolio
     public function setSubtitle(string $subtitle): self
     {
         $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
@@ -138,14 +172,14 @@ class Portfolio
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getVisible(): ?bool
     {
-        return $this->description;
+        return $this->visible;
     }
 
-    public function setDescription(?string $description): self
+    public function setVisible(bool $visible): self
     {
-        $this->description = $description;
+        $this->visible = $visible;
 
         return $this;
     }

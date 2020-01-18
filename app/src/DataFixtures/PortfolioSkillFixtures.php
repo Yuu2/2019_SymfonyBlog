@@ -17,10 +17,17 @@ class PortfolioSkillFixtures extends Fixture {
 
   public function load(ObjectManager $manager) {
     
-    $this->createPortfolioSkill(
-      $manager,
-      $this->createPortfolio($manager, "JavaFx-Chat", "Window/Mac 어플리케이션"),
-      $this->createSkill($manager, 'Symfony', 70, "A")
+    $portfolio = $this->createPortfolio($manager, "JavaFx-Chat", "Window/Mac 어플리케이션", "https://github.com/Yuu2/javafx-chat");
+
+    $this->addPortfolioSkill(
+      $manager, 
+      $portfolio,
+      $this->createSkill($manager, 'Java', 70, "A")
+    );
+    $this->addPortfolioSkill(
+      $manager, 
+      $portfolio,
+      $this->createSkill($manager, 'MySQL', 50, "B", false)
     );
     
     $manager->flush();
@@ -32,15 +39,17 @@ class PortfolioSkillFixtures extends Fixture {
    * @param string $name
    * @param int $percentage
    * @param string $level
+   * @param bool $visible
    * @return Skill
    */
-  private function createSkill(ObjectManager $manager, string $name, int $percentage, string $level): Skill {
+  private function createSkill(ObjectManager $manager, string $name, int $percentage, string $level, bool $visible = true): Skill {
     
     $skill = new Skill();
 
     $skill->setName($name);
     $skill->setPercentage($percentage);
     $skill->setLevel($level);
+    $skill->setVisible($visible);
 
     $manager->persist($skill);
 
@@ -52,13 +61,17 @@ class PortfolioSkillFixtures extends Fixture {
    * @param ObjectManager $manager
    * @param string $title
    * @param string $subtitle
+   * @param string $url
+   * @param bool $visible
    * @return Portfolio
    */
-  private function createPortfolio(ObjectManager $manager, string $title, string $subtitle): Portfolio {
+  private function createPortfolio(ObjectManager $manager, string $title, string $subtitle, string $url, bool $visible = true): Portfolio {
     
     $portfolio = new Portfolio();
     $portfolio->setTitle($title);
     $portfolio->setSubtitle($subtitle);
+    $portfolio->setUrl($url);
+    $portfolio->setVisible($visible);
     $portfolio->setCreateAt(new \DateTime);
     
     $manager->persist($portfolio);
@@ -72,7 +85,7 @@ class PortfolioSkillFixtures extends Fixture {
    * @param Portfolio $portfolio
    * @param Skill $skill
    */
-  private function createPortfolioSkill(ObjectManager $manager, Portfolio $portfolio, Skill $skill) {
+  private function addPortfolioSkill(ObjectManager $manager, Portfolio $portfolio, Skill $skill) {
 
     $portfolio_skill = new PortfolioSkill();
     $portfolio_skill->setPortfolio($portfolio);

@@ -32,7 +32,6 @@
                           aria-valuemax="100"></div>
                       </div>
                     {% endfor %}
-                    {{ dump(Skills) }}
                   {% else %}
                   {{ 'common.message.null'|trans|raw }}
                   {% endif %}
@@ -52,7 +51,7 @@
       </div>
     </div>
   </section>
-  <!-- WORK -->
+  <!-- TODO: 슈퍼관리자 설정 후 데이터 취득 -->
   {% if Work is defined and
         Work is not empty %}
   <div class="section-counter paralax-mf bg-image">
@@ -107,8 +106,8 @@
     </div>
   </div>
   {% endif %}
-  {% if Portfolio is defined and
-        Portfolio is not empty %}
+  {% if Portfolios is defined and
+        Portfolios is not empty %}
   <!-- PORTFOLIO -->
   <section id="work" class="portfolio-mf sect-pt4 route">
     <div class="container">
@@ -123,17 +122,23 @@
       <div class="row">
         <div class="col-md-4">
           <div class="work-box">
-            <a href="#" data-lightbox="gallery-mf">
+            {% for Portfolio in Portfolios %}
+            <a href="{{ Portfolio.url }}" target="_blank">
               <div class="work-img">
                 <img src="{{ asset('style/img/work-1.jpg') }}" alt="" class="img-fluid">
               </div>
               <div class="work-content">
                 <div class="row">
                   <div class="col-sm-8">
-                    <h2 class="w-title">JavaFx-Chat</h2>
-                    <p>Window/Mac 채팅앱</p>
+                    <h2 class="w-title">{{ Portfolio.title }}</h2>
+                    <p>{{ Portfolio.subtitle }}</p>
                     <div class="w-more">
-                      <span class="w-ctegory">JAVA</span> / <span class="w-date">22 Nov. 2019</span>
+                      <span class="w-ctegory">
+                      {% for PortfolioSkill in Portfolio.PortfolioSkill %}
+                      {{ PortfolioSkill.Skill.name }}
+                      {% endfor %}
+                      </span>/
+                      <span class="w-date">{{ Portfolio.createAt|date("Y.m.d") }}</span>
                     </div>
                   </div>
                   <div class="col-sm-4">
@@ -144,6 +149,7 @@
                 </div>
               </div>
             </a>
+            {% endfor %}
           </div>
         </div>
       </div>
