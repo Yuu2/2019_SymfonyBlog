@@ -44,11 +44,6 @@ class Article
     private $deleted_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="article")
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="article")
      * @ORM\JoinColumn(nullable=false)
      */
