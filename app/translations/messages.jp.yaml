@@ -23,13 +23,13 @@ security.login.submit: ログイン
 # 인트로
 front.intro.text: ポートフォリオブログにようこそ、おいでくださいました。
 
-# 홈 - 자기소개
+# 홈 - 자기소개 / 경력
 front.about.skill: 自信あるスキル
 front.about.email: メールアドレス
-front.about.cert: 
+front.about.cert:
   <p>
-    <small> - 啓明学大学 人文国際学部 日本学専門</small></br>
-    <small> - 情報処理騎士 (応用情報技術者）</small><br>
+    <small> - 啓明学大学 人文国際学部 日本学専門 </small></br>
+    <small> - 情報処理騎士(応用情報技術者) </small><br>
     <small> - TOEIC 723 </small><br>
     <small> - JLPT N1 </small>
   </p>
@@ -37,13 +37,11 @@ front.about.introduction: 自己紹介
 front.about.description: 
   <p class="lead">
     <small>
-      日本福岡所在のソリューション会社でPHP・JAVA エンジニアです。</br>
+      日本福岡所在のソリューション会社 JAVA・PHP エンジニアです。</br>
     </small>
   </p>
-
-# 메인 - 경력정보
 front.work.year: 経歴
 front.work.project: 参加プロジェクト
 
-# Home - 포트폴리오
+# 홈 - 포트폴리오
 front.portfolio.title: ポートフォリオ

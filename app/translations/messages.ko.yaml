@@ -23,10 +23,10 @@ security.login.submit: 로그인
 # 인트로
 front.intro.text: 포트폴리오 블로그에 오신 것을 환영합니다.
 
-# 홈 - 자기소개
+# 홈 - 자기소개 / 경력
 front.about.skill: 경험한 스킬
 front.about.email: 이메일
-front.about.cert: 
+front.about.cert:
   <p>
     <small> - 계명대학교 인문국제학대학 일본학 전공 </small></br>
     <small> - 정보처리기사 </small><br>
@@ -37,15 +37,11 @@ front.about.introduction: 자기소개
 front.about.description: 
   <p class="lead">
     <small>
-      일본 후쿠오카 솔루션 회사 1년차 PHP 개발자</br>
+      일본 후쿠오카 솔루션 회사 JAVA・PHP 개발자</br>
     </small>
   </p>
-
-# 홈 - 경력정보
 front.work.year: 경력
-front.work.year.cnt: 1
 front.work.project: 참여 프로젝트
-front.work.project.cnt: 4
 
 # 홈 - 포트폴리오
 front.portfolio.title: 포트폴리오
