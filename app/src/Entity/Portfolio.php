@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PortfolioRepository")
@@ -24,14 +25,9 @@ class Portfolio
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $subtitle;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="portfolio")
-     */
-    private $skill;
 
     /**
      * @ORM\Column(type="datetime")
@@ -44,13 +40,13 @@ class Portfolio
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="portfolio")
+     * @ORM\OneToMany(targetEntity="App\Entity\PortfolioSkill", mappedBy="portfolio", orphanRemoval=true)
      */
-    private $user;
+    private $portfolio_skill;
 
     public function __construct()
     {
-        $this->skill = new ArrayCollection();
+        $this->portfolio_skill = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,37 +78,6 @@ class Portfolio
         return $this;
     }
 
-    /**
-     * @return Collection|Skill[]
-     */
-    public function getSkill(): Collection
-    {
-        return $this->skill;
-    }
-
-    public function addSkill(Skill $skill): self
-    {
-        if (!$this->skill->contains($skill)) {
-            $this->skill[] = $skill;
-            $skill->setPortfolio($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skill $skill): self
-    {
-        if ($this->skill->contains($skill)) {
-            $this->skill->removeElement($skill);
-            // set the owning side to null (unless already changed)
-            if ($skill->getPortfolio() === $this) {
-                $skill->setPortfolio(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->create_at;
@@ -137,14 +102,33 @@ class Portfolio
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection|PortfolioSkill[]
+     */
+    public function getPortfolioSkill(): Collection
     {
-        return $this->user;
+        return $this->portfolio_skill;
     }
 
-    public function setUser(?User $user): self
+    public function addPortfolioSkill(PortfolioSkill $portfolioSkill): self
     {
-        $this->user = $user;
+        if (!$this->portfolio_skill->contains($portfolioSkill)) {
+            $this->portfolio_skill[] = $portfolioSkill;
+            $portfolioSkill->setPortfolio($this);
+        }
+
+        return $this;
+    }
+
+    public function removePortfolioSkill(PortfolioSkill $portfolioSkill): self
+    {
+        if ($this->portfolio_skill->contains($portfolioSkill)) {
+            $this->portfolio_skill->removeElement($portfolioSkill);
+            // set the owning side to null (unless already changed)
+            if ($portfolioSkill->getPortfolio() === $this) {
+                $portfolioSkill->setPortfolio(null);
+            }
+        }
 
         return $this;
     }

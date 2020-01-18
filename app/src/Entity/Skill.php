@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,7 +19,7 @@ class Skill
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=20)
      */
     private $name;
 
@@ -32,14 +34,14 @@ class Skill
     private $level;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Portfolio", inversedBy="skill")
+     * @ORM\OneToMany(targetEntity="App\Entity\PortfolioSkill", mappedBy="skill", orphanRemoval=true)
      */
-    private $portfolio;
+    private $portfolio_skill;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="skill")
-     */
-    private $user;
+    public function __construct()
+    {
+        $this->portfolio_skill = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -92,14 +94,33 @@ class Skill
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection|PortfolioSkill[]
+     */
+    public function getPortfolioSkill(): Collection
     {
-        return $this->user;
+        return $this->portfolio_skill;
     }
 
-    public function setUser(?User $user): self
+    public function addPortfolioSkill(PortfolioSkill $portfolioSkill): self
     {
-        $this->user = $user;
+        if (!$this->portfolio_skill->contains($portfolioSkill)) {
+            $this->portfolio_skill[] = $portfolioSkill;
+            $portfolioSkill->setSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removePortfolioSkill(PortfolioSkill $portfolioSkill): self
+    {
+        if ($this->portfolio_skill->contains($portfolioSkill)) {
+            $this->portfolio_skill->removeElement($portfolioSkill);
+            // set the owning side to null (unless already changed)
+            if ($portfolioSkill->getSkill() === $this) {
+                $portfolioSkill->setSkill(null);
+            }
+        }
 
         return $this;
     }

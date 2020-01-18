@@ -10,9 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * updated 2020.01.01
  * @author Yuu2
- * 
+ * updated 2020.01.18
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email")
  */
@@ -30,11 +29,6 @@ class User implements UserInterface {
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
-    
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
-    private $name;
 
     /**
      * @ORM\Column(type="json")
@@ -47,12 +41,7 @@ class User implements UserInterface {
      * @ORM\Column(type="string")
      */
     private $password;
-    
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $thumbnail;
-
+  
     /**
      * @ORM\Column(type="datetime")
      */
@@ -62,11 +51,6 @@ class User implements UserInterface {
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="user", fetch="LAZY")
-     */
-    private $skill;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Portfolio", mappedBy="user", fetch="LAZY")
@@ -83,12 +67,10 @@ class User implements UserInterface {
      */
     private $work;
 
-    public function __construct()
-    {
-        $this->skill = new ArrayCollection();
-        $this->portfolio = new ArrayCollection();
-        $this->article = new ArrayCollection();
-    }
+    /**
+     * @ORM\Embedded(class = "App\Entity\Profile", columnPrefix = false)
+     */
+    private $profile;
 
     public function getId(): ?int
     {
@@ -151,30 +133,6 @@ class User implements UserInterface {
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getThumbnail(): ?string
-    {
-        return $this->thumbnail;
-    }
-
-    public function setThumbnail(?string $thumbnail): self
-    {
-        $this->thumbnail = $thumbnail;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -214,97 +172,14 @@ class User implements UserInterface {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-    
-    /**
-     * @return Collection|Skill[]
-     */
-    public function getSkill(): Collection
+
+    public function getProfile() 
     {
-        return $this->skill;
+      return $this->profile;
     }
 
-    public function addSkill(Skill $skill): self
-    {
-        if (!$this->skill->contains($skill)) {
-            $this->skill[] = $skill;
-            $skill->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skill $skill): self
-    {
-        if ($this->skill->contains($skill)) {
-            $this->skill->removeElement($skill);
-            // set the owning side to null (unless already changed)
-            if ($skill->getUser() === $this) {
-                $skill->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Portfolio[]
-     */
-    public function getPortfolio(): Collection
-    {
-        return $this->portfolio;
-    }
-
-    public function addPortfolio(Portfolio $portfolio): self
-    {
-        if (!$this->portfolio->contains($portfolio)) {
-            $this->portfolio[] = $portfolio;
-            $portfolio->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removePortfolio(Portfolio $portfolio): self
-    {
-        if ($this->portfolio->contains($portfolio)) {
-            $this->portfolio->removeElement($portfolio);
-            // set the owning side to null (unless already changed)
-            if ($portfolio->getUser() === $this) {
-                $portfolio->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticle(): Collection
-    {
-        return $this->article;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->article->contains($article)) {
-            $this->article[] = $article;
-            $article->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->article->contains($article)) {
-            $this->article->removeElement($article);
-            // set the owning side to null (unless already changed)
-            if ($article->getUser() === $this) {
-                $article->setUser(null);
-            }
-        }
-
-        return $this;
+    public function setProfile(Profile $profile): self {
+      $this->profile = $profile;
+      return $this;
     }
 }
