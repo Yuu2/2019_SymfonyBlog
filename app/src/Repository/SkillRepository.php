@@ -7,6 +7,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
+ *
+ * @author Yuu2
+ * updated 2020.01.18
+ * 
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
  * @method Skill|null findOneBy(array $criteria, array $orderBy = null)
  * @method Skill[]    findAll()
@@ -16,22 +20,22 @@ class SkillRepository extends ServiceEntityRepository {
 
     /**
      * @access public
+     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry) {
-        parent::__construct($registry, Skill::class);
+      parent::__construct($registry, Skill::class);
     }
 
-    
-    
-    /*
-    public function findOneBySomeField($value): ?Skill
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    /**
+     * @access public
+     * @return array
+     */
+    public function findAll(): ?array {
+      return $this->createQueryBuilder('s')
+        ->andWhere('s.visible = :visible')
+        ->setParameter('visible', true)
+        ->getQuery()
+        ->getResult()
+      ;
     }
-    */
 }

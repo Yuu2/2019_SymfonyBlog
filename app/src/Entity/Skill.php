@@ -38,6 +38,11 @@ class Skill
      */
     private $portfolio_skill;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     */
+    private $visible = true;
+
     public function __construct()
     {
         $this->portfolio_skill = new ArrayCollection();
@@ -121,6 +126,18 @@ class Skill
                 $portfolioSkill->setSkill(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
 
         return $this;
     }
