@@ -17,7 +17,7 @@ class BlogController extends AbstractController {
 
     /**
      * 블로그 게시물 일람
-     * @Route("/blog", name="blog_index")
+     * @Route("/blog", name="blog_index", methods={"GET"})
      * @Template("front/Blog/index.twig")
      * @access public
      */
@@ -27,7 +27,7 @@ class BlogController extends AbstractController {
     }
     /**
      * 블로그 게시물 상세
-     * @Route("/blog/{id}", name="blog_show")
+     * @Route("/blog/{id}", name="blog_show", methods={"GET"})
      * @Template("front/Blog/index.twig")
      * @access public
      * @param Article $article
@@ -39,7 +39,7 @@ class BlogController extends AbstractController {
 
     /**
      * 블로그 게시물 작성
-     * @Route("/blog/new", name="blog_new")
+     * @Route("/blog/new", name="blog_new", methods={"GET"})
      * @Template("front/blog/new.twig")
      * @access public
      */
@@ -50,7 +50,7 @@ class BlogController extends AbstractController {
 
     /**
      * 블로그 게시물 수정
-     * @Route("/blog/edit/{article}", name="blog_edit")
+     * @Route("/blog/edit/{article}", name="blog_edit", methods={"GET"})
      * @Template("front/blog/edit.twig")
      * @access public
      * @param Article $article

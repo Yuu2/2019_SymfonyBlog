@@ -17,13 +17,13 @@ class PortfolioSkill
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Portfolio", inversedBy="portfolio_skill")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Portfolio", inversedBy="portfolio_skill", fetch="LAZY")
      * @ORM\JoinColumn(nullable=false)
      */
     private $portfolio;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Skill", inversedBy="portfolio_skill")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Skill", inversedBy="portfolio_skill", fetch="LAZY")
      * @ORM\JoinColumn(nullable=false)
      */
     private $skill;

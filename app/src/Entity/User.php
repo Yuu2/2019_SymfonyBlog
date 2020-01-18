@@ -53,16 +53,6 @@ class User implements UserInterface {
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Portfolio", mappedBy="user", fetch="LAZY")
-     */
-    private $portfolio;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user", fetch="LAZY")
-     */
-    private $article;
-
-    /**
      * @ORM\Embedded(class = "App\Entity\Work", columnPrefix = false) 
      */
     private $work;
@@ -75,11 +65,6 @@ class User implements UserInterface {
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
     }
 
     public function setEmail(string $email): self
