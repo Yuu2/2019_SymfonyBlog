@@ -18,7 +18,7 @@ class HomeController extends AbstractController {
    * 홈
    * @access public
    *
-   * @Route({"ko": "/", "jp": "/"}, name="home", methods={"GET"})
+   * @Route("/", name="home", methods={"GET"})
    * @Template("front/home.twig")
    * @param SkillService $skillService
    * @param PortfolioService $portfolioService
