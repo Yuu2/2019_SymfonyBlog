@@ -34,14 +34,14 @@ class Category
     private $subcategories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategory", mappedBy="category", orphanRemoval=true)
      */
-    private $article;
+    private $article_category;
 
     public function __construct()
     {
         $this->subcategories = new ArrayCollection();
-        $this->article = new ArrayCollection();
+        $this->article_category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,30 +105,30 @@ class Category
     }
 
     /**
-     * @return Collection|Article[]
+     * @return Collection|ArticleCategory[]
      */
-    public function getArticle(): Collection
+    public function getArticleCategory(): Collection
     {
-        return $this->article;
+        return $this->article_category;
     }
 
-    public function addArticle(Article $article): self
+    public function addArticleCategory(ArticleCategory $articleCategory): self
     {
-        if (!$this->article->contains($article)) {
-            $this->article[] = $article;
-            $article->setCategory($this);
+        if (!$this->article_category->contains($articleCategory)) {
+            $this->article_category[] = $articleCategory;
+            $articleCategory->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeArticleCategory(ArticleCategory $articleCategory): self
     {
-        if ($this->article->contains($article)) {
-            $this->article->removeElement($article);
+        if ($this->article_category->contains($articleCategory)) {
+            $this->article_category->removeElement($articleCategory);
             // set the owning side to null (unless already changed)
-            if ($article->getCategory() === $this) {
-                $article->setCategory(null);
+            if ($articleCategory->getCategory() === $this) {
+                $articleCategory->setCategory(null);
             }
         }
 

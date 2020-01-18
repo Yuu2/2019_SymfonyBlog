@@ -44,19 +44,24 @@ class Article
     private $deleted_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="article")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleTag", mappedBy="article", orphanRemoval=true)
      */
     private $article_tag;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategory", mappedBy="article", orphanRemoval=true)
+     */
+    private $article_category;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
     public function __construct()
     {
         $this->article_tag = new ArrayCollection();
+        $this->article_category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,18 +141,6 @@ class Article
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     /**
      * @return Collection|ArticleTag[]
      */
@@ -175,6 +168,49 @@ class Article
                 $articleTag->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleCategory[]
+     */
+    public function getArticleCategory(): Collection
+    {
+        return $this->article_category;
+    }
+
+    public function addArticleCategory(ArticleCategory $articleCategory): self
+    {
+        if (!$this->article_category->contains($articleCategory)) {
+            $this->article_category[] = $articleCategory;
+            $articleCategory->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleCategory(ArticleCategory $articleCategory): self
+    {
+        if ($this->article_category->contains($articleCategory)) {
+            $this->article_category->removeElement($articleCategory);
+            // set the owning side to null (unless already changed)
+            if ($articleCategory->getArticle() === $this) {
+                $articleCategory->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
 
         return $this;
     }
