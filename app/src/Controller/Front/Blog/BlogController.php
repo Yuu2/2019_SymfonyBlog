@@ -4,6 +4,7 @@ namespace App\Controller\Front\Blog;
 
 use App\Entity\Article;
 use App\Service\BlogService;
+use App\Util\CategoryTree;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,11 +24,13 @@ class BlogController extends AbstractController {
    * @Route("/blog", name="blog_index", methods={"GET"})
    * @Template("front/Blog/index.twig")
    * @access public
+   * @param Request $request
    * @param BlogService $blogService
+   * @param CategoryTree $categoryTree
    * @return array
    */
-  public function index(Request $request, BlogService $blogService): ?array {
-    
+  public function index(Request $request, BlogService $blogService, CategoryTree $categoryTree): ?array {
+
     $params = array(
       'page' => $request->get('page'),
       'search' => $request->get('search'),

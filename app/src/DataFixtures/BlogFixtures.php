@@ -25,6 +25,7 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
     
     $this->createTags($manager, 20);
     $this->createArticles($manager, 50);
+    $this->createCategories($manager, 10);
 
     $manager->flush();
   }
@@ -39,7 +40,7 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
       );
   }
 
-   /**
+  /**
    * @access protected
    * @param ObjectManager $manager
    * @param int $count
@@ -48,6 +49,17 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
   protected function createArticles(ObjectManager $manager, int $count) {
     for ($i = 1; $i <= $count; $i++) {
       $this->createArticle($manager, $i, $i, "work-1.jpg");
+    }
+  }
+  /**
+   * @access protected
+   * @param ObjectManager $manager
+   * @param int $count
+   * @return void
+   */
+  protected function createCategories(ObjectManager $manager, int $count) {
+    for ($i = 1; $i <= $count; $i++) {
+      $this->createCategory($manager, $i);
     }
   }
 
@@ -69,7 +81,7 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
    * @param Article $article
    * @param Tag $tag
    */
-  protected function addArticleTag(ObjectManager $manager, Article $article, Tag $tag) {
+  protected function createArticleTag(ObjectManager $manager, Article $article, Tag $tag) {
 
     $article_tag = new ArticleTag();
     $article_tag->setArticle($article);
