@@ -23,7 +23,7 @@ security.login.submit: 로그인
 # 인트로
 front.intro.text: 포트폴리오 블로그에 오신 것을 환영합니다.
 
-# 홈 - 자기소개 / 경력
+# 자기소개 / 경력
 front.about.skill: 경험한 스킬
 front.about.email: 이메일
 front.about.cert:
@@ -43,5 +43,8 @@ front.about.description:
 front.work.year: 경력
 front.work.project: 참여 프로젝트
 
-# 홈 - 포트폴리오
+# 포트폴리오
 front.portfolio.title: 포트폴리오
+
+# 블로그
+front.blog.tag.title: 태그

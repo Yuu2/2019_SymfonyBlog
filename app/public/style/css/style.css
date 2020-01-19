@@ -916,7 +916,7 @@ a:hover {
 .widget-sidebar {
   padding: 2rem;
   background-color: #fff;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .blog-wrapper .article-title {
@@ -1032,14 +1032,7 @@ a:hover {
 
 .widget-tags ul li {
   display: inline-block;
-  background-color: #0078ff;
-  padding: .2rem .6rem;
   margin-bottom: .5rem;
-  border-radius: 15px;
-}
-
-.widget-tags ul li a {
-  color: #fff;
 }
 
 /*======================================
