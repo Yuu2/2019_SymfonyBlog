@@ -92,24 +92,14 @@
             </div>
           </div>
           <div class="widget-sidebar">
-            <h5 class="sidebar-title">Recent Post</h5>
+            <h5 class="sidebar-title">{{ 'front.blog.recently.title'|trans }}</h5>
             <div class="sidebar-content">
               <ul class="list-sidebar">
-                <li>
-                  <a href="#">Atque placeat maiores.</a>
-                </li>
-                <li>
-                  <a href="#">Lorem ipsum dolor sit amet consectetur</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
-                <li>
-                  <a href="#">Atque placeat maiores nam quo autem</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
+                {% if RecentArticles is not empty %}
+                {% for RecentArticle in RecentArticles %}
+                  <li><a href="{{ path('blog_show', {'id': RecentArticle.id} )}}">{{ RecentArticle.title }} <small>{{ RecentArticle.createdAt|date('l, Y/m/d')}}</small></a></li>
+                {% endfor %}
+                {% endif %}
               </ul>
             </div>
           </div>

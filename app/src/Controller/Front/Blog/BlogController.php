@@ -36,6 +36,7 @@ class BlogController extends AbstractController {
     
     return array(
       'Articles' => $blogService->articles($params),
+      'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->tags()
     );
   }

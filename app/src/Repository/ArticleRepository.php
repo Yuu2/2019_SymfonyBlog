@@ -75,6 +75,21 @@ class ArticleRepository extends ServiceEntityRepository {
 
     return $this->paginator->paginate($query, $page, 3);
   }
+  /**
+   * 최근 작성한 게시물
+   * @access public
+   * @param int $count
+   * @return array
+   */
+  public function recent(int $count): ?array {
+    return $this->createQueryBuilder('a')
+    ->addOrderBy('a.updated_at', 'DESC')
+    ->addOrderBy('a.created_at', 'DESC')
+    ->addOrderBy('a.id', 'DESC')
+    ->getQuery()
+    ->setMaxResults($count)
+    ->getResult();
+  }
 
   /**
    * 검색 문자열 처리
