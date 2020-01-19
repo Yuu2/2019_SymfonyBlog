@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\Tag;
 use App\Entity\Skill;
 use App\Entity\Article;
 use App\Entity\Portfolio;
@@ -137,6 +138,21 @@ abstract class AbstractFixtures extends Fixture {
     $manager->persist($article);
 
     return $article;
+  }
+
+  /**
+   * @access protected
+   * @param ObjectManager $manager
+   * @param string $name
+   * @return Tag
+   */
+  protected function createTag(ObjectManager $manager, string $name): ?Tag {
+    
+    $tag = new Tag();
+    $tag->setName($name);
+    $manager->persist($tag);
+
+    return $tag;
   }
 }
 

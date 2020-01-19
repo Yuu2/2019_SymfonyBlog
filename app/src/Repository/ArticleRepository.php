@@ -32,34 +32,27 @@ class ArticleRepository extends ServiceEntityRepository {
   /**
    * 게시글 일람 쿼리
    * @access public
-   * @param int $page
+   * @param array $query
    * @return Object
    */
-  public function paging(int $page): ?Object {
+  public function paging(array $query): ?Object {
 
-    $query = $this->createQueryBuilder('a')
-      ->andWhere('a.visible = :visible')
+    $page = $query['page'];
+    $page = is_numeric($page) || !is_null($page) ? $page : 1;
+    
+    $tag = $query['tag'];
+
+    $items = $this->createQueryBuilder('a')
+      ->where('a.visible = :visible')
       ->setParameter('visible', true)
-      ->addOrderBy('a.id', 'DESC')
+      ->orderBy('a.id', 'DESC')
       ->getQuery()
       ->getResult();
     ;
-    return $this->paginator->paginate($query, $page, 3);
+    return $this->paginator->paginate($items, $page, 3);
   }
 
-  /**
-   * 게시글 카운트 쿼리
-   * @access public
-   * @param Integer $board
-   */
-  function total($board) {
-    return $this->createQueryBuilder('at')
-                ->select('count(at.id) as total')
-                ->where('at.board = :board')
-                ->setParameter('board', $board)
-                ->getQuery()
-                ->getOneOrNullResult();
-  }
+
 
   /**
    * 게시글 상세 쿼리
