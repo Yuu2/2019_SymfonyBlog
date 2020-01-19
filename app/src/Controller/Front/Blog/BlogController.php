@@ -28,14 +28,14 @@ class BlogController extends AbstractController {
    */
   public function index(Request $request, BlogService $blogService): ?array {
     
-    $query = array(
+    $params = array(
       'page' => $request->get('page'),
       'search' => $request->get('search'),
       'tag' => $request->get('tag'),
     );
     
     return array(
-      'Articles' => $blogService->articles($query),
+      'Articles' => $blogService->articles($params),
       'Tags' => $blogService->tags()
     );
   }

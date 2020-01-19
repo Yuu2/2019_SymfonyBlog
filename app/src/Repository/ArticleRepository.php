@@ -35,37 +35,57 @@ class ArticleRepository extends ServiceEntityRepository {
    * @param array $query
    * @return Object
    */
-  public function paging(array $query): ?Object {
+  public function paging(array $params): ?Object {
 
-    $page = $query['page'];
+    $page = $params['page'];
     $page = is_numeric($page) || !is_null($page) ? $page : 1;
     
-    $tag = $query['tag'];
+    $tag = $params['tag'];
+    $search = $params['search'];
 
-    $items = $this->createQueryBuilder('a')
-      ->where('a.visible = :visible')
+    $query = $this->createQueryBuilder('a');
+    
+    switch(true) {
+      // 검색
+      case $search:
+        foreach($this->prepareQuery($search) as $key => $term) {
+          $query
+          ->orWhere('a.title LIKE :title_' . $key)
+          ->orWhere('a.title LIKE :content_' . $key)
+          ->setParameter('title_' . $key, '%' . trim($term) . '%')
+          ->setParameter('content_' . $key, '%' . trim($term) . '%');
+        }
+      break;
+      // 태그
+      case $tag:
+        $query
+          ->innerJoin('a.article_tag', 'at')
+          ->innerJoin('at.tag', 't')
+          ->where('t.name = :tagname')
+          ->setParameter('tagname', $tag);
+      break;
+    }
+
+    $query
+      ->andWhere('a.visible = :visible')
       ->setParameter('visible', true)
       ->orderBy('a.id', 'DESC')
       ->getQuery()
-      ->getResult();
     ;
-    return $this->paginator->paginate($items, $page, 3);
+
+    return $this->paginator->paginate($query, $page, 3);
   }
 
-
-
   /**
-   * 게시글 상세 쿼리
-   * @access public
+   * 검색 문자열 처리
+   * @access private
+   * @param string $search
+   * @return array
    */
-  function show($id) {
-    return $this->createQueryBuilder('at')
-                ->select('at.id, at.title, at.content, at.created_at', 'ac.username', 'b.subject')
-                ->innerJoin('at.account', 'ac')
-                ->innerJoin('at.board', 'b')
-                ->where('at.id = :id')
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getOneOrNullResult();
+  private function prepareQuery(string $search): array {
+    $terms = array_unique(explode(' ', $search));
+    return array_filter($terms, function($term) {
+      return 2 <= mb_strlen($term);
+    }); 
   }
 }
