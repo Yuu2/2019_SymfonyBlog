@@ -2,6 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Article;
+use App\Entity\Tag;
+use App\Entity\ArticleTag;
+
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -36,26 +40,41 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
   }
 
    /**
-   * @access private
+   * @access protected
    * @param ObjectManager $manager
    * @param int $count
    * @return void
    */
-  private function createArticles(ObjectManager $manager, int $count) {
+  protected function createArticles(ObjectManager $manager, int $count) {
     for ($i = 1; $i <= $count; $i++) {
       $this->createArticle($manager, $i, $i, "work-1.jpg");
     }
   }
 
   /**
-   * @access private
+   * @access protected
    * @param ObjectManager $manager
    * @param int $count
    * @return void
    */
-  private function createTags(ObjectManager $manager, int $count) {
+  protected function createTags(ObjectManager $manager, int $count) {
     for ($i = 1; $i <= $count; $i++) {
       $this->createTag($manager, $i);
     }
+  }
+
+  /**
+   * @access protected
+   * @param ObjectManager $manager
+   * @param Article $article
+   * @param Tag $tag
+   */
+  protected function addArticleTag(ObjectManager $manager, Article $article, Tag $tag) {
+
+    $article_tag = new ArticleTag();
+    $article_tag->setArticle($article);
+    $article_tag->setSkill($tag);
+
+    $manager->persist($article_tag);
   }
 }

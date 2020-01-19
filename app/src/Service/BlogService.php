@@ -31,12 +31,12 @@ class BlogService {
 
   /**
    * @access public
-   * @param array $query
+   * @param array $params
    * @return Object
    */
-  public function articles(array $query): ?Object {
+  public function articles(array $params): ?Object {
 
-    return $this->articleRepository->paging($query);
+    return $this->articleRepository->paging($params);
   }
 
   /**

@@ -77,13 +77,13 @@
         <!-- 검색 -->
         <div class="col-md-4">
           <div class="widget-sidebar sidebar-search">
-            <h5 class="sidebar-title">Search</h5>
+            <h5 class="sidebar-title">{{ 'front.blog.search.title'|trans }}</h5>
             <div class="sidebar-content">
-              <form>
+              <form method="GET" action="{{ path('blog_index') }}">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+                  <input type="text" name="search" class="form-control" placeholder="{{ 'front.blog.search.placeholder'|trans }}">
                   <span class="input-group-btn">
-                    <button class="btn btn-secondary btn-search" type="button">
+                    <button class="btn btn-secondary btn-search" type="submit">
                       <span class="ion-android-search"></span>
                     </button>
                   </span>
@@ -142,7 +142,7 @@
                 {% for Tag in Tags %}
                 <li>
                   <form method="GET" action="{{ path('blog_index') }}">
-                    <input type="hidden" name="search" value="{{ Tag.name }}" />
+                    <input type="hidden" name="tag" value="{{ Tag.name }}" />
                     <button class="btn btn-outline-primary btn-sm" type="submit">{{ Tag.name }}</button>
                   </form>
                 </li>

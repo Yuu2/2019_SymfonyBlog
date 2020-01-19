@@ -7,7 +7,6 @@ use App\Entity\Tag;
 use App\Entity\Skill;
 use App\Entity\Article;
 use App\Entity\Portfolio;
-use App\Entity\PortfolioSkill;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -100,21 +99,6 @@ abstract class AbstractFixtures extends Fixture {
     $manager->persist($portfolio);
 
     return $portfolio;
-  }
-
-  /**
-   * @access protected
-   * @param ObjectManager $manager
-   * @param Portfolio $portfolio
-   * @param Skill $skill
-   */
-  protected function addPortfolioSkill(ObjectManager $manager, Portfolio $portfolio, Skill $skill) {
-
-    $portfolio_skill = new PortfolioSkill();
-    $portfolio_skill->setPortfolio($portfolio);
-    $portfolio_skill->setSkill($skill);
-
-    $manager->persist($portfolio_skill);
   }
 
   /**
