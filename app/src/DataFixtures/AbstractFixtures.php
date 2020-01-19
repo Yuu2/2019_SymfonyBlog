@@ -2,11 +2,12 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
-use App\Entity\Tag;
-use App\Entity\Skill;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\Portfolio;
+use App\Entity\Skill;
+use App\Entity\Tag;
+use App\Entity\User;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -137,6 +138,23 @@ abstract class AbstractFixtures extends Fixture {
     $manager->persist($tag);
 
     return $tag;
+  }
+
+  /**
+   * @access protected
+   * @param ObjectManager $manager
+   * @param string $title
+   * @param int $parent_id
+   * @return Category
+   */
+  protected function createCategory(ObjectManager $manager, string $title, int $parent_id = null): ?Category {
+    
+    $category = new Category();
+    $category->setTitle($title);
+    $category->setParent($parent_id);
+    $manager->persist($category);
+
+    return $category;
   }
 }
 

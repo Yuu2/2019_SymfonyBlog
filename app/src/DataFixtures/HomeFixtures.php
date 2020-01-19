@@ -18,12 +18,12 @@ class HomeFixtures extends AbstractFixtures {
     
     $portfolio = $this->createPortfolio($manager, "JavaFx-Chat", "Window/Mac 어플리케이션", "https://github.com/Yuu2/javafx-chat");
 
-    $this->addPortfolioSkill(
+    $this->createPortfolioSkill(
       $manager, 
       $portfolio,
       $this->createSkill($manager, 'Java', 70, "A")
     );
-    $this->addPortfolioSkill(
+    $this->createPortfolioSkill(
       $manager, 
       $portfolio,
       $this->createSkill($manager, 'MySQL', 50, "B", false)
@@ -38,7 +38,7 @@ class HomeFixtures extends AbstractFixtures {
    * @param Portfolio $portfolio
    * @param Skill $skill
    */
-  protected function addPortfolioSkill(ObjectManager $manager, Portfolio $portfolio, Skill $skill) {
+  protected function createPortfolioSkill(ObjectManager $manager, Portfolio $portfolio, Skill $skill) {
 
     $portfolio_skill = new PortfolioSkill();
     $portfolio_skill->setPortfolio($portfolio);
