@@ -12,39 +12,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method ArticleTag[]    findAll()
  * @method ArticleTag[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArticleTagRepository extends ServiceEntityRepository
-{
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, ArticleTag::class);
-    }
+class ArticleTagRepository extends ServiceEntityRepository {
 
-    // /**
-    //  * @return ArticleTag[] Returns an array of ArticleTag objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ArticleTag
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+  public function __construct(RegistryInterface $registry) {
+      parent::__construct($registry, ArticleTag::class);
+  }
 }

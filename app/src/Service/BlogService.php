@@ -38,6 +38,15 @@ class BlogService {
 
     return $this->articleRepository->paging($params);
   }
+  /**
+   * @access public
+   * @param int $count
+   * @return array
+   */
+  public function recentArticles(int $count = 10): ?array {
+
+    return $this->articleRepository->recent($count);
+  }
 
   /**
    * @access public
