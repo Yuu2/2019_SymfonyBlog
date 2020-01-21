@@ -91,7 +91,7 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 게시물 영속화
-   * @Route("/blog/new", name="blog_save", methods={"POST"})
+   * @Route("/blog/save", name="blog_save", methods={"POST"})
    * @access public
    * @param Request $request
    * @param BlogService $blogService
