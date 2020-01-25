@@ -81,7 +81,7 @@ class ArticleRepository extends ServiceEntityRepository {
    * @param int $count
    * @return array
    */
-  public function recent(int $count): ?array {
+  public function recentArticles(int $count): ?array {
     return $this->createQueryBuilder('a')
     ->addOrderBy('a.updated_at', 'DESC')
     ->addOrderBy('a.created_at', 'DESC')

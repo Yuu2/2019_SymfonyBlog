@@ -17,4 +17,17 @@ class CategoryRepository extends ServiceEntityRepository {
   public function __construct(RegistryInterface $registry) {
       parent::__construct($registry, Category::class);
   }
+
+  /**
+   * 계층 카테고리
+   * @access public
+   * @param int $count
+   * @return array
+   */
+  public function categories(int $count): ?array {
+    return $this->createQueryBuilder('c')
+    ->getQuery()
+    ->setMaxResults($count)
+    ->getResult();
+  }
 }
