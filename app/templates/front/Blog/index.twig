@@ -92,6 +92,25 @@
             </div>
           </div>
           <div class="widget-sidebar">
+            <h5 class="sidebar-title">{{ 'front.blog.category.title'|trans }}</h5>
+            <div class="sidebar-content">
+              <ul class="list-sidebar">
+                {% if Categories is not empty %}
+                {% for Category in Categories %}
+                {% if Category.parent is null %}
+                  <li><a href="#">{{ Category.title }}</a></li>
+                  <ul class="list-sidebar">
+                    {% for SubCategory in Category.subcategories %}
+                    <li>:<a href="#">{{ SubCategory.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+          <div class="widget-sidebar">
             <h5 class="sidebar-title">{{ 'front.blog.recently.title'|trans }}</h5>
             <div class="sidebar-content">
               <ul class="list-sidebar">
@@ -100,28 +119,6 @@
                   <li><a href="{{ path('blog_show', {'id': RecentArticle.id} )}}">{{ RecentArticle.title }} <small>{{ RecentArticle.createdAt|date('l, Y/m/d')}}</small></a></li>
                 {% endfor %}
                 {% endif %}
-              </ul>
-            </div>
-          </div>
-          <div class="widget-sidebar">
-            <h5 class="sidebar-title">Archives</h5>
-            <div class="sidebar-content">
-              <ul class="list-sidebar">
-                <li>
-                  <a href="#">September, 2017.</a>
-                </li>
-                <li>
-                  <a href="#">April, 2017.</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
-                <li>
-                  <a href="#">Atque placeat maiores nam quo autem</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
               </ul>
             </div>
           </div>

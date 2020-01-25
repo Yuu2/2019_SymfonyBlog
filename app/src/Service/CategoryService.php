@@ -30,6 +30,6 @@ class CategoryService {
    */
   public function categories(int $count = 10): ?array {
 
-    return $this->articleRepository->categories();
+    return $this->categoryRepository->categories($count);
   }
 }
