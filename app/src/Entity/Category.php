@@ -24,13 +24,13 @@ class Category
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subcategories")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subcategories", fetch="EAGER")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent", fetch="EAGER")
      */
     private $subcategories;
 

@@ -48,6 +48,7 @@ front.portfolio.title: 포트폴리오
 
 # 블로그
 front.blog.tag.title: 태그
+front.blog.category.title: 카테고리
+front.blog.recently.title: 최근 작성한 게시물
 front.blog.search.title: 블로그 내 검색
 front.blog.search.placeholder: 제목, 내용, 태그 ...
-front.blog.recently.title: 최근 작성한 게시물
