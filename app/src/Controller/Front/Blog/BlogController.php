@@ -4,7 +4,7 @@ namespace App\Controller\Front\Blog;
 
 use App\Entity\Article;
 use App\Service\BlogService;
-use App\Util\CategoryTree;
+use App\Service\CategoryService;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,10 +26,10 @@ class BlogController extends AbstractController {
    * @access public
    * @param Request $request
    * @param BlogService $blogService
-   * @param CategoryTree $categoryTree
+   * @param CategoryService $categoryService
    * @return array
    */
-  public function index(Request $request, BlogService $blogService, CategoryTree $categoryTree): ?array {
+  public function index(Request $request, BlogService $blogService, CategoryService $categoryService): ?array {
 
     $params = array(
       'page' => $request->get('page'),
@@ -39,6 +39,7 @@ class BlogController extends AbstractController {
     
     return array(
       'Articles' => $blogService->articles($params),
+      'Categories' => $categoryService->categories(10),
       'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->tags()
     );

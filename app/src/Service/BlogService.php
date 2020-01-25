@@ -45,7 +45,7 @@ class BlogService {
    */
   public function recentArticles(int $count = 10): ?array {
 
-    return $this->articleRepository->recent($count);
+    return $this->articleRepository->recentArticles($count);
   }
 
   /**
