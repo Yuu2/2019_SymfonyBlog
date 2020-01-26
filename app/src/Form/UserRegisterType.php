@@ -13,10 +13,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * updated 2019.12.31
- * @author Yuu2
+ * @author yuu2
+ * updated 2020.01.26
  */
-class UserType extends AbstractType {
+class UserRegisterType extends AbstractType {
   
   /**
    * @access public
@@ -33,6 +33,8 @@ class UserType extends AbstractType {
 
       ->add('password', RepeatedType::class, array(
         'type' => PasswordType::class,
+        'invalid_message' => '@todo',
+        'required' => true,
         'first_options'  => ['label' => 'Password'],
         'second_options' => ['label' => 'Repeat Password'],
       ))

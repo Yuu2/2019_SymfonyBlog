@@ -1,54 +1,43 @@
 # 관리자정보
 administrator.id: Yuu2
 administrator.email: myco8332v2@gmail.com
-
-# 네비게이션
-common.title.home: 포트폴리오 블로그
-common.title.about: 소개
-common.title.portfolio: 포트폴리오
-common.title.blog: 블로그
-common.title.contact: 질문하기
-common.title.membership: 로그인
-
 # 공통
-common.message.null: 데이터가 존재하지 않습니다.
-
+common.data.null: 데이터가 존재하지 않습니다.
 # 보안
-security.login.title: 로그인
+security.login: 로그인
 security.login.email: 이메일
 security.login.password: 패스워드
 security.login.remember: 로그인 상태 유지
-security.login.submit: 로그인
-
-# 인트로
-front.intro.text: 포트폴리오 블로그에 오신 것을 환영합니다.
-
-# 자기소개 / 경력
-front.about.skill: 경험한 스킬
-front.about.email: 이메일
-front.about.cert:
+security.login.submit: 로그인 하기
+security.register: 멤버 등록
+# 홈
+front.home: 포트폴리오 블로그
+front.home.intro: 포트폴리오 블로그에 오신 것을 환영합니다.
+front.home.about: 소개
+front.home.about.skill: 경험한 스킬
+front.home.about.email: 이메일
+front.home.about.cert:
   <p>
     <small> - 계명대학교 인문국제학대학 일본학 전공 </small></br>
     <small> - 정보처리기사 </small><br>
     <small> - TOEIC 723 </small><br>
     <small> - JLPT N1 </small>
   </p>
-front.about.introduction: 자기소개
-front.about.description: 
+front.home.about.description: 
   <p class="lead">
     <small>
-      일본 후쿠오카 솔루션 회사 JAVA・PHP 개발자</br>
+      JAVA・PHP 개발자</br>
     </small>
   </p>
-front.work.year: 경력
-front.work.project: 참여 프로젝트
-
-# 포트폴리오
-front.portfolio.title: 포트폴리오
-
+front.home.work.year: 경력
+front.home.work.project: 참여 프로젝트
+front.home.portfolio: 포트폴리오
 # 블로그
-front.blog.tag.title: 태그
-front.blog.category.title: 카테고리
-front.blog.recently.title: 최근 작성한 게시물
-front.blog.search.title: 블로그 내 검색
-front.blog.search.placeholder: 제목, 내용, 태그 ...
+front.blog: 블로그
+front.blog.tag: 태그
+front.blog.category: 카테고리
+front.blog.recently: 최근 작성한 게시물
+front.blog.search: 블로그 내 검색
+front.blog.search.placeholder: 제목, 내용 ...
+# 질문하기
+front.contact: 질문하기

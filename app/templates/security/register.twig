@@ -18,7 +18,7 @@
 {% endblock %}
 {% block main %}
 <div class="form-security" style="margin: 0 auto; text-align: center; width: 50%;">    
-{{ form_start(form, { 'attr': {'novalidate': 'novalidate'} }) }}
+{{ form_start(form) }}
 
   <input type="hidden" name="_token" value="{{ csrf_token('user') }}"/>
 
@@ -27,8 +27,15 @@
   {{ form_widget(form.password) }}
   {{ form_errors(form.password) }}
 
+  <!-- Recaptcha -->
+  <div class="g-recaptcha" data-sitekey="6LeFy6gUAAAAAEXAe66NVeIl0mcTfGkk7xgqNuVw"></div>
+
   {{ form_widget(form.submit) }}
 
 {{ form_end(form) }}
 </div>
+{% endblock %}
+
+{% block javascript %}
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
