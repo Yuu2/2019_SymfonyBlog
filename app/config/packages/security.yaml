@@ -33,7 +33,7 @@ security:
                 path: sec_logout
                 target: home
             remember_me:
-                secret:   '%kernel.secret%'
+                secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path: /
 

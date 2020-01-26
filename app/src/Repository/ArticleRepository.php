@@ -6,7 +6,7 @@ use App\Entity\Article;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @author Yuu2
@@ -21,10 +21,10 @@ class ArticleRepository extends ServiceEntityRepository {
 
   /**
    * @access public
-   * @param RegistryInterface $registry
+   * @param ManagerRegistry $registry
    * @param PaginatorInterface $paginatorInterface
    */
-  public function __construct(RegistryInterface $registry, PaginatorInterface $paginator) {
+  public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator) {
     parent::__construct($registry, Article::class);
     $this->paginator = $paginator;
   }
@@ -77,7 +77,7 @@ class ArticleRepository extends ServiceEntityRepository {
       break;
     }
 
-    $test = $query
+    $query
       ->andWhere('a.visible = :visible')
       ->setParameter('visible', true)
       ->orderBy('a.id', 'DESC')
