@@ -17,12 +17,12 @@
                   </div>
                   <div class="col-sm-6 col-md-7">
                     <div class="about-info">
-                      <p><span>{{ 'front.about.cert'|trans|raw }}</span></p>
+                      <p><span>{{ 'front.home.about.cert'|trans|raw }}</span></p>
                     </div>
                   </div>
                 </div>
                 <div class="skill-mf">
-                  <p class="title-s">{{ 'front.about.skill'|trans }}</p>
+                  <p class="title-s">{{ 'front.home.about.skill'|trans }}</p>
                   {% if Skills is defined and 
                         Skills is not empty %}
                     {% for Skill in Skills %}
@@ -33,16 +33,16 @@
                       </div>
                     {% endfor %}
                   {% else %}
-                  {{ 'common.message.null'|trans|raw }}
+                  {{ 'common.data.null'|trans|raw }}
                   {% endif %}
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="about-me pt-4 pt-md-0">
                   <div class="title-box-2">
-                    <h5 class="title-left">{{ 'front.about.introduction'|trans }}</h5>
+                    <h5 class="title-left">{{ 'front.home.about'|trans }}</h5>
                   </div>
-                  {{ 'front.about.description'|trans|raw }}
+                  {{ 'front.home.about.description'|trans|raw }}
                 </div>
               </div>
             </div>
@@ -65,7 +65,7 @@
             </div>
             <div class="counter-num">
               <p class="counter">{{ Work.join_year }}</p>
-              <span class="counter-text">{{ 'front.work.year'|trans }}</span>
+              <span class="counter-text">{{ 'front.home.work.year'|trans }}</span>
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@
             </div>
             <div class="counter-num">
               <p class="counter">{{ Work.join_project }}</p>
-              <span class="counter-text">{{ 'front.work.project'|trans }}</span>
+              <span class="counter-text">{{ 'front.home.work.project'|trans }}</span>
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="title-box text-center">
-            <h3 class="title-a">{{ 'front.portfolio.title'|trans }}</h3>
+            <h3 class="title-a">{{ 'front.home.portfolio'|trans }}</h3>
             <div class="line-mf"></div>
           </div>
         </div>
