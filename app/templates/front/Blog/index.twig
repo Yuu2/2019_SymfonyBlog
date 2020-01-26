@@ -96,16 +96,7 @@
             <div class="sidebar-content">
               <ul class="list-sidebar">
                 {% if Categories is not empty %}
-                {% for Category in Categories %}
-                {% if Category.parent is null %}
-                  <li><a href="#">{{ Category.title }}</a></li>
-                  <ul class="list-sidebar">
-                    {% for SubCategory in Category.subcategories %}
-                    <li>:<a href="#">{{ SubCategory.title }}</a></li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-                {% endfor %}
+                {{ Categories|raw }}
                 {% endif %}
               </ul>
             </div>

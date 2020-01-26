@@ -30,8 +30,11 @@ class BlogController extends AbstractController {
    * @return array
    */
   public function index(Request $request, BlogService $blogService, CategoryService $categoryService): ?array {
+    
+    $categories = $categoryService->hierarachy();
 
     $params = array(
+      'category' => $request->get('category'),
       'page' => $request->get('page'),
       'search' => $request->get('search'),
       'tag' => $request->get('tag'),
@@ -39,7 +42,7 @@ class BlogController extends AbstractController {
     
     return array(
       'Articles' => $blogService->articles($params),
-      'Categories' => $categoryService->categories(10),
+      'Categories' => $categoryService->categories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->tags()
     );
