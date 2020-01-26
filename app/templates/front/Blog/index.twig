@@ -44,35 +44,41 @@
       <div class="row">
         <div class="col-md-8">
           <!-- 블로그 본문 -->
+          {% if Articles is empty %}
+            <div class="post-box">
+              {{ 'common.message.null'|trans }}
+            </div>
+          {% else %}
           {% for Article in Articles %}
-          <div class="post-box">
-            <div class="post-thumb">
-              <a href="{{ path('blog_show', {'id': Article.id}) }}">
-              <img src="{{ asset('style/img/' ~ Article.thumbnail) }}" class="img-fluid" alt="">
-              </a>
+            <div class="post-box">
+              <div class="post-thumb">
+                <a href="{{ path('blog_show', {'id': Article.id}) }}">
+                <img src="{{ asset('style/img/' ~ Article.thumbnail) }}" class="img-fluid" alt="">
+                </a>
+              </div>
+              <div class="post-meta">
+                <a href="{{ path('blog_show', {'id': Article.id}) }}">
+                  <h1 class="article-title">{{ Article.title }}</h1>
+                </a>
+                <ul>
+                  <li>
+                    <span class="ion-pricetag"></span>
+                    <a href="#"></a>
+                  </li>
+                  <li>
+                    <span class="ion-chatbox"></span>
+                    <a href="#">14</a>
+                  </li>
+                  <li>
+                    <span class="ion-calendar"></span>
+                    <span class="w-date">{{ Article.createdAt|date("l, Y.m.d") }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div class="post-meta">
-              <a href="{{ path('blog_show', {'id': Article.id}) }}">
-                <h1 class="article-title">{{ Article.title }}</h1>
-              </a>
-              <ul>
-                <li>
-                  <span class="ion-pricetag"></span>
-                  <a href="#"></a>
-                </li>
-                <li>
-                  <span class="ion-chatbox"></span>
-                  <a href="#">14</a>
-                </li>
-                <li>
-                  <span class="ion-calendar"></span>
-                  <span class="w-date">{{ Article.createdAt|date("l, Y.m.d") }}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
           {% endfor %}
           {{ knp_pagination_render(Articles) }}
+          {% endif %}
         </div>
         <!-- 검색 -->
         <div class="col-md-4">

@@ -28,7 +28,7 @@ class ArticleRepository extends ServiceEntityRepository {
     parent::__construct($registry, Article::class);
     $this->paginator = $paginator;
   }
-  
+
   /**
    * 게시글 일람 쿼리
    * @access public
@@ -36,16 +36,35 @@ class ArticleRepository extends ServiceEntityRepository {
    * @return Object
    */
   public function paging(array $params): ?Object {
-
-    $page = $params['page'];
-    $page = is_numeric($page) || !is_null($page) ? $page : 1;
     
-    $tag = $params['tag'];
+    $category = $params['category'];
+    $page     = $params['page'];
+    $tag      = $params['tag'];
+
+    $category = is_numeric($category) ? $category : NULL;
+    $page     = is_numeric($page)     ? $page     : 1;
+    
     $search = $params['search'];
 
     $query = $this->createQueryBuilder('a');
     
     switch(true) {
+      // 카테고리
+      case $category:
+        $query
+          ->innerJoin('a.article_category', 'ac')
+          ->innerJoin('ac.category', 'c')
+          ->where('c.id = :category_id')
+          ->setParameter('category_id', $category);
+      break;
+      // 태그
+      case $tag:
+        $query
+          ->innerJoin('a.article_tag', 'at')
+          ->innerJoin('at.tag', 't')
+          ->where('t.name = :name')
+          ->setParameter('name', $tag);
+      break;
       // 검색
       case $search:
         foreach($this->prepareQuery($search) as $key => $term) {
@@ -56,17 +75,9 @@ class ArticleRepository extends ServiceEntityRepository {
           ->setParameter('content_' . $key, '%' . trim($term) . '%');
         }
       break;
-      // 태그
-      case $tag:
-        $query
-          ->innerJoin('a.article_tag', 'at')
-          ->innerJoin('at.tag', 't')
-          ->where('t.name = :tagname')
-          ->setParameter('tagname', $tag);
-      break;
     }
 
-    $query
+    $test = $query
       ->andWhere('a.visible = :visible')
       ->setParameter('visible', true)
       ->orderBy('a.id', 'DESC')
