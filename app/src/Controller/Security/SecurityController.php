@@ -3,8 +3,9 @@
 namespace App\Controller\Security;
 
 use App\Entity\User;
-use App\Util\CustomValidator;
 use App\Form\UserCreateType;
+use App\Service\SecurityService;
+use App\Util\CustomValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class SecurityController extends AbstractController {
   
   /**     
    * 로그인
-   * @Route("/login", name="sec_login", methods={"GET", "POST"})
+   * @Route("/security/login", name="sec_login", methods={"GET", "POST"})
    * @Template("/security/login.twig")
    * @access public
    * @param AuthenticationUtils $authenticationUtils
@@ -49,40 +50,49 @@ class SecurityController extends AbstractController {
 
   /**
    * 등록
-   * @Route("/register", name="sec_register", methods={"GET", "POST"})
+   * @Route("/security/register", name="sec_register", methods={"GET", "POST"})
    * @Template("/security/register.twig")
    * @access public
    * @param Request $request
    * @param UserPasswordEncoderInterface $userPasswordEncoder
+   * @param CustomValidator $customValidator
+   * @param SecuriyService $securiyService
    * @return array
    */
-  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, CustomValidator $customValidator): array {
+  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, CustomValidator $customValidator, SecurityService $securiyService): array {
 
-    $form = $this->createForm(
-      UserCreateType::class, new User, array(
+    $form = $this->createForm(UserCreateType::class, new User, array(
         'attr' => array('novalidate' => 'novalidate')
     ));
-
     $form->handleRequest($request);
-  
-    switch($form->isSubmitted() && $form->isValid()) {
-
-      // CSRF 토큰 검증
-      case !$customValidator->verifyCsrfToken($request):
-       
-      break;
-
-      // Recaptcha 검증 
-      case !$customValidator->verifyRecaptcha($request):
+    
+    if($form->isSubmitted() && $form->isValid()) {
       
-      break;
-
-      default: 
-        
+      switch(true) {
+        // CSRF Token 검증
+        case !$customValidator->verifyCsrfToken($request): break;
+        // Google Recaptcha 검증 
+        case !$customValidator->verifyRecaptcha($request): break;
+        default: 
+          /** @var User */
+          $user = $form->getData();
+          $securiyService->save($user);
+          return $this->redirectToRoute('sec_confirm');
+      }
     }
 
     return array(
       'form' => $form->createView()
     );
+  }
+
+  /**
+   * 등록 확인
+   * @access public
+   * @Route("/security/confirm", name="sec_confirm", methods={"GET"})
+   * @Template("/security/confirm.twig")
+   */
+  public function confirm() {
+    return array();
   }
 }
