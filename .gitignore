@@ -21,4 +21,3 @@ app/vendor/
 app/node_modules/
 ###> symfony/phpunit-bridge ###
 app/bin/.phpunit/
-app/.web-server-pid

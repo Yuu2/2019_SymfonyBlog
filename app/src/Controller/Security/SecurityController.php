@@ -54,7 +54,6 @@ class SecurityController extends AbstractController {
    * @access public
    * @param Request $request
    * @param UserPasswordEncoderInterface $userPasswordEncoder
-   * @param CustomValidator $customValidator
    * @return array
    */
   public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, CustomValidator $customValidator): array {
@@ -65,25 +64,25 @@ class SecurityController extends AbstractController {
     ));
 
     $form->handleRequest($request);
-    
-    $csrfToken = $request->get('_token'); 
-    $recaptcha = true;
-    
-    if($form->isSubmitted() && $form->isValid() && $this->isCsrfTokenValid('user', $csrfToken)) {
-      
-      $checkRecaptcha = $customValidator->checkRecaptcha($request);
-      
-      if($checkRecaptcha) {
+  
+    switch($form->isSubmitted() && $form->isValid()) {
 
-        // TODO: 회원가입 서비스 로직 작성.
-      } else {
-        $recaptcha = false;
-      }
+      // CSRF 토큰 검증
+      case !$customValidator->verifyCsrfToken($request):
+       
+      break;
+
+      // Recaptcha 검증 
+      case !$customValidator->verifyRecaptcha($request):
+      
+      break;
+
+      default: 
+        
     }
 
     return array(
-      'form' => $form->createView(),
-      'recaptcha' => $recaptcha
+      'form' => $form->createView()
     );
   }
 }

@@ -4,32 +4,77 @@ namespace App\Util;
 
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @author yuu2
- * updated 2020.01.26
+ * updated 2020.01.27
  */
 class CustomValidator {
 
   /**
+   * @var CsrfTokenManagerInterface
+   */
+  private $csrfTokenManager;
+
+  /**
    * @access public
    */
-  public function __construct() {}
+  public function __construct(CsrfTokenManagerInterface $csrfTokenManager) {
+    $this->csrfTokenManager = $csrfTokenManager;
+  }
+
+  /**
+   * CSRF Token 검사
+   * @access public
+   * @static
+   * @param Request $request
+   * @return bool
+   */
+  public function verifyCsrfToken(Request $request): bool {
+    
+    $token = $request->get('_csrf_token');
+
+    return $this->csrfTokenManager->getToken($token) ? true : false;
+  }
 
   /**
    * Recaptcha 검사
    * @access public
+   * @static
    * @param Request $request
    * @return boolean
    */
-  public function checkRecaptcha(Request $request): boolean {
+  public static function verifyRecaptcha(Request $request): bool {
     
     $secretkey = $_SERVER['RECAPTCHA_SECRET'];
   
-    if(is_null($secretkey)) return null;
+    /** @todo 커스텀 예외 작성 */
+    if(is_null($secretkey)) throw new \Exception(); 
 
     $recaptcha = new ReCaptcha($secretkey);
     
     return $recaptcha->verify($request->get('g-recaptcha-response'), $request->getClientIp())->isSuccess();
+  }
+
+  /**
+   * 문자열 초과 길이 검사
+   * @access public
+   * @param string $str
+   * @param int $limit
+   * @return bool
+   */
+  public static function isOverLength(string $str, int $limit): bool {
+    return mb_strlen($str) > $lmit;
+  }
+    /**
+   * 문자열 미만 길이 검사
+   * @access public
+   * @param string $str
+   * @param int $limit
+   * @return bool
+   */
+  public static function isLessLength(string $str, int $limit): bool {
+    return mb_strlen($str) < $lmit;
   }
 }
