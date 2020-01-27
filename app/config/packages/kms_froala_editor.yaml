@@ -1,0 +1,5 @@
+kms_froala_editor:
+    language: '%locale%'
+twig:
+  form_themes:
+    - '@KMSFroalaEditor/Form/froala_widget.html.twig'

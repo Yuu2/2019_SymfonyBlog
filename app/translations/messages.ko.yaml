@@ -39,5 +39,6 @@ front.blog.category: 카테고리
 front.blog.recently: 최근 작성한 게시물
 front.blog.search: 블로그 내 검색
 front.blog.search.placeholder: 제목, 내용 ...
+front.blog.article: 블로그 게시물 작성
 # 질문하기
 front.contact: 질문하기

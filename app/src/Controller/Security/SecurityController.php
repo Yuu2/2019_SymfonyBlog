@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 /**
  * @author yuu2
- * updated 2020.01.26
+ * updated 2020.01.27
  */
 class SecurityController extends AbstractController {
   

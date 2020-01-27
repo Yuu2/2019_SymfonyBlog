@@ -6,6 +6,7 @@ use App\Form\ArticleCreateType;
 use App\Entity\Article;
 use App\Service\BlogService;
 use App\Service\CategoryService;
+use App\Util\CustomValidator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,7 +44,7 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 게시물 상세
-   * @Route("/blog/{id}", name="blog_show", methods={"GET"})
+   * @Route("/blog/{id}", name="blog_show", methods={"GET"}, requirements={"id":"\d+"})
    * @Template("front/Blog/show.twig")
    * @access public
    * @param Article $article
@@ -65,31 +66,39 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 게시물 작성
-   * @Route("/blog/new", name="blog_new", methods={"GET"})
+   * @Route("/blog/new", name="blog_new", methods={"GET", "POST"})
    * @Template("front/blog/form.twig")
    * @access public
    * @param Request $request
    * @param BlogService $blogService
    * @param CategoryService $categoryService
+   * @param CustomValidator $customValidator
    * @return array
    */
-  public function new(Request $request, BlogService $blogService, CategoryService $categoryService): array {
+  public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomValidator $customValidator): array {
     
     $form = $this->createForm(
-      ArticleCreateType::class, new User, array('attr' => array('novalidate' => 'novalidate')
+      ArticleCreateType::class, new Article, array('attr' => array('novalidate' => 'novalidate')
     ));
-
     $form->handleRequest($request);
-    $csrfToken = $request->get('_token'); 
 
-    if($form->isSubmitted() && $form->isValid() && $this->isCsrfTokenValid('article', $csrfToken)) {
-
+    if($form->isSubmitted() && $form->isValid()) {
+      
+      switch(true) {
+        // CSRF Token 검증
+        case !$customValidator->verifyCsrfToken($request): break;
+        default:
+        /** @var Article */
+        $article = $form->getData();
+        $blogService->save($article);
+        return $this->redirectToRoute('blog_index');
+      }
     }
-
-
+    
     $categories = $categoryService->hierarachy();
 
     return array(
+      'form' => $form->createView(),
       'Categories' => $categoryService->categories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->tags()
@@ -98,7 +107,7 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 게시물 수정
-   * @Route("/blog/edit/{id}", name="blog_edit", methods={"GET"})
+   * @Route("/blog/edit/{id}", name="blog_edit", methods={"GET", "POST"}, requirements={"id":"\d+"})
    * @Template("front/blog/form.twig")
    * @access public
    * @param Article $article
@@ -111,21 +120,8 @@ class BlogController extends AbstractController {
   }
 
   /**
-   * 블로그 게시물 영속화
-   * @Route("/blog/save", name="blog_save", methods={"POST"})
-   * @access public
-   * @param Request $request
-   * @param BlogService $blogService
-   * @return array
-   */
-  public function save(Request $request, BlogService $blogService): array {
-    
-    return array();
-  }
-
-  /**
    * 블로그 게시물 삭제
-   * @Route("/blog/delete/{id}", name="blog_delete", methods={"DELETE"})
+   * @Route("/blog/delete/{id}", name="blog_delete", methods={"DELETE"}, requirements={"id":"\d+"})
    * @access public
    * @param Request $request
    * @param Article $article

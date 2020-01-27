@@ -17,4 +17,24 @@
   </nav>
 {% endblock %}
 {% block main %}
+<div style="margin: 0 auto; text-align: center; width: 800px;">    
+  
+  <h1 class="h3 mb-3 font-weight-normal" style="margin: 30px 0;">{{ 'front.blog.article'|trans }}</h1>
+    
+  {{ form_start(form) }}
+
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
+  <div>
+  {{ form_widget(form.title) }}
+  {{ form_errors(form.title) }}
+  </div>
+  <diV>
+  {{ form_widget(form.content) }}
+  {{ form_errors(form.content) }}
+  </div>
+  <div>
+  {{ form_widget(form.submit) }}
+  {{ form_end(form) }}
+  </div>
+</div>
 {% endblock %}
