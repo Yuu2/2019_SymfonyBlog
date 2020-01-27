@@ -14,9 +14,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author yuu2
- * updated 2020.01.26
+ * updated 2020.01.27
  */
-class UserRegisterType extends AbstractType {
+class UserCreateType extends AbstractType {
+  
+  /**
+   * @access public
+   */
+  public function __construct() {}
   
   /**
    * @access public
@@ -49,8 +54,8 @@ class UserRegisterType extends AbstractType {
    */
   public function configureOptions(OptionsResolver $resolver) {
     $resolver->setDefaults([
-        'data_class' => User::class,
-        'csrf_protection' => true
+      'data_class' => User::class,
+      'csrf_protection' => true
     ]);
   }
 }

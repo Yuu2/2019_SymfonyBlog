@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("email")
  */
 class User implements UserInterface {
-
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -25,7 +25,8 @@ class User implements UserInterface {
     private $id;
 
     /**
-     * @Assert\Email()
+
+     * @Assert\Email(message = "assert.seucirty.email.incorrent")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -36,8 +37,8 @@ class User implements UserInterface {
     private $roles = [];
 
     /**
-     * @var string The hashed password
-     * @Assert\NotBlank()
+     * @var string
+     * @Assert\NotBlank(message = "assert.security.password.empty")
      * @ORM\Column(type="string")
      */
     private $password;
@@ -146,6 +147,16 @@ class User implements UserInterface {
         return $this;
     }
 
+    public function getProfile() 
+    {
+      return $this->profile;
+    }
+
+    public function setProfile(Profile $profile): self {
+      $this->profile = $profile;
+      return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -161,15 +172,5 @@ class User implements UserInterface {
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getProfile() 
-    {
-      return $this->profile;
-    }
-
-    public function setProfile(Profile $profile): self {
-      $this->profile = $profile;
-      return $this;
     }
 }
