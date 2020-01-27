@@ -50,8 +50,8 @@ class SecurityService {
   
   /**
    * 유저 영속화
-   * @param User $user
    * @access public
+   * @param User $user
    * @return void
    */
   public function save(User $user) {

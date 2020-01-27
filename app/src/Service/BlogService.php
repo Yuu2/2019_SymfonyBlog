@@ -64,4 +64,19 @@ class BlogService {
   public function tags(): ?array {
     return $this->tagRepository->findAll();
   }
+  /**
+   * 게시물 영속화
+   * @param Article $article
+   * @access public
+   * @return void
+   */
+  public function save(Article $article) {
+
+    /**
+     * @todo 영속화 로직
+     */
+    
+    $this->entityManager->persist($article);
+    $this->entityManager->flush();
+  }
 }
