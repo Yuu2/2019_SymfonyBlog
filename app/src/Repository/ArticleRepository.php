@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-
+use App\Util\CustomValidator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -43,7 +43,7 @@ class ArticleRepository extends ServiceEntityRepository {
 
     $category = is_numeric($category) ? $category : NULL;
     $page     = is_numeric($page)     ? $page     : 1;
-    
+
     $search = $params['search'];
 
     $query = $this->createQueryBuilder('a');
@@ -70,7 +70,7 @@ class ArticleRepository extends ServiceEntityRepository {
         foreach($this->prepareQuery($search) as $key => $term) {
           $query
           ->orWhere('a.title LIKE :title_' . $key)
-          ->orWhere('a.title LIKE :content_' . $key)
+          ->orWhere('a.content LIKE :content_' . $key)
           ->setParameter('title_' . $key, '%' . trim($term) . '%')
           ->setParameter('content_' . $key, '%' . trim($term) . '%');
         }
@@ -83,7 +83,7 @@ class ArticleRepository extends ServiceEntityRepository {
       ->orderBy('a.id', 'DESC')
       ->getQuery()
     ;
-
+  
     return $this->paginator->paginate($query, $page, 3);
   }
   /**

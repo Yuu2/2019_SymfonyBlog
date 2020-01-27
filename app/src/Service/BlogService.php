@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Repository\ArticleRepository;
 use App\Repository\TagRepository;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * @author Yuu2
  * updated 2020.01.19
@@ -31,10 +33,17 @@ class BlogService {
 
   /**
    * @access public
-   * @param array $params
+   * @param Request $request
    * @return Object
    */
-  public function articles(array $params): ?Object {
+  public function articles(Request $request): Object {
+
+    $params = array(
+      'category' => $request->get('category'),
+      'page' => $request->get('page'),
+      'search' => $request->get('search'),
+      'tag' => $request->get('tag'),
+    );
 
     return $this->articleRepository->paging($params);
   }

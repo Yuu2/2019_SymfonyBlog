@@ -33,15 +33,8 @@ class BlogController extends AbstractController {
     
     $categories = $categoryService->hierarachy();
     
-    $params = array(
-      'category' => $request->get('category'),
-      'page' => $request->get('page'),
-      'search' => $request->get('search'),
-      'tag' => $request->get('tag'),
-    );
-    
     return array(
-      'Articles' => $blogService->articles($params),
+      'Articles' => $blogService->articles($request),
       'Categories' => $categoryService->categories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->tags()

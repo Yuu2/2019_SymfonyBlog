@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./app:/var/www/app
+      - ./app:/var/www/app:cached
       - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
 
   db:
