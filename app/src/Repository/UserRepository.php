@@ -7,6 +7,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
+ * @author yuu2
+ * updated 2020.01.27
+ * 
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
  * @method User[]    findAll()
@@ -14,7 +17,11 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository {
   
+  /**
+   * @access public
+   * @param ManagerRegistry $registry
+   */
   public function __construct(ManagerRegistry $registry) {
-      parent::__construct($registry, User::class);
+    parent::__construct($registry, User::class);
   }
 }

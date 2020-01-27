@@ -33,7 +33,9 @@ class CustomValidator {
    */
   public function verifyCsrfToken(Request $request): bool {
     
-    $token = $request->get('_csrf_token');
+    $token = $request->request->get('_csrf_token');
+
+    if(is_null($token)) return false; 
 
     return $this->csrfTokenManager->getToken($token) ? true : false;
   }

@@ -39,10 +39,10 @@ class BlogService {
   public function articles(Request $request): Object {
 
     $params = array(
-      'category' => $request->get('category'),
-      'page' => $request->get('page'),
-      'search' => $request->get('search'),
-      'tag' => $request->get('tag'),
+      'category' => $request->query->get('category'),
+      'page' => $request->query->get('page'),
+      'search' => $request->query->get('search'),
+      'tag' => $request->query->get('tag'),
     );
 
     return $this->articleRepository->paging($params);
