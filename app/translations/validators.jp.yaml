@@ -1,0 +1,2 @@
+assert.seucirty.email.incorrent: メールを正しく入力してください。
+assert.security.password.empty: パースワードに空白が含まれています。

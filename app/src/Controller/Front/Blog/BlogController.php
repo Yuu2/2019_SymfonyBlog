@@ -2,10 +2,10 @@
 
 namespace App\Controller\Front\Blog;
 
+use App\Form\ArticleCreateType;
 use App\Entity\Article;
 use App\Service\BlogService;
 use App\Service\CategoryService;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * @author Yuu2
  * @todo 블로그 게시물 검색
- * updated 2020.01.19
+ * updated 2020.01.27
  */
 class BlogController extends AbstractController {
 
@@ -29,7 +29,7 @@ class BlogController extends AbstractController {
    * @param CategoryService $categoryService
    * @return array
    */
-  public function index(Request $request, BlogService $blogService, CategoryService $categoryService): ?array {
+  public function index(Request $request, BlogService $blogService, CategoryService $categoryService): array {
     
     $categories = $categoryService->hierarachy();
     
@@ -55,12 +55,17 @@ class BlogController extends AbstractController {
    * @access public
    * @param Article $article
    * @param BlogService $blogService
+   * @param CategoryService $categoryService
    * @return array
    */
-  public function show(Article $article, BlogService $blogService): ?array {
+  public function show(Article $article, BlogService $blogService, CategoryService $categoryService): array {
+
+    $categories = $categoryService->hierarachy();
 
     return array(
       'Article' => $article,
+      'Categories' => $categoryService->categories($categories),
+      'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->tags()
     );
   }
@@ -72,11 +77,30 @@ class BlogController extends AbstractController {
    * @access public
    * @param Request $request
    * @param BlogService $blogService
+   * @param CategoryService $categoryService
    * @return array
    */
-  public function new(Request $request, BlogService $blogService): ?array {
+  public function new(Request $request, BlogService $blogService, CategoryService $categoryService): array {
     
-    return array();
+    $form = $this->createForm(
+      ArticleCreateType::class, new User, array('attr' => array('novalidate' => 'novalidate')
+    ));
+
+    $form->handleRequest($request);
+    $csrfToken = $request->get('_token'); 
+
+    if($form->isSubmitted() && $form->isValid() && $this->isCsrfTokenValid('article', $csrfToken)) {
+
+    }
+
+
+    $categories = $categoryService->hierarachy();
+
+    return array(
+      'Categories' => $categoryService->categories($categories),
+      'RecentArticles' => $blogService->recentArticles(10),
+      'Tags' => $blogService->tags()
+    );
   }
 
   /**
@@ -88,7 +112,7 @@ class BlogController extends AbstractController {
    * @param BlogService $blogService
    * @return array
    */
-  public function edit(Article $article, BlogService $blogService): ?array {
+  public function edit(Article $article, BlogService $blogService): array {
 
     return array();
   }
@@ -101,7 +125,7 @@ class BlogController extends AbstractController {
    * @param BlogService $blogService
    * @return array
    */
-  public function save(Request $request, BlogService $blogService): ?array {
+  public function save(Request $request, BlogService $blogService): array {
     
     return array();
   }
@@ -110,9 +134,13 @@ class BlogController extends AbstractController {
    * 블로그 게시물 삭제
    * @Route("/blog/delete/{id}", name="blog_delete", methods={"DELETE"})
    * @access public
+   * @param Request $request
+   * @param Article $article
+   * @return array
    */
-  public function delete(Article $article) {
+  public function delete(Request $request, Article $article): array {
 
-    return array();
+
+    return $this->redirectToRoute('blog_index');
   }
 }

@@ -4,10 +4,11 @@ namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Util\CustomValidator;
-use App\Form\UserRegisterType;
+use App\Form\UserCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -23,11 +24,10 @@ class SecurityController extends AbstractController {
    * @Template("/security/login.twig")
    * @access public
    * @param AuthenticationUtils $authenticationUtils
-   * @return array
    */
   public function login(AuthenticationUtils $authenticationUtils): array {
 
-    if($this->getUser()) return $this->redirectToRoute('home');
+    if($this->getUser()) return $this->redirectToRoute('blog_index');
 
     $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -60,13 +60,14 @@ class SecurityController extends AbstractController {
   public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, CustomValidator $customValidator): array {
 
     $form = $this->createForm(
-      UserRegisterType::class, new User, array(
+      UserCreateType::class, new User, array(
         'attr' => array('novalidate' => 'novalidate')
     ));
+
     $form->handleRequest($request);
     
-    $recaptcha = true;
     $csrfToken = $request->get('_token'); 
+    $recaptcha = true;
     
     if($form->isSubmitted() && $form->isValid() && $this->isCsrfTokenValid('user', $csrfToken)) {
       
