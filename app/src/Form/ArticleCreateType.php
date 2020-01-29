@@ -52,16 +52,20 @@ class ArticleCreateType extends AbstractType {
           'placeholder' => $translator->trans('front.blog.article.title.placeholder')
         ],
         'constraints' => [
-          new Assert\NotBlank()
+          new Assert\NotBlank([
+            'message' => 'assert.blog.article.title.empty'
+          ])
         ],
         'label' => $translator->trans('front.blog.article.title')
       ])
       // 내용
       ->add('content', FroalaEditorType::class, [
         'constraints' => [
-          new Assert\NotBlank()
+          new Assert\NotBlank([
+            'message' => 'assert.blog.article.content.empty'
+          ])
         ],
-        'label' => $translator->trans('front.blog.article.content')
+        'label' => FALSE
       ])
       // 공개여부
       ->add('visible', ChoiceType::class, [
@@ -71,6 +75,7 @@ class ArticleCreateType extends AbstractType {
         ],
         'label' => $translator->trans('front.blog.article.visible')
       ])
+      // 카테고리
       ->add('category', EntityType::class, [
         'choice_label' => function(Category $category) {
           return $category->getTitle();
@@ -78,7 +83,6 @@ class ArticleCreateType extends AbstractType {
         'class' => Category::class,
         'label' => $translator->trans('front.blog.article.category')
       ])
-      ->add('submit',  SubmitType::class, [])
     ;
   }
 

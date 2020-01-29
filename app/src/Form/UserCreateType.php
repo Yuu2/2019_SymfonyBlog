@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Profile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -11,17 +12,27 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @author yuu2
- * updated 2020.01.27
+ * @author Yuu2
+ * updated 2020.01.29
  */
 class UserCreateType extends AbstractType {
   
   /**
-   * @access public
+   * @var TranslatorInterface
    */
-  public function __construct() {}
+  private $translator;
+
+  /**
+   * @access public
+   * @param TranslatorInterface $translator
+   */
+  public function __construct(TranslatorInterface $translator) {
+    $this->translator = $translator;
+  }
   
   /**
    * @access public
@@ -35,7 +46,6 @@ class UserCreateType extends AbstractType {
       ->add('email', EmailType::class, array(
         'label' => 'email',
       ))
-      ->add('name')
       ->add('password', RepeatedType::class, array(
         'type' => PasswordType::class,
         'invalid_message' => '@todo',

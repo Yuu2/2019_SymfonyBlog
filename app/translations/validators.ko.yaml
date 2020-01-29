@@ -1,2 +1,4 @@
 assert.seucirty.email.incorrent: 정확하지 않은 이메일입니다.
 assert.security.password.empty: 패스워드가 공백입니다.
+assert.blog.article.title.empty: 제목을 입력해주세요.
+assert.blog.article.content.empty: 내용을 입력해주세요.

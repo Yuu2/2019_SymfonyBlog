@@ -39,8 +39,15 @@ front.blog.category: カテゴリー
 front.blog.recently: 新規記事リスト
 front.blog.search: 検索
 front.blog.search.placeholder: 題名, 内容 ...
+front.blog.article: ブログ記事作成
+front.blog.article.title: タイトル
+front.blog.article.content: コンテンツ
 front.blog.article.visible: 公開
-front.blog.article.invisible: 非公開
+front.blog.article.category: カテゴリー
+front.blog.article.submit: 作成
+front.blog.article.cancel: 取消
+front.blog.article.visible.true: 公開
+front.blog.article.visible.false: 非公開
 front.blog.article.title.placeholder: タイトルを入力してください。
 # 질문하기
 front.contact: 問い合わせ
