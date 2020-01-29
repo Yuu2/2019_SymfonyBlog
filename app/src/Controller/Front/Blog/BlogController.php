@@ -6,7 +6,7 @@ use App\Form\ArticleCreateType;
 use App\Entity\Article;
 use App\Service\BlogService;
 use App\Service\CategoryService;
-use App\Util\CustomValidator;
+use App\Util\CustomUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,10 +72,10 @@ class BlogController extends AbstractController {
    * @param Request $request
    * @param BlogService $blogService
    * @param CategoryService $categoryService
-   * @param CustomValidator $customValidator
+   * @param CustomUtil $customUtil
    * @return array|object
    */
-  public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomValidator $customValidator) {
+  public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomUtil $customUtil) {
     
     $form = $this->createForm(ArticleCreateType::class, new Article);
     $form->handleRequest($request);
@@ -84,7 +84,7 @@ class BlogController extends AbstractController {
       
       switch(true) {
         // CSRF Token 검증
-        case !$customValidator->verifyCsrfToken($request): break;
+        case !$customUtil->verifyCsrfToken($request): break;
         default:
         /** @var Article */
         $article = $form->getData();
@@ -105,16 +105,40 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 게시물 수정
-   * @Route("/blog/edit/{id}", name="blog_edit", methods={"GET", "POST"}, requirements={"id":"\d+"})
+   * @Route("/blog/edit/{id}", name="blog_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
    * @Template("front/blog/form.twig")
    * @access public
+   * @param Request $request
    * @param Article $article
    * @param BlogService $blogService
-   * @return array
+   * @return array|object
    */
-  public function edit(Article $article, BlogService $blogService): array {
+  public function edit(Request $request, Article $article, BlogService $blogService, CategoryService $categoryService, CustomUtil $customUtil) {
 
-    return array();
+    $form = $this->createForm(ArticleCreateType::class, $article, ['method' => 'PUT']);
+    $form->handleRequest($request);
+
+    if($form->isSubmitted() && $form->isValid()) {
+      
+      switch(true) {
+        // CSRF Token 검증
+        case !$customUtil->verifyCsrfToken($request): break;
+        default:
+        /** @var Article */
+        $article = $form->getData();
+        $blogService->save($article);
+        return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+      }
+    }
+
+    $categories = $categoryService->hierarachy();
+
+    return array(
+      'form' => $form->createView(),
+      'Categories' => $categoryService->categories($categories),
+      'RecentArticles' => $blogService->recentArticles(10),
+      'Tags' => $blogService->tags()
+    );
   }
 
   /**

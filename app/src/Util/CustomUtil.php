@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
- * @author yuu2
- * updated 2020.01.27
+ * @author Yuu2
+ * updated 2020.01.30
  */
-class CustomValidator {
+class CustomUtil {
 
   /**
    * @var CsrfTokenManagerInterface
