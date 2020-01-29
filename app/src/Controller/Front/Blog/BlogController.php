@@ -77,9 +77,7 @@ class BlogController extends AbstractController {
    */
   public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomValidator $customValidator) {
     
-    $form = $this->createForm(
-      ArticleCreateType::class, new Article, array('attr' => array('novalidate' => 'novalidate')
-    ));
+    $form = $this->createForm(ArticleCreateType::class, new Article);
     $form->handleRequest($request);
 
     if($form->isSubmitted() && $form->isValid()) {
@@ -125,10 +123,12 @@ class BlogController extends AbstractController {
    * @access public
    * @param Request $request
    * @param Article $article
-   * @return array
+   * @param BlogService $blogService
+   * @return object
    */
-  public function delete(Request $request, Article $article): array {
-
+  public function delete(Request $request, Article $article, BlogService $blogService): object {
+    
+    $blogService->remove($article);
 
     return $this->redirectToRoute('blog_index');
   }
