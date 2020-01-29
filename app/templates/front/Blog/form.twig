@@ -1,4 +1,8 @@
 {% extends 'base.html.twig' %}
+{% block stylesheet %}
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
 {% block nav %}
   <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
     <div class="container">
@@ -22,19 +26,24 @@
   <h1 class="h3 mb-3 font-weight-normal" style="margin: 30px 0;">{{ 'front.blog.article'|trans }}</h1>
     
   {{ form_start(form) }}
-
   <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
-  <div>
-  {{ form_widget(form.title) }}
-  {{ form_errors(form.title) }}
+  <diV>
+    {{ form_row(form.category) }}
   </div>
   <diV>
-  {{ form_widget(form.content) }}
-  {{ form_errors(form.content) }}
+    {{ form_row(form.visible) }}
   </div>
   <div>
-  {{ form_widget(form.submit) }}
-  {{ form_end(form) }}
+    {{ form_row(form.title) }}
   </div>
+  <diV>
+    {{ form_widget(form.content) }}
+    {{ form_errors(form.content) }}
+  </div>
+  <div>
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+  </div>
+
 </div>
 {% endblock %}

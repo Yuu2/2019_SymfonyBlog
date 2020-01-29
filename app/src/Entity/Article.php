@@ -34,9 +34,9 @@ class Article
     private $thumbnail;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": true})
      */
-    private $visible;
+    private $visible = TRUE;
 
     /**
      * @ORM\Column(type="datetime")
@@ -59,14 +59,14 @@ class Article
     private $article_tag;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategory", mappedBy="article", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="article")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $article_category;
+    private $category;
 
     public function __construct()
     {
         $this->article_tag = new ArrayCollection();
-        $this->article_category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,37 +165,6 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection|ArticleCategory[]
-     */
-    public function getArticleCategory(): Collection
-    {
-        return $this->article_category;
-    }
-
-    public function addArticleCategory(ArticleCategory $articleCategory): self
-    {
-        if (!$this->article_category->contains($articleCategory)) {
-            $this->article_category[] = $articleCategory;
-            $articleCategory->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticleCategory(ArticleCategory $articleCategory): self
-    {
-        if ($this->article_category->contains($articleCategory)) {
-            $this->article_category->removeElement($articleCategory);
-            // set the owning side to null (unless already changed)
-            if ($articleCategory->getArticle() === $this) {
-                $articleCategory->setArticle(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getVisible(): ?bool
     {
         return $this->visible;
@@ -216,6 +185,18 @@ class Article
     public function setThumbnail(?string $thumbnail): self
     {
         $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

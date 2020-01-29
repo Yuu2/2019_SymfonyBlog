@@ -35,7 +35,7 @@ class UserCreateType extends AbstractType {
       ->add('email', EmailType::class, array(
         'label' => 'email',
       ))
-
+      ->add('name')
       ->add('password', RepeatedType::class, array(
         'type' => PasswordType::class,
         'invalid_message' => '@todo',

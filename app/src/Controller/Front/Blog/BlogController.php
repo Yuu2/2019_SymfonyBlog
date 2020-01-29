@@ -73,9 +73,9 @@ class BlogController extends AbstractController {
    * @param BlogService $blogService
    * @param CategoryService $categoryService
    * @param CustomValidator $customValidator
-   * @return array
+   * @return object
    */
-  public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomValidator $customValidator): array {
+  public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomValidator $customValidator): object {
     
     $form = $this->createForm(
       ArticleCreateType::class, new Article, array('attr' => array('novalidate' => 'novalidate')
@@ -91,7 +91,7 @@ class BlogController extends AbstractController {
         /** @var Article */
         $article = $form->getData();
         $blogService->save($article);
-        return $this->redirectToRoute('blog_index');
+        return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
       }
     }
     

@@ -109,9 +109,10 @@ abstract class AbstractFixtures extends Fixture {
    * @param string $content
    * @param string thumbnail
    * @param bool $visible
+   * @param Category $category
    * @return Article $article
    */
-  protected function createArticle(ObjectManager $manager, string $title, string $content, string $thumbnail, bool $visible = true): ?Article{
+  protected function createArticle(ObjectManager $manager, string $title, string $content, string $thumbnail, bool $visible = true, Category $category): ?Article{
     
     $article = new Article();
     $article->setTitle($title);
@@ -119,6 +120,7 @@ abstract class AbstractFixtures extends Fixture {
     $article->setThumbnail($thumbnail);
     $article->setVisible($visible);
     $article->setCreatedAt(new \DateTime);
+    $article->setCategory($category);
 
     $manager->persist($article);
 
