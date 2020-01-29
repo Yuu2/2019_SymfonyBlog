@@ -40,6 +40,7 @@ class BlogService {
   }
 
   /**
+   * 블로그 게시글 리스트
    * @access public
    * @param Request $request
    * @return Object
@@ -56,6 +57,7 @@ class BlogService {
     return $this->articleRepository->paging($params);
   }
   /**
+   * 최근 블로그 게시글
    * @access public
    * @param int $count
    * @return array
@@ -73,7 +75,7 @@ class BlogService {
     return $this->tagRepository->findAll();
   }
   /**
-   * 게시물 영속화
+   * 블로그 게시글 영속화
    * @param Article $article
    * @access public
    * @return void
@@ -83,6 +85,17 @@ class BlogService {
     $article->setCreatedAt(new \DateTime);
 
     $this->entityManager->persist($article);
+    $this->entityManager->flush();
+  }
+
+  /**
+   * 블로그 게시글 삭제
+   * @access public
+   * @param Article $article
+   * @return void
+   */
+  public function remove(Article $article): void {
+    $this->entityManager->remove($article);
     $this->entityManager->flush();
   }
 }
