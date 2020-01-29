@@ -1,7 +1,17 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
 <style>
-  .article-form.submit {margin: 10px;}
+  .article-form {
+    margin: 0 auto; 
+    text-align: center; 
+    max-width: 800px;
+  }
+  .article-form .submit-box {
+    margin: 10px;
+  }
+  .navbar-b.navbar-reduce {
+    padding-bottom: 0;
+  }
 </style>
 {% endblock %}
 {% block javascripts %}
@@ -31,29 +41,31 @@
   </nav>
 {% endblock %}
 {% block main %}
-<div style="margin: 0 auto; text-align: center; max-width: 800px;">    
+<div class="article-form">    
   
   <h1 class="h3 mb-3 font-weight-normal" style="margin: 30px 0;">{{ 'front.blog.article'|trans }}</h1>
     
   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
-  <diV>
-    {{ form_row(form.category) }}
-  </div>
-  <diV>
-    {{ form_row(form.visible) }}
-  </div>
-  <div>
-    {{ form_row(form.title) }}
-  </div>
-  <diV>
-    {{ form_widget(form.content) }}
-    {{ form_errors(form.content) }}
-  </div>
-  <div class="article-form submit">
-    <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
-    <button id="submit" type="submit" class="btn btn-primary">{{ 'front.blog.article.submit'|trans }}</button>
-  </div>
+  
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
+    
+    <diV>
+      {{ form_row(form.category) }}
+    </div>
+    <diV>
+      {{ form_row(form.visible) }}
+    </div>
+    <div>
+      {{ form_row(form.title) }}
+    </div>
+    <diV>
+      {{ form_widget(form.content) }}
+      {{ form_errors(form.content) }}
+    </div>
+    <div class="submit-box">
+      <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
+      <button id="submit" type="submit" class="btn btn-primary">{{ 'front.blog.article.submit'|trans }}</button>
+    </div>
   {{ form_end(form) }}
 
 </div>

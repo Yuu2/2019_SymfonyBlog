@@ -39,7 +39,7 @@
         <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
           <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link js-scroll" href="#about">{{ 'front.home.about'|trans }}</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll" href="#blog">{{ 'front.home.portfolio'|trans }}</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll" href="#portfolio">{{ 'front.home.portfolio'|trans }}</a></li>
             <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('blog_index') }}">{{ 'front.blog'|trans }}</a></li>
             <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('contact') }}">{{ 'front.contact'|trans }}</a></li>
             {% if app.user %}
@@ -55,20 +55,20 @@
     {% endblock %}
     <!-- INTRO -->
     {% block intro %}
-    <div id="intro" class="intro route bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
-      <div class="overlay-itro"></div>
-      <div class="intro-content display-table">
-        <div class="table-cell">
-          <div class="container">
-            <h1 class="intro-title mb-4">{{ 'administrator.id'|trans }}</h1>
-            <p class="intro-subtitle">
-              <span class="text-slider-items">{{ 'front.home.intro'|trans }}</span>
-              <strong class="text-slider"></strong>
-            </p>
+      <div id="intro" class="intro route bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
+        <div class="overlay-itro"></div>
+        <div class="intro-content display-table">
+          <div class="table-cell">
+            <div class="container">
+              <h1 class="intro-title mb-4">{{ 'administrator.id'|trans }}</h1>
+              <p class="intro-subtitle">
+                <span class="text-slider-items">{{ 'front.home.intro'|trans }}</span>
+                <strong class="text-slider"></strong>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     {% endblock %}
 
     {% block main %}
