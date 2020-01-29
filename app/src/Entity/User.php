@@ -25,7 +25,6 @@ class User implements UserInterface {
     private $id;
 
     /**
-
      * @Assert\Email(message = "assert.seucirty.email.incorrent")
      * @ORM\Column(type="string", length=180, unique=true)
      */
@@ -62,6 +61,7 @@ class User implements UserInterface {
      * @ORM\Embedded(class = "App\Entity\Profile", columnPrefix = false)
      */
     private $profile;
+
 
     public function getId(): ?int
     {

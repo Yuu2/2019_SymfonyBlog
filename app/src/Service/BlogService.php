@@ -2,16 +2,22 @@
 
 namespace App\Service;
 
+use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use App\Repository\TagRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Yuu2
- * updated 2020.01.19
+ * updated 2020.01.29
  */
 class BlogService {
 
+  /**
+   * @var EntityManagerInterface
+   */
+  protected $entityManager;
   /**
    * @var ArticleRepository
    */
@@ -23,10 +29,12 @@ class BlogService {
 
   /**
    * @access public
+   * @param EntityManagerInterface $entityManager
    * @param ArticleRepository $articleRepository
    * @param TagRepository $tagRepository
    */
-  public function __construct(ArticleRepository $articleRepository, TagRepository $tagRepository) {
+  public function __construct(EntityManagerInterface $entityManager, ArticleRepository $articleRepository, TagRepository $tagRepository) {
+    $this->entityManager = $entityManager;
     $this->articleRepository = $articleRepository;
     $this->tagRepository = $tagRepository;
   }
@@ -72,10 +80,8 @@ class BlogService {
    */
   public function save(Article $article) {
 
-    /**
-     * @todo 영속화 로직
-     */
-    
+    $article->setCreatedAt(new \DateTime);
+
     $this->entityManager->persist($article);
     $this->entityManager->flush();
   }

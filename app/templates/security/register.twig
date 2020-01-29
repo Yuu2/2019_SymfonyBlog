@@ -26,7 +26,7 @@
   <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
 
   {{ form_row(form.email) }}
-  
+  {{ form_row(form.name) }}
   {{ form_widget(form.password) }}
   {{ form_errors(form.password) }}
 
