@@ -2,7 +2,7 @@
 
 namespace App\Util;
 
-use ReCaptcha\ReCaptcha;
+  use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
