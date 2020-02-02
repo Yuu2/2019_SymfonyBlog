@@ -21,8 +21,8 @@ services:
     volumes:
       - ./app:/var/www/app
       # ./app:/var/www/app:cached
-      - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
-
+      - ./apache/vhost.conf:/etc/apache2/sites-available/000-default.conf
+      # ./apche/php.ini:/usr/local/etc/php/php.ini
   db:
     image: mysql:5.7
     container_name: db

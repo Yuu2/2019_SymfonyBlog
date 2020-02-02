@@ -1,2 +1,2 @@
-security.user.notfound: 해당 계정은 존재하지 않습니다.
+security.user.notfound: 해당 계정은 존재하지 않습니다. 이메일과 비밀번호를 확인해주세요.
 security.user.csrf: 유효하지 않은 접근입니다.
