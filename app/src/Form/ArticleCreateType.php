@@ -69,6 +69,11 @@ class ArticleCreateType extends AbstractType {
       ])
       // 공개여부
       ->add('visible', ChoiceType::class, [
+        'constraints' => [
+          new Assert\Type([
+            'type' => 'bool'
+          ])
+        ],
         'choices' => [
           $translator->trans('front.blog.article.visible.true')  => TRUE,
           $translator->trans('front.blog.article.visible.false') => FALSE
@@ -82,6 +87,11 @@ class ArticleCreateType extends AbstractType {
         },
         'class' => Category::class,
         'label' => $translator->trans('front.blog.article.category')
+      ])
+      ->add('raw_tag', TextType::class, [
+        'mapped'   => false,
+        'required' => false,
+        'label' => $translator->trans('front.blog.article.tag')
       ])
     ;
   }

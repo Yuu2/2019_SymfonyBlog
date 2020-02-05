@@ -42,6 +42,7 @@ front.blog.search.placeholder: 제목, 내용 ...
 front.blog.article: 블로그 게시물 작성
 front.blog.article.title: 제목
 front.blog.article.content: 내용
+front.blog.article.tag: 태그
 front.blog.article.visible: 공개여부
 front.blog.article.category: 카테고리
 front.blog.article.submit: 작성
