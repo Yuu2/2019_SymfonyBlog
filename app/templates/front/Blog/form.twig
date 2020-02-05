@@ -61,6 +61,9 @@
     <diV>
       {{ form_widget(form.content) }}
       {{ form_errors(form.content) }}
+    </div> 
+    <div>
+      {{ form_row(form.raw_tag) }}
     </div>
     <div class="submit-box">
       <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
