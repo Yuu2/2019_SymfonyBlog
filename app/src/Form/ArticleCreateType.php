@@ -88,11 +88,6 @@ class ArticleCreateType extends AbstractType {
         'class' => Category::class,
         'label' => $translator->trans('front.blog.article.category')
       ])
-      ->add('raw_tag', TextType::class, [
-        'mapped'   => false,
-        'required' => false,
-        'label' => $translator->trans('front.blog.article.tag')
-      ])
     ;
   }
 
