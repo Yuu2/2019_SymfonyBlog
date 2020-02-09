@@ -13,6 +13,21 @@
     .article-form .content-box {
       margin-bottom: 15px;
     }
+    .article-form .hashtag-list li {
+      border-radius: 5px;
+      display: inline-block;
+      margin: 3px;
+      padding: 5px;
+      list-style-type: none;
+      background-color: #d6ecfa;
+      color: #00b9f1;
+    }
+    .article-form .hashtag-list li span {
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 3px;
+      color: #404146;
+    }
     .navbar-b.navbar-reduce {
       padding-bottom: 0;
     }
@@ -22,43 +37,63 @@
 {% block javascripts %}
   <script>
     $(function(){
+      // 해시태그 객체
       var hashtags = {};
-      var count    = 0;
 
-      // 태그 추가
-      function addHashtag(data) {
-        hashtags[count] = data;
-        count++;
+      // 해시태그 객체 추가
+      function addHashtag(value) {
+        var idx = Object.keys(hashtags).length;
+        hashtags[idx] = value;
+        $('.hashtag-list').append(
+          '<li>' + 
+            value + 
+            "<span class='btn-del-hashtag' idx='" + idx + "'>x</span>" +
+          "</li>"
+        );
       }
-      // 태그 삭제
-      function removeHashtag(data) {
-      
+      // 해시태그 객체 삭제
+      function removeHashtag(idx) {
+        if(idx != -1) 
+        delete hashtags[idx];
       }
       // 공백검사
       function isEmpty(str) {
         return (!str || 0 === str.length);
       }
-
-      // 취소버튼 스크립트
+      // 키보드검사
+      function isKeyboard(keyCode) {
+        return (keyCode == 32 | keyCode == 13) ? true : false;
+      }
+      // 폼 취소버튼 스크립트
       $("#cancel").click(function(){
         $(location).attr('href', "{{ url('blog_index') }}");
       });
+      // 해시태그 삭제버튼 스크립트
+      $(document).on('click', '.btn-del-hashtag', function(event) {
+        
+        var hashtag = $(this);
+        var idx     = $(this).attr('idx');
 
+        removeHashtag(idx);
+
+        hashtag.parent().remove();
+        console.log(hashtags);
+      });
       // 해시태그 키보드 스크립트
       $("#hashtag").keydown(function(event) {
         
         var hashtag = $(this);
 
-        if(event.keyCode == 32 | event.keyCode == 13) {
-          
-          var hashtagVal = $(this).val().trim();
+        if(isKeyboard(event.keyCode)) {
+          event.preventDefault();
+          var hashtagValue = $(this).val().trim();
 
-          if(!isEmpty(hashtagVal)) {
-            addHashtag(hashtagVal);
+          if(!isEmpty(hashtagValue)) {
+            addHashtag(hashtagValue);
             hashtag.val('');
           }
         }
-      })
+      });
     });
   </script>
 {% endblock %}
@@ -85,7 +120,7 @@
   
   <h1 class="h3 mb-3 font-weight-normal" style="margin: 30px 0;">{{ 'front.blog.article'|trans }}</h1>
     
-  {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'onsubmit': 'return false;'}}) }}
+  {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div>
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
     </div>
@@ -99,7 +134,8 @@
       {{ form_row(form.title) }}
     </div>
     <div class="hashtag-box">
-      <input id="hashtag" name="hashtag" type="text" class="form-control" placeholder="{{ 'front.blog.article.hashtag.placeholder'|trans }}" />
+      <div><ul class="hashtag-list"></ul></div>
+      <div><input id="hashtag" name="hashtag" type="text" class="form-control" placeholder="{{ 'front.blog.article.hashtag.placeholder'|trans }}" /></div>
     </div>
     <div class="content-box">
       {{ form_widget(form.content) }}
