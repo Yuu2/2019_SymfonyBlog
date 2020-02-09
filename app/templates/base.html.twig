@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    
+    <!-- Keyword -->
+    {% block keyword %}
     <!-- <meta name="keywords" content=""> -->
+    {% endblock %}
         
     <title>{{ 'front.home'|trans }}</title>
     <link rel="icon" type="image/png" href="{{ asset('style/img/favicon.png') }}" /> 
@@ -28,10 +32,10 @@
   </head>
   <body id="page-top">
 
-    <!-- HEADER -->
+    <!-- Header -->
     {% block header %}
     {% endblock %}
-    <!-- NAV -->
+    <!-- Nav -->
     {% block nav %}
     <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
       <div class="container">
@@ -53,7 +57,7 @@
       </div>
     </nav>
     {% endblock %}
-    <!-- INTRO -->
+    <!-- Intro -->
     {% block intro %}
       <div id="intro" class="intro route bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
         <div class="overlay-itro"></div>
@@ -74,11 +78,11 @@
     {% block main %}
     {% endblock %}
 
-    <!-- right side -->  
+    <!-- Right Side -->  
     {% block rightside %}
     {% endblock %}
 
-    <!-- footer -->  
+    <!-- Footer -->  
     {% block footer %}
     <section class="paralax-mf footer-paralax bg-image sect-mt4 route">
       <div class="overlay-mf"></div>

@@ -2,18 +2,21 @@
 
 {% block stylesheets %}
   <style>
-    .article-form {
-      margin: 0 auto; 
+    .article-new {
+      margin: 0 auto;
       text-align: center; 
       max-width: 800px;
     }
-    .article-form .hashtag-box {
+    .article-new h1 {
+      margin: 30px 0;
+    }
+    .content-box {
       margin-bottom: 15px;
     }
-    .article-form .content-box {
+    .hashtag-box {
       margin-bottom: 15px;
     }
-    .article-form .hashtag-list li {
+    .hashtag-view li {
       border-radius: 5px;
       display: inline-block;
       margin: 3px;
@@ -22,7 +25,7 @@
       background-color: #d6ecfa;
       color: #00b9f1;
     }
-    .article-form .hashtag-list li span {
+    .hashtag-view li span {
       cursor: pointer;
       font-weight: bold;
       margin-left: 3px;
@@ -37,14 +40,18 @@
 {% block javascripts %}
   <script>
     $(function(){
+      
       // 해시태그 객체
       var hashtags = {};
 
       // 해시태그 객체 추가
       function addHashtag(value) {
+        
+        if(isDuplicated(value)) return;
+
         var idx = Object.keys(hashtags).length;
         hashtags[idx] = value;
-        $('.hashtag-list').append(
+        $('.hashtag-view').append(
           '<li>' + 
             value + 
             "<span class='btn-del-hashtag' idx='" + idx + "'>x</span>" +
@@ -56,18 +63,6 @@
         if(idx != -1) 
         delete hashtags[idx];
       }
-      // 공백검사
-      function isEmpty(str) {
-        return (!str || 0 === str.length);
-      }
-      // 키보드검사
-      function isKeyboard(keyCode) {
-        return (keyCode == 32 | keyCode == 13) ? true : false;
-      }
-      // 폼 취소버튼 스크립트
-      $("#cancel").click(function(){
-        $(location).attr('href', "{{ url('blog_index') }}");
-      });
       // 해시태그 삭제버튼 스크립트
       $(document).on('click', '.btn-del-hashtag', function(event) {
         
@@ -77,22 +72,44 @@
         removeHashtag(idx);
 
         hashtag.parent().remove();
-        console.log(hashtags);
       });
       // 해시태그 키보드 스크립트
-      $("#hashtag").keydown(function(event) {
+      $('#hashtag').keydown(function(event) {
         
         var hashtag = $(this);
 
         if(isKeyboard(event.keyCode)) {
           event.preventDefault();
-          var hashtagValue = $(this).val().trim();
-
-          if(!isEmpty(hashtagValue)) {
-            addHashtag(hashtagValue);
+          var value = $(this).val().trim();
+          
+          if(!isEmpty(value)) {
+            addHashtag(value);
             hashtag.val('');
           }
         }
+      });
+      // 중복검사
+      function isDuplicated(value) {
+        return (Object.values(hashtags).indexOf(value)) != -1 ? true : false;
+      }
+      // 공백검사
+      function isEmpty(str) {
+        return (!str || 0 === str.length);
+      }
+      // 키보드검사
+      function isKeyboard(keyCode) {
+        return (keyCode == 32 | keyCode == 13) ? true : false;
+      }
+      // Cancel버튼 스크립트
+      $('#cancel').one('click', function(event){
+        $(location).attr('href', "{{ url('blog_index') }}");
+      });
+      // Submit버튼 스크립트
+      $('#submit').one('click', function(event) {
+        $('#article_hashtag').val($.map(hashtags, function(value, index) {
+          return [value];
+        }));
+        $('form').submit();
       });
     });
   </script>
@@ -116,9 +133,9 @@
   </nav>
 {% endblock %}
 {% block main %}
-<div class="article-form">    
+<div class="article-new">    
   
-  <h1 class="h3 mb-3 font-weight-normal" style="margin: 30px 0;">{{ 'front.blog.article'|trans }}</h1>
+  <h1 >{{ 'front.blog.article'|trans }}</h1>
     
   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div>
@@ -131,20 +148,24 @@
       {{ form_row(form.visible) }}
     </div>
     <div>
-      {{ form_row(form.title) }}
+      {{ form_row(form.title, {'attr': {'placeholder': 'front.blog.article.title.placeholder'|trans }}) }}
     </div>
-    <div class="hashtag-box">
-      <div><ul class="hashtag-list"></ul></div>
-      <div><input id="hashtag" name="hashtag" type="text" class="form-control" placeholder="{{ 'front.blog.article.hashtag.placeholder'|trans }}" /></div>
-    </div>
+    <div class="hashtag-view">
+      <ul></ul>
+      {{ form_row(form.hashtag) }}
+    </div> 
+
     <div class="content-box">
       {{ form_widget(form.content) }}
       {{ form_errors(form.content) }}
     </div>
-    <div class="submit-box">
-      <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
-      <button id="submit" type="submit" class="btn btn-primary">{{ 'front.blog.article.submit'|trans }}</button>
-    </div>
   {{ form_end(form) }}
+  <div class="hashtag-box">
+    <input id="hashtag" name="hashtag" type="text" class="form-control" placeholder="{{ 'front.blog.article.hashtag.placeholder'|trans }}" />
+  </div>
+  <div class="submit-box">
+    <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
+    <button id="submit" type="submit" class="btn btn-primary">{{ 'front.blog.article.submit'|trans }}</button>
+  </div>
 </div>
 {% endblock %}

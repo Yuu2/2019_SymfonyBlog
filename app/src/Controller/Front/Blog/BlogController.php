@@ -2,7 +2,7 @@
 
 namespace App\Controller\Front\Blog;
 
-use App\Form\ArticleCreateType;
+use App\Form\ArticleType;
 use App\Entity\Article;
 use App\Service\BlogService;
 use App\Service\CategoryService;
@@ -77,7 +77,7 @@ class BlogController extends AbstractController {
    */
   public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomUtil $customUtil) {
     
-    $form = $this->createForm(ArticleCreateType::class, new Article);
+    $form = $this->createForm(ArticleType::class, new Article);
     $form->handleRequest($request);
 
     if($form->isSubmitted() && $form->isValid()) {
@@ -115,7 +115,7 @@ class BlogController extends AbstractController {
    */
   public function edit(Request $request, Article $article, BlogService $blogService, CategoryService $categoryService, CustomUtil $customUtil) {
 
-    $form = $this->createForm(ArticleCreateType::class, $article, ['method' => 'PUT']);
+    $form = $this->createForm(ArticleType::class, $article, ['method' => 'PUT']);
     $form->handleRequest($request);
 
     if($form->isSubmitted() && $form->isValid()) {
