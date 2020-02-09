@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -18,9 +19,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @author Yuu2
- * updated 2020.01.29
+ * updated 2020.02.09
  */
-class ArticleCreateType extends AbstractType {
+class ArticleType extends AbstractType {
   
   /**
    * @var TranslatorInterface
@@ -48,9 +49,6 @@ class ArticleCreateType extends AbstractType {
     $builder
       // 제목
       ->add('title', TextType::class, [
-        'attr' => [
-          'placeholder' => $translator->trans('front.blog.article.title.placeholder')
-        ],
         'constraints' => [
           new Assert\NotBlank([
             'message' => 'assert.blog.article.title.empty'
@@ -69,14 +67,14 @@ class ArticleCreateType extends AbstractType {
       ])
       // 공개여부
       ->add('visible', ChoiceType::class, [
+        'choices' => [
+          $translator->trans('front.blog.article.visible.true')  => TRUE,
+          $translator->trans('front.blog.article.visible.false') => FALSE
+        ],
         'constraints' => [
           new Assert\Type([
             'type' => 'bool'
           ])
-        ],
-        'choices' => [
-          $translator->trans('front.blog.article.visible.true')  => TRUE,
-          $translator->trans('front.blog.article.visible.false') => FALSE
         ],
         'label' => $translator->trans('front.blog.article.visible')
       ])
@@ -87,6 +85,11 @@ class ArticleCreateType extends AbstractType {
         },
         'class' => Category::class,
         'label' => $translator->trans('front.blog.article.category')
+      ])
+      // 해시태그
+      ->add('hashtag', HiddenType::class, [
+        'required' => false,
+        'mapped'   => false,
       ])
     ;
   }
