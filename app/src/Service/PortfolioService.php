@@ -27,7 +27,7 @@ class PortfolioService {
    * @access public
    * @return array
    */
-  public function all(): ?array {
+  public function allPortfolios(): ?array {
     return $this->portfolioRepository->findAll();
   }
 }

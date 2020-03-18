@@ -54,7 +54,7 @@ class SecurityService {
    * @param User $user
    * @return void
    */
-  public function save(User $user) {
+  public function saveUser(User $user) {
     
     $encryptedPw = $this->passwordEncoder->encodePassword($user, $user->getPassword());
 

@@ -40,12 +40,12 @@ class BlogService {
   }
 
   /**
-   * 블로그 게시글 리스트
+   * 블로그 게시글 페이징
    * @access public
    * @param Request $request
    * @return Object
    */
-  public function articles(Request $request): Object {
+  public function pagingArticles(Request $request): Object {
 
     $params = array(
       'category' => $request->query->get('category'),
@@ -56,6 +56,7 @@ class BlogService {
 
     return $this->articleRepository->paging($params);
   }
+
   /**
    * 최근 블로그 게시글
    * @access public
@@ -67,20 +68,14 @@ class BlogService {
     return $this->articleRepository->recentArticles($count);
   }
 
-  /**
-   * @access public
-   * @return array
-   */
-  public function tags(): ?array {
-    return $this->tagRepository->findAll();
-  }
-  /**
+    /**
    * 블로그 게시글 영속화
    * @param Article $article
    * @access public
    * @return void
    */
-  public function save(Article $article) {
+  public function saveArticle(Article $article) {
+
 
     $article->setCreatedAt(new \DateTime);
 
@@ -94,8 +89,37 @@ class BlogService {
    * @param Article $article
    * @return void
    */
-  public function remove(Article $article): void {
+  public function removeArticle(Article $article): void {
     $this->entityManager->remove($article);
     $this->entityManager->flush();
   }
+
+  /**
+   * 블로그 모든 태그
+   * @access public
+   * @return array
+   */
+  public function allTags(): ?array {
+    return $this->tagRepository->findAll();
+  }
+
+  /**
+   * 블로그 해시태그 저장
+   * @access public
+   * @return boolean
+   */
+  public function saveTags() {
+    $this->entityManager->getConnection()->beginTransaction();
+    
+    try {
+
+      // @todo
+
+      $this->entityManager->getConnection()->commit();
+    } catch(\Exception $e) {
+      $this->entityManager->getConnection()->rollback();
+    }
+
+    $this->tagRepoistory;
+  } 
 }
