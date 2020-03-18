@@ -42,7 +42,7 @@ class CategoryService {
    * @param array $categories
    * @return string
    */
-  public function categories(array $categories): string {
+  public function renderCategories(array $categories): string {
 
     $this->html .= '<ul>';
   
@@ -50,9 +50,9 @@ class CategoryService {
       $url = $this->urlGenerator->generate('blog_index', array('category' => $category['id']));
       $this->html .= '<li>' . '<a href="' . $url .'">' . $category['title'] .  '</a>'.'</li>';
 
-      if(!empty($category['subcategory'])) 
-        $this->categories($category['subcategory']);
-
+      if(!empty($category['subcategory'])) {
+        $this->allCategories($category['subcategory']);
+      }
     }
 
     $this->html .= '</ul>';
@@ -65,7 +65,7 @@ class CategoryService {
    * @access public
    * @param int $parent
    */
-  public function hierarachy(int $parent = NULL): ?array {
+  public function hierarachyCategories(int $parent = NULL): ?array {
 
       $tree = array();
 
@@ -79,7 +79,7 @@ class CategoryService {
             array(
               'id' => $category->getId(),
               'title' => $category->getTitle(),
-              'subcategory' => $this->hierarachy($category->getId())
+              'subcategory' => $this->hierarachyCategories($category->getId())
             )
           )
         );

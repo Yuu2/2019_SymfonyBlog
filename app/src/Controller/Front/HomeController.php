@@ -27,8 +27,8 @@ class HomeController extends AbstractController {
   public function home(SkillService $skillService, PortfolioService $portfolioService) {
  
     return array(
-      'Skills' => $skillService->all(),
-      'Portfolios' => $portfolioService->all()
+      'Skills' => $skillService->allSkills(),
+      'Portfolios' => $portfolioService->allPortfolios()
     );
   }
 }

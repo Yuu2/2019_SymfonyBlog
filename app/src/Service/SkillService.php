@@ -27,7 +27,7 @@ class SkillService {
    * @access public
    * @return array
    */
-  public function all(): ?array {
+  public function allSkills(): ?array {
     return $this->skillRepository->findAll();
   }
 }

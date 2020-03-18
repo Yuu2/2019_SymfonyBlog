@@ -35,8 +35,8 @@ class BlogController extends AbstractController {
     $categories = $categoryService->hierarachy();
     
     return array(
-      'Articles' => $blogService->articles($request),
-      'Categories' => $categoryService->categories($categories),
+      'Articles' => $blogService->pagingArticles($request),
+      'Categories' => $categoryService->renderCategories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->tags()
     );
@@ -54,13 +54,13 @@ class BlogController extends AbstractController {
    */
   public function show(Article $article, BlogService $blogService, CategoryService $categoryService): array {
 
-    $categories = $categoryService->hierarachy();
+    $categories = $categoryService->hierarachyCategories();
 
     return array(
       'Article' => $article,
-      'Categories' => $categoryService->categories($categories),
+      'Categories' => $categoryService->renderCategories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->tags()
+      'Tags' => $blogService->allTags()
     );
   }
 
@@ -86,10 +86,15 @@ class BlogController extends AbstractController {
         // CSRF Token 검증
         case !$customUtil->verifyCsrfToken($request): break;
         default:
-        /** @var Article */
-        $article = $form->getData();
-        $blogService->save($article);
-        return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+          /** @var String */
+          $hashtag = $form->get('hashtag')->getData();
+
+          /** @var Article */
+          $article = $form->getData();
+
+          $blogService->saveArticle($article);
+          
+          return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
       }
     }
     
@@ -99,7 +104,7 @@ class BlogController extends AbstractController {
       'form' => $form->createView(),
       'Categories' => $categoryService->categories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->tags()
+      'Tags' => $blogService->allTags()
     );
   }
 
@@ -137,7 +142,7 @@ class BlogController extends AbstractController {
       'form' => $form->createView(),
       'Categories' => $categoryService->categories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->tags()
+      'Tags' => $blogService->allTags()
     );
   }
 
@@ -152,7 +157,7 @@ class BlogController extends AbstractController {
    */
   public function delete(Request $request, Article $article, BlogService $blogService): object {
     
-    $blogService->remove($article);
+    $blogService->removeArticle($article);
 
     return $this->redirectToRoute('blog_index');
   }
