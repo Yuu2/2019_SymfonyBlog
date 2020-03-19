@@ -6,12 +6,14 @@ use App\Form\ArticleType;
 use App\Entity\Article;
 use App\Service\BlogService;
 use App\Service\CategoryService;
-use App\Util\CustomUtil;
+use App\Util\ValidationUtils;
+use App\Util\BlogUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author Yuu2
@@ -32,13 +34,13 @@ class BlogController extends AbstractController {
    */
   public function index(Request $request, BlogService $blogService, CategoryService $categoryService): array {
     
-    $categories = $categoryService->hierarachy();
+    $categories = $categoryService->hierarachyCategories();
     
     return array(
       'Articles' => $blogService->pagingArticles($request),
       'Categories' => $categoryService->renderCategories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->tags()
+      'Tags' => $blogService->allTags()
     );
   }
 
@@ -72,10 +74,12 @@ class BlogController extends AbstractController {
    * @param Request $request
    * @param BlogService $blogService
    * @param CategoryService $categoryService
-   * @param CustomUtil $customUtil
+   * @param TranslatorInterface $translator
+   * @param ValidationUtils $validationUtils
+   * @param BlogUtils $blogUtils
    * @return array|object
    */
-  public function new(Request $request, BlogService $blogService, CategoryService $categoryService, CustomUtil $customUtil) {
+  public function new(Request $request, TranslatorInterface $translator, BlogService $blogService, CategoryService $categoryService, ValidationUtils $validationUtils, BlogUtils $blogUtils) {
     
     $form = $this->createForm(ArticleType::class, new Article);
     $form->handleRequest($request);
@@ -84,31 +88,39 @@ class BlogController extends AbstractController {
       
       switch(true) {
         // CSRF Token 검증
-        case !$customUtil->verifyCsrfToken($request): break;
+        case !$validationUtils->verifyCsrfToken($request): break;
+
         default:
           /** @var String */
           $hashtag = $form->get('hashtag')->getData();
-
+          $hashtagArr = $blogUtils->hashtagStringToArray($hashtag);
+    
           /** @var Article */
           $article = $form->getData();
-
-          $blogService->saveArticle($article);
           
-          return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+          if ($blogService->write($article, $hashtagArr)) {
+
+            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+          } else {
+            /** @todo 에러메시지 */
+            // $this->addFlash('error', '');
+          }
       }
     }
     
-    $categories = $categoryService->hierarachy();
+    $hierarachyCategories = $categoryService->hierarachyCategories();
 
     return array(
       'form' => $form->createView(),
-      'Categories' => $categoryService->categories($categories),
+      'Categories' => $categoryService->renderCategories($hierarachyCategories),
       'RecentArticles' => $blogService->recentArticles(10),
       'Tags' => $blogService->allTags()
     );
   }
 
   /**
+   * @todo 리팩토링
+   * 
    * 블로그 게시물 수정
    * @Route("/blog/edit/{id}", name="blog_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
    * @Template("front/blog/form.twig")
@@ -118,7 +130,7 @@ class BlogController extends AbstractController {
    * @param BlogService $blogService
    * @return array|object
    */
-  public function edit(Request $request, Article $article, BlogService $blogService, CategoryService $categoryService, CustomUtil $customUtil) {
+  public function edit(Request $request, Article $article, BlogService $blogService, CategoryService $categoryService, ValidationUtils $validationUtils) {
 
     $form = $this->createForm(ArticleType::class, $article, ['method' => 'PUT']);
     $form->handleRequest($request);
@@ -127,7 +139,7 @@ class BlogController extends AbstractController {
       
       switch(true) {
         // CSRF Token 검증
-        case !$customUtil->verifyCsrfToken($request): break;
+        case !$validationUtils->verifyCsrfToken($request): break;
         default:
         /** @var Article */
         $article = $form->getData();
