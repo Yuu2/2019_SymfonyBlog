@@ -5,7 +5,7 @@ namespace App\Controller\Security;
 use App\Entity\User;
 use App\Form\UserCreateType;
 use App\Service\SecurityService;
-use App\Util\CustomUtil;
+use App\Util\ValidationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,11 +55,11 @@ class SecurityController extends AbstractController {
    * @access public
    * @param Request $request
    * @param UserPasswordEncoderInterface $userPasswordEncoder
-   * @param CustomUtil $customUtil
+   * @param ValidationUtils $validationUtils
    * @param SecuriyService $securiyService
    * @return array
    */
-  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, CustomUtil $customUtil, SecurityService $securiyService): array {
+  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, ValidationUtils $validationUtils, SecurityService $securiyService): array {
 
     $form = $this->createForm(UserCreateType::class, new User, array(
         'attr' => array('novalidate' => 'novalidate')
@@ -70,9 +70,9 @@ class SecurityController extends AbstractController {
       
       switch(true) {
         // CSRF Token 검증
-        case !$customUtil->verifyCsrfToken($request): break;
+        case !$validationUtils->verifyCsrfToken($request): break;
         // Google Recaptcha 검증 
-        case !$customUtil->verifyRecaptcha($request): break;
+        case !$validationUtils->verifyRecaptcha($request): break;
         default: 
           /** @var User */
           $user = $form->getData();

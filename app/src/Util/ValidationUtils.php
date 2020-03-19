@@ -2,15 +2,15 @@
 
 namespace App\Util;
 
-  use ReCaptcha\ReCaptcha;
+use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @author Yuu2
- * updated 2020.01.30
+ * updated 2020.03.18
  */
-class CustomUtil {
+class ValidationUtils {
 
   /**
    * @var CsrfTokenManagerInterface
