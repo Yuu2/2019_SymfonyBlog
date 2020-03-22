@@ -49,5 +49,7 @@ front.blog.article.cancel: 取消
 front.blog.article.visible.true: 公開
 front.blog.article.visible.false: 非公開
 front.blog.article.title.placeholder: タイトルを入力してください。
+front.blog.article.flash.msg_write_error: 記事作成に失敗しました。（サーバエラー）
+
 # 질문하기
 front.contact: 問い合わせ

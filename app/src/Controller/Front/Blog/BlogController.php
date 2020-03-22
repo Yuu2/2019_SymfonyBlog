@@ -40,7 +40,7 @@ class BlogController extends AbstractController {
       'Articles' => $blogService->pagingArticles($request),
       'Categories' => $categoryService->renderCategories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->allTags()
+      'RecentTags' => $blogService->recentTags(30)
     );
   }
 
@@ -62,7 +62,7 @@ class BlogController extends AbstractController {
       'Article' => $article,
       'Categories' => $categoryService->renderCategories($categories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->allTags()
+      'RecentTags' => $blogService->recentTags(30)
     );
   }
 
@@ -87,6 +87,7 @@ class BlogController extends AbstractController {
     if($form->isSubmitted() && $form->isValid()) {
       
       switch(true) {
+
         // CSRF Token 검증
         case !$validationUtils->verifyCsrfToken($request): break;
 
@@ -103,7 +104,7 @@ class BlogController extends AbstractController {
             return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
           } else {
             /** @todo 에러메시지 */
-            // $this->addFlash('error', '');
+            $this->addFlash('msg', $translator->trans('front.blog.article.flash.msg_write_error'));
           }
       }
     }
@@ -114,7 +115,7 @@ class BlogController extends AbstractController {
       'form' => $form->createView(),
       'Categories' => $categoryService->renderCategories($hierarachyCategories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->allTags()
+      'RecentTags' => $blogService->recentTags(30)
     );
   }
 
@@ -138,23 +139,36 @@ class BlogController extends AbstractController {
     if($form->isSubmitted() && $form->isValid()) {
       
       switch(true) {
+
         // CSRF Token 검증
         case !$validationUtils->verifyCsrfToken($request): break;
+        
         default:
-        /** @var Article */
-        $article = $form->getData();
-        $blogService->save($article);
-        return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+
+          /** @var String */
+          $hashtag = $form->get('hashtag')->getData();
+          $hashtagArr = $blogUtils->hashtagStringToArray($hashtag);
+    
+          /** @var Article */
+          $article = $form->getData();
+          
+          if ($blogService->write($article, $hashtagArr)) {
+
+            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+          } else {
+            /** @todo 에러메시지 */
+            $this->addFlash('msg', $translator->trans('front.blog.article.flash.msg_write_error'));
+          }
       }
     }
 
-    $categories = $categoryService->hierarachy();
+    $categories = $categoryService->hierarachyCategories();
 
     return array(
       'form' => $form->createView(),
-      'Categories' => $categoryService->categories($categories),
+      'Categories' => $categoryService->renderCategories($hierarachyCategories),
       'RecentArticles' => $blogService->recentArticles(10),
-      'Tags' => $blogService->allTags()
+      'RecentTags' => $blogService->recentTags(30)
     );
   }
 

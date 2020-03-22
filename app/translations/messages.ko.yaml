@@ -50,6 +50,6 @@ front.blog.article.visible.true: 공개
 front.blog.article.visible.false: 비공개
 front.blog.article.title.placeholder: 제목을 입력하세요.
 front.blog.article.hashtag.placeholder: 해시태그를 입력하세요.
-
+front.blog.article.flash.msg_write_error: 옳바르지 않은 데이터는 저장 할 수 없습니다. (서버 에러)
 # 질문하기
 front.contact: 질문하기

@@ -56,7 +56,11 @@
                 <ul>
                   <li>
                     <span class="ion-pricetag"></span>
-                    <a href="#"></a>
+                    {% for ArticleTag in Article.articleTag %}
+                      <li>
+                        <small><a href="{{ url('blog_index', { 'tag': ArticleTag.Tag.name })}}">{{ ArticleTag.Tag.name }}</a></small>
+                      </li>
+                    {% endfor %}
                   </li>
                   <li>
                     <span class="ion-chatbox"></span>
@@ -90,6 +94,8 @@
               </form>
             </div>
           </div>
+
+          <!-- 카테고리 -->
           <div class="widget-sidebar">
             <h5 class="sidebar-title">{{ 'front.blog.category'|trans }}</h5>
             <div class="sidebar-content">
@@ -100,6 +106,8 @@
               </ul>
             </div>
           </div>
+
+          <!-- 최근 작성한 게시물 -->
           <div class="widget-sidebar">
             <h5 class="sidebar-title">{{ 'front.blog.recently'|trans }}</h5>
             <div class="sidebar-content">
@@ -112,11 +120,13 @@
               </ul>
             </div>
           </div>
+
+          <!-- 최근 추가된 태그 -->
           <div class="widget-sidebar widget-tags">
             <h5 class="sidebar-title">{{ 'front.blog.tag'|trans }}</h5>
             <div class="sidebar-content">
               <ul>
-                {% for Tag in Tags %}
+                {% for Tag in RecentTags %}
                 <li>
                   <form method="GET" action="{{ path('blog_index') }}">
                     <input type="hidden" name="tag" value="{{ Tag.name }}" />
