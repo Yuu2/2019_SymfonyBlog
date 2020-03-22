@@ -152,7 +152,13 @@
 <div class="article-new">    
   
   <h1 >{{ 'front.blog.article'|trans }}</h1>
-    
+  
+  {% for message in app.flashes('msg') %}
+    <div class="alert alert-danger">
+      {{ message }}
+    </div>
+  {% endfor %}
+  
   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div>
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>

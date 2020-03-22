@@ -86,13 +86,14 @@ class BlogService {
   }
 
   /**
-   * 블로그 모든 태그
+   * 최근 블로그 태그
    * @access public
+   * @param int $count
    * @return array
    */
-  public function allTags(): ?array {
+  public function recentTags(int $count = 30): ?array {
 
-    return $this->tagRepository->findAll();
+    return $this->tagRepository->findTagsOrderById($count);
   }
   
   /**
@@ -103,21 +104,28 @@ class BlogService {
    * @return bool
    */
   public function write(Article $article, array $hashtagArr): bool {
-    
-    $this->saveArticle($article, false);
-    
-    foreach ($hashtagArr as $hashtag) {
-      
-      $tag = new Tag();
-      $tag->setName($hashtag);
+ 
+    try {
 
-      $this->saveTag($tag, false);
-      $this->saveArticleTag($article, $tag, false);
+      $this->saveArticle($article, false);
+    
+      foreach ($hashtagArr as $hashtag) {
+        
+        $tag = new Tag();
+        $tag->setName($hashtag);
+
+        $this->saveTag($tag, false);
+        $this->saveArticleTag($article, $tag, false);
+      }
+
+      $this->entityManager->flush();
+
+      return true;
+
+    } catch(\Exception $e) {
+
+      return false;
     }
-
-    $this->entityManager->flush();
-    
-    return $this->articleRepository->find($article->getId()) ? true : false;
   }
 
   /**

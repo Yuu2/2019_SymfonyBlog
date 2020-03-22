@@ -25,7 +25,7 @@
     <div class="intro-content display-table">
       <div class="table-cell">
         <div class="container">
-          <a href="{{ path('blog_show', {'id': Article.id}) }}">
+          <a href="{{ path('blog_show', { 'id': Article.id })}}">
           <h2 class="intro-title mb-4">{{ Article.title }}</h2>
           </a>
           <ol class="breadcrumb d-flex justify-content-center">
@@ -47,7 +47,11 @@
               <ul>
                 <li>
                   <span class="ion-pricetag"></span>
-                  <a href="#"></a>
+                  {% for ArticleTag in Article.articleTag %}
+                    <li>
+                      <a href="{{ url('blog_index', { 'tag': ArticleTag.Tag.name })}}">{{ ArticleTag.Tag.name }}</a>
+                    </li>
+                  {% endfor %}
                 </li>
                 <li>
                   <span class="ion-chatbox"></span>
@@ -169,13 +173,13 @@
         <!-- 검색 -->
         <div class="col-md-4">
           <div class="widget-sidebar sidebar-search">
-            <h5 class="sidebar-title">Search</h5>
+            <h5 class="sidebar-title">{{ 'front.blog.search'|trans }}</h5>
             <div class="sidebar-content">
-              <form>
+              <form method="GET" action="{{ path('blog_index') }}">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+                  <input type="text" name="search" class="form-control" placeholder="{{ 'front.blog.search.placeholder'|trans }}">
                   <span class="input-group-btn">
-                    <button class="btn btn-secondary btn-search" type="button">
+                    <button class="btn btn-secondary btn-search" type="submit">
                       <span class="ion-android-search"></span>
                     </button>
                   </span>
@@ -183,72 +187,45 @@
               </form>
             </div>
           </div>
+          <!-- 카테고리 -->
           <div class="widget-sidebar">
-            <h5 class="sidebar-title">Recent Post</h5>
+            <h5 class="sidebar-title">{{ 'front.blog.category'|trans }}</h5>
             <div class="sidebar-content">
               <ul class="list-sidebar">
-                <li>
-                  <a href="#">Atque placeat maiores.</a>
-                </li>
-                <li>
-                  <a href="#">Lorem ipsum dolor sit amet consectetur</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
-                <li>
-                  <a href="#">Atque placeat maiores nam quo autem</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
+                {% if Categories is not empty %}
+                {{ Categories|raw }}
+                {% endif %}
               </ul>
             </div>
           </div>
+
+          <!-- 최근 작성한 게시물 -->
           <div class="widget-sidebar">
-            <h5 class="sidebar-title">Archives</h5>
+            <h5 class="sidebar-title">{{ 'front.blog.recently'|trans }}</h5>
             <div class="sidebar-content">
               <ul class="list-sidebar">
-                <li>
-                  <a href="#">September, 2017.</a>
-                </li>
-                <li>
-                  <a href="#">April, 2017.</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
-                <li>
-                  <a href="#">Atque placeat maiores nam quo autem</a>
-                </li>
-                <li>
-                  <a href="#">Nam quo autem exercitationem.</a>
-                </li>
+                {% if RecentArticles is not empty %}
+                {% for RecentArticle in RecentArticles %}
+                  <li><a href="{{ path('blog_show', {'id': RecentArticle.id} )}}">{{ RecentArticle.title }} <small>{{ RecentArticle.createdAt|date('l, Y/m/d')}}</small></a></li>
+                {% endfor %}
+                {% endif %}
               </ul>
             </div>
           </div>
+
+          <!-- 최근 추가된 태그 -->
           <div class="widget-sidebar widget-tags">
-            <h5 class="sidebar-title">Tags</h5>
+            <h5 class="sidebar-title">{{ 'front.blog.tag'|trans }}</h5>
             <div class="sidebar-content">
               <ul>
+                {% for Tag in RecentTags %}
                 <li>
-                  <a href="#">Web.</a>
+                  <form method="GET" action="{{ path('blog_index') }}">
+                    <input type="hidden" name="tag" value="{{ Tag.name }}" />
+                    <button class="btn btn-outline-primary btn-sm" type="submit">{{ Tag.name }}</button>
+                  </form>
                 </li>
-                <li>
-                  <a href="#">Design.</a>
-                </li>
-                <li>
-                  <a href="#">Travel.</a>
-                </li>
-                <li>
-                  <a href="#">Photoshop</a>
-                </li>
-                <li>
-                  <a href="#">Corel Draw</a>
-                </li>
-                <li>
-                  <a href="#">JavaScript</a>
-                </li>
+                {% endfor %}
               </ul>
             </div>
           </div>
