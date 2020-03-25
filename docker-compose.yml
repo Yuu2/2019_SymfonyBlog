@@ -9,8 +9,8 @@ services:
     working_dir: /var/www
 
   server:
-    image: apache
     container_name: server
+    image: apache
     ports:
       - 80:80
     environment:
@@ -22,10 +22,11 @@ services:
       - ./app:/var/www/app
       # ./app:/var/www/app:cached
       - ./apache/vhost.conf:/etc/apache2/sites-available/000-default.conf
-      # ./apche/php.ini:/usr/local/etc/php/php.ini
+  
   db:
-    image: mysql:5.8
     container_name: db
+    image: mysql:8.0
+    command: mysqld --sql_mode=""
     environment:
       MYSQL_DATABASE: portfolioblog_db
       MYSQL_ROOT_PASSWORD: root

@@ -166,24 +166,3 @@ class BlogService {
     $this->entityManager->flush();
   }
 }
-
-
-
-
-/*
-$this->entityManager->getConnection()->beginTransaction();
-    
-try {
-
-  // @todo 일괄처리
-
-
-
-
-  $this->entityManager->getConnection()->commit();
-  return true;
-
-} catch(\Exception $e) {
-  $this->entityManager->getConnection()->rollback();
-  return false;
-}
