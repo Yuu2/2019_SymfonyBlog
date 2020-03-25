@@ -24,15 +24,15 @@ class Tag
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleTag", mappedBy="tag", orphanRemoval=true)
+     * @ORM\Column(type="datetime")
      */
-    private $article_tag;
+    private $created_at;
 
-    public function __construct()
-    {
-        $this->ArticleTag = new ArrayCollection();
-        $this->article_tag = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="tag")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
 
     public function getId(): ?int
     {
@@ -51,34 +51,28 @@ class Tag
         return $this;
     }
 
-    /**
-     * @return Collection|ArticleTag[]
-     */
-    public function getArticleTag(): Collection
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->article_tag;
+        return $this->created_at;
     }
 
-    public function addArticleTag(ArticleTag $articleTag): self
+    public function setCreatedAt(\DateTimeInterface $created_at): self
     {
-        if (!$this->article_tag->contains($articleTag)) {
-            $this->article_tag[] = $articleTag;
-            $articleTag->setTag($this);
-        }
+        $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function removeArticleTag(ArticleTag $articleTag): self
+    public function getArticle(): ?Article
     {
-        if ($this->article_tag->contains($articleTag)) {
-            $this->article_tag->removeElement($articleTag);
-            // set the owning side to null (unless already changed)
-            if ($articleTag->getTag() === $this) {
-                $articleTag->setTag(null);
-            }
-        }
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }
+
 }

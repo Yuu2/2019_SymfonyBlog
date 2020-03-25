@@ -30,9 +30,11 @@ class TagRepository extends ServiceEntityRepository {
    * @param int $count
    * @return array
    */
-  public function findTagsOrderById(int $count): ?array {
+  public function countTags(int $count): ?array {
     return $this->createQueryBuilder('t')
-      ->orderBy('t.id', 'DESC')
+      ->select()
+      ->groupBy('t.name')
+      ->orderBy('t.created_at', 'DESC')
       ->getQuery()
       ->setMaxResults($count)
       ->getResult()

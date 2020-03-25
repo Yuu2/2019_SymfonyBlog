@@ -52,16 +52,14 @@ class ArticleRepository extends ServiceEntityRepository {
       // 카테고리
       case $category:
         $query
-          ->innerJoin('a.article_category', 'ac')
-          ->innerJoin('ac.category', 'c')
+          ->innerJoin('a.category', 'c')
           ->where('c.id = :category_id')
           ->setParameter('category_id', $category);
       break;
       // 태그
       case $tag:
         $query
-          ->innerJoin('a.article_tag', 'at')
-          ->innerJoin('at.tag', 't')
+          ->innerJoin('a.tag', 't')
           ->where('t.name = :name')
           ->setParameter('name', $tag);
       break;

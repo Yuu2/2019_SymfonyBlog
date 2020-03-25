@@ -6,7 +6,6 @@ use App\Entity\Article;
 use App\Entity\Tag;
 use App\Entity\ArticleTag;
 use App\Repository\ArticleRepository;
-use App\Repository\ArticleTagRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +27,6 @@ class BlogService {
   private $articleRepository;
 
   /**
-   * @var ArticleTagRepository
-   */
-  private $articleTagRepository;
-
-  /**
    * @var TagRepository
    */
   protected $tagRepository;
@@ -41,18 +35,15 @@ class BlogService {
    * @access public
    * @param EntityManagerInterface $entityManager
    * @param ArticleRepository $articleRepository
-   * @param ArticleTagRepository $articleTagRepository
    * @param TagRepository $tagRepository
    */
   public function __construct(
     EntityManagerInterface $entityManager, 
     ArticleRepository $articleRepository,
-    ArticleTagRepository $articleTagRepository,
     TagRepository $tagRepository
   ) {
     $this->entityManager = $entityManager;
     $this->articleRepository = $articleRepository;
-    $this->articleTagRepository = $articleTagRepository;
     $this->tagRepository = $tagRepository;
   }
 
@@ -93,90 +84,62 @@ class BlogService {
    */
   public function recentTags(int $count = 30): ?array {
 
-    return $this->tagRepository->findTagsOrderById($count);
+    return $this->tagRepository->countTags($count);
   }
   
   /**
    * 블로그 게시글 작성
    * @access public
    * @param Article $article
-   * @param array $hashtagArr
+   * @param array $hashtagForm
    * @return bool
    */
-  public function write(Article $article, array $hashtagArr): bool {
- 
-    try {
-
-      $this->saveArticle($article, false);
+  public function write(Article $article, array $hashtags): bool {
     
-      foreach ($hashtagArr as $hashtag) {
-        
-        $tag = new Tag();
-        $tag->setName($hashtag);
+    try {
+      
+      $artitags = [];
+      
+      foreach($article->getTag() as $tag) {
 
-        $this->saveTag($tag, false);
-        $this->saveArticleTag($article, $tag, false);
+        $artitags[] = $tag->getName();
       }
 
+      // 해시태그 주입 시 
+      foreach(array_diff($hashtags, $artitags) as $hashtag) {
+
+        $tag = new Tag();
+        
+        $tag->setName($hashtag);
+        $tag->setCreatedAt(new \DateTime);
+        
+        $this->entityManager->persist($tag);
+
+        $article->addTag($tag);
+      }
+
+      // 해시태그 삭제 시
+      foreach(array_diff($artitags, $hashtags) as $hashtag) {
+        
+        foreach($article->getTag() as $tag) {
+          
+          if($tag->getName() == $hashtag) {
+            $article->removeTag($tag);
+          }
+        }
+      }
+      
+      $article->setCreatedAt(new \DateTime);
+
+      $this->entityManager->persist($article);
       $this->entityManager->flush();
 
       return true;
-
+    
     } catch(\Exception $e) {
-
+      dump($e);
       return false;
     }
-  }
-
-  /**
-   * 블로그 게시글 영속화
-   * @access public
-   * @param Article $article
-   * @param bool $flushFlag 
-   * @return void
-   */
-  public function saveArticle(Article $article, bool $flushFlag = true): void {
-
-
-    $article->setCreatedAt(new \DateTime);
-
-    $this->entityManager->persist($article);
-    
-    $flushFlag ? $this->entityManager->flush() : null;
-  }
-
-  /**
-   * 블로그 태그 영속화
-   * @access public
-   * @param Tag $tag
-   * @param bool $flashFlag
-   * @return void
-   */
-  public function saveTag(Tag $tag, bool $flashFlag = true): void {
-
-    $this->entityManager->persist($tag);
-
-    $flashFlag ? $this->entityManager->flush() : true;
-  }
-
-  /**
-   * 블로그 게시글 - 태그 영속화
-   * @access public
-   * @param Article $article
-   * @param Tag $tag
-   * @param bool $flashFlag
-   * @return void
-   */
-  public function saveArticleTag(Article $article, Tag $tag, bool $flashFlag = true): void {
-    
-    /** @var ArticleTag */
-    $articleTag = new ArticleTag();
-    $articleTag->setArticle($article);
-    $articleTag->setTag($tag);
-
-    $this->entityManager->persist($articleTag);
-
-    $flashFlag ? $this->entityManager->flush() : true;
   }
 
   /**

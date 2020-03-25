@@ -11,12 +11,15 @@
     .article-new h1 {
       margin: 30px 0;
     }
+    
     .content-box {
       margin-bottom: 5px;
     }
+
     .hashtag-box {
       margin-bottom: 10px;
     }
+    
     .hashtag-view {
       margin-bottom: 5px;
     }
@@ -49,6 +52,19 @@
       // 해시태그 객체
       var hashtags = {};
 
+      initHashtag();
+      // 해시태그 초기값
+      function initHashtag() {
+        
+        {% for Tag in form.vars.value.Tag %}
+
+          var hashtag = '{{ Tag.name }}';
+          
+          addHashtag(hashtag);
+
+        {% endfor %}
+      }
+
       // 해시태그 객체 추가
       function addHashtag(value) {
         
@@ -57,6 +73,12 @@
         var idx = Object.keys(hashtags).length;
         hashtags[idx] = value;
         
+        renderHashtag(idx, value);
+      }
+
+      // 해시태그 렌더링
+      function renderHashtag(idx, value) {
+
         $('.hashtag-view').append(
           "<li>" +
             "<button type='button' class='btn btn-outline-primary btn-sm'>" +
@@ -160,19 +182,23 @@
   {% endfor %}
   
   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    
     <div>
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
     </div>
+    
     <diV>
       {{ form_row(form.category) }}
     </div>
+    
     <diV>
       {{ form_row(form.visible) }}
     </div>
+
     <div>
       {{ form_row(form.title, {'attr': {'placeholder': 'front.blog.article.title.placeholder'|trans }}) }}
     </div>
-
+    
     <div class="content-box">
       {{ form_widget(form.content) }}
       {{ form_errors(form.content) }}
@@ -184,9 +210,11 @@
     </div> 
 
   {{ form_end(form) }}
+  
   <div class="hashtag-box">
     <input id="hashtag" name="hashtag" type="text" class="form-control" placeholder="{{ 'front.blog.article.hashtag.placeholder'|trans }}" />
   </div>
+
   <div class="submit-box">
     <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
     <button id="submit" type="submit" class="btn btn-primary">{{ 'front.blog.article.submit'|trans }}</button>
