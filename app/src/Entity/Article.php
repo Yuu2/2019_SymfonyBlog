@@ -54,19 +54,19 @@ class Article
     private $deleted_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleTag", mappedBy="article", orphanRemoval=true)
-     */
-    private $article_tag;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="article")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tag", mappedBy="article", orphanRemoval=true)
+     */
+    private $tag;
+
     public function __construct()
     {
-        $this->article_tag = new ArrayCollection();
+        $this->tag = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,37 +134,6 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection|ArticleTag[]
-     */
-    public function getArticleTag(): Collection
-    {
-        return $this->article_tag;
-    }
-
-    public function addArticleTag(ArticleTag $articleTag): self
-    {
-        if (!$this->article_tag->contains($articleTag)) {
-            $this->article_tag[] = $articleTag;
-            $articleTag->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticleTag(ArticleTag $articleTag): self
-    {
-        if ($this->article_tag->contains($articleTag)) {
-            $this->article_tag->removeElement($articleTag);
-            // set the owning side to null (unless already changed)
-            if ($articleTag->getArticle() === $this) {
-                $articleTag->setArticle(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getVisible(): ?bool
     {
         return $this->visible;
@@ -197,6 +166,37 @@ class Article
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTag(): Collection
+    {
+        return $this->tag;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tag->contains($tag)) {
+            $this->tag[] = $tag;
+            $tag->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tag->contains($tag)) {
+            $this->tag->removeElement($tag);
+            // set the owning side to null (unless already changed)
+            if ($tag->getArticle() === $this) {
+                $tag->setArticle(null);
+            }
+        }
 
         return $this;
     }

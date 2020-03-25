@@ -16,6 +16,7 @@ app/templates/bloge/
 app/templates/backup/
 app/templates/backup.html.twig
 app/public/bundles/
+app/public/upload/
 app/var/
 app/vendor/
 app/node_modules/

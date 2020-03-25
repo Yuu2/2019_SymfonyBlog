@@ -47,9 +47,9 @@
               <ul>
                 <li>
                   <span class="ion-pricetag"></span>
-                  {% for ArticleTag in Article.articleTag %}
+                  {% for Tag in Article.Tag %}
                     <li>
-                      <a href="{{ url('blog_index', { 'tag': ArticleTag.Tag.name })}}">{{ ArticleTag.Tag.name }}</a>
+                      <a href="{{ url('blog_index', { 'tag': Tag.name })}}">{{ Tag.name }}</a>
                     </li>
                   {% endfor %}
                 </li>

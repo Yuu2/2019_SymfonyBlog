@@ -34,11 +34,11 @@ class BlogController extends AbstractController {
    */
   public function index(Request $request, BlogService $blogService, CategoryService $categoryService): array {
     
-    $categories = $categoryService->hierarachyCategories();
+    $hierarachyCategories = $categoryService->hierarachyCategories();
     
     return array(
       'Articles' => $blogService->pagingArticles($request),
-      'Categories' => $categoryService->renderCategories($categories),
+      'Categories' => $categoryService->renderCategories($hierarachyCategories),
       'RecentArticles' => $blogService->recentArticles(10),
       'RecentTags' => $blogService->recentTags(30)
     );
@@ -56,11 +56,11 @@ class BlogController extends AbstractController {
    */
   public function show(Article $article, BlogService $blogService, CategoryService $categoryService): array {
 
-    $categories = $categoryService->hierarachyCategories();
+    $hierarachyCategories = $categoryService->hierarachyCategories();
 
     return array(
       'Article' => $article,
-      'Categories' => $categoryService->renderCategories($categories),
+      'Categories' => $categoryService->renderCategories($hierarachyCategories),
       'RecentArticles' => $blogService->recentArticles(10),
       'RecentTags' => $blogService->recentTags(30)
     );
@@ -73,13 +73,13 @@ class BlogController extends AbstractController {
    * @access public
    * @param Request $request
    * @param BlogService $blogService
+   * @param BlogUtils $blogUtils
    * @param CategoryService $categoryService
    * @param TranslatorInterface $translator
    * @param ValidationUtils $validationUtils
-   * @param BlogUtils $blogUtils
    * @return array|object
    */
-  public function new(Request $request, TranslatorInterface $translator, BlogService $blogService, CategoryService $categoryService, ValidationUtils $validationUtils, BlogUtils $blogUtils) {
+  public function new(Request $request, BlogService $blogService, BlogUtils $blogUtils, CategoryService $categoryService, TranslatorInterface $translator, ValidationUtils $validationUtils) {
     
     $form = $this->createForm(ArticleType::class, new Article);
     $form->handleRequest($request);
@@ -94,12 +94,12 @@ class BlogController extends AbstractController {
         default:
           /** @var String */
           $hashtag = $form->get('hashtag')->getData();
-          $hashtagArr = $blogUtils->hashtagStringToArray($hashtag);
+          $hashtagForm = $blogUtils->hashtagStringToArray($hashtag);
     
           /** @var Article */
           $article = $form->getData();
           
-          if ($blogService->write($article, $hashtagArr)) {
+          if ($blogService->write($article, $hashtagForm)) {
 
             return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
           } else {
@@ -129,9 +129,13 @@ class BlogController extends AbstractController {
    * @param Request $request
    * @param Article $article
    * @param BlogService $blogService
+   * @param BlogUtils $blogUtils
+   * @param CategoryService $categoryService
+   * @param TranslatorInterface $translator
+   * @param ValidationUtils $validationUtils
    * @return array|object
    */
-  public function edit(Request $request, Article $article, BlogService $blogService, CategoryService $categoryService, ValidationUtils $validationUtils) {
+  public function edit(Request $request, Article $article, BlogService $blogService,  BlogUtils $blogUtils, CategoryService $categoryService, TranslatorInterface $translator, ValidationUtils $validationUtils) {
 
     $form = $this->createForm(ArticleType::class, $article, ['method' => 'PUT']);
     $form->handleRequest($request);
@@ -147,12 +151,13 @@ class BlogController extends AbstractController {
 
           /** @var String */
           $hashtag = $form->get('hashtag')->getData();
-          $hashtagArr = $blogUtils->hashtagStringToArray($hashtag);
+          
+          $hashtagForm = $blogUtils->hashtagStringToArray($hashtag);
     
           /** @var Article */
           $article = $form->getData();
           
-          if ($blogService->write($article, $hashtagArr)) {
+          if ($blogService->write($article, $hashtagForm)) {
 
             return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
           } else {
@@ -162,7 +167,7 @@ class BlogController extends AbstractController {
       }
     }
 
-    $categories = $categoryService->hierarachyCategories();
+    $hierarachyCategories = $categoryService->hierarachyCategories();
 
     return array(
       'form' => $form->createView(),

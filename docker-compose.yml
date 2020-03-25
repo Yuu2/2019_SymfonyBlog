@@ -24,7 +24,7 @@ services:
       - ./apache/vhost.conf:/etc/apache2/sites-available/000-default.conf
       # ./apche/php.ini:/usr/local/etc/php/php.ini
   db:
-    image: mysql:5.7
+    image: mysql:5.8
     container_name: db
     environment:
       MYSQL_DATABASE: portfolioblog_db
