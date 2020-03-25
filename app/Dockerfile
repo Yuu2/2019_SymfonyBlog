@@ -12,4 +12,6 @@ WORKDIR /var/www/app/
 
 RUN composer install
 
+RUN bin/console doctrine:schema:update --dump-sql --force
+
 RUN service apache2 restart
