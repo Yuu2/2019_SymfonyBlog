@@ -29,7 +29,9 @@ services:
     command: mysqld --sql_mode=""
     environment:
       MYSQL_DATABASE: portfolioblog_db
-      MYSQL_ROOT_PASSWORD: root
+      # 배포시 패스워드 반드시 수정 할 것 #
+      MYSQL_ROOT_PASSWORD: root           #
+      #####################################
     ports:
       - 3306:3306
     volumes:
