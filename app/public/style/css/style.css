@@ -89,12 +89,12 @@ a:hover {
   padding: 0;
   height: 100%;
   width: 100%;
-  opacity: .9;
+  opacity: .8;
 }
 
 .paralax-mf {
   position: relative;
-  padding: 8rem 0;
+  padding: 100px 0 30px 0;
 }
 
 .display-table {
@@ -600,7 +600,7 @@ a:hover {
   position: absolute;
 }
 
-.intro .overlay-itro {
+.intro .overlay-intro {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
   top: 0;

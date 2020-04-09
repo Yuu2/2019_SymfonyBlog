@@ -188,6 +188,8 @@ class BlogController extends AbstractController {
    */
   public function delete(Request $request, Article $article, BlogService $blogService): object {
     
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
     $blogService->removeArticle($article);
 
     return $this->redirectToRoute('blog_index');

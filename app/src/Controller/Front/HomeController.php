@@ -2,15 +2,14 @@
 
 namespace App\Controller\Front;
 
-use App\Service\SkillService;
-use App\Service\PortfolioService;
+use App\Service\HomeService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @author Yuu2
- * updated 2020.01.18
+ * updated 2020.04.09
  */
 class HomeController extends AbstractController {
 
@@ -20,15 +19,15 @@ class HomeController extends AbstractController {
    *
    * @Route("/", name="home", methods={"GET"})
    * @Template("front/home.twig")
-   * @param SkillService $skillService
-   * @param PortfolioService $portfolioService
+   * @param HomeService $homeService
    * @return array
    */
-  public function home(SkillService $skillService, PortfolioService $portfolioService) {
- 
+  public function home(HomeService $homeService) {
+    
     return array(
-      'Skills' => $skillService->allSkills(),
-      'Portfolios' => $portfolioService->allPortfolios()
+      'Portfolios' => $homeService->renderPortfolios(),
+      'Skills'     => $homeService->renderSkills(),
+      'Work'       => $homeService->renderWork()
     );
   }
 }

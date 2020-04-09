@@ -23,8 +23,7 @@
                 </div>
                 <div class="skill-mf">
                   <p class="title-s">{{ 'front.home.about.skill'|trans }}</p>
-                  {% if Skills is defined and 
-                        Skills is not empty %}
+                  {% if Skills is not empty %}
                     {% for Skill in Skills %}
                       <span>{{ Skill.name }}</span> <span class="pull-right">{{ Skill.level }}</span>
                       <div class="progress">
@@ -52,10 +51,9 @@
     </div>
   </section>
   <!-- TODO: 슈퍼관리자 설정 후 데이터 취득 -->
-  {% if Work is defined and
-        Work is not empty %}
-  <div class="section-counter paralax-mf bg-image">
-    <div class="overlay-mf"></div>
+  {% if Work is not empty %}
+  <div class="section-counter paralax-mf bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
+    <div class="overlay-mf" style="opacity: 0.73"></div>
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-lg-3">
@@ -64,8 +62,8 @@
               <span class="ico-circle"><i class="ion-ios-calendar-outline"></i></span>
             </div>
             <div class="counter-num">
-              <p class="counter">{{ Work.join_year }}</p>
-              <span class="counter-text">{{ 'front.home.work.year'|trans }}</span>
+              <p class="counter">{{ Work.joinYears }}</p>
+              <span class="counter-text">{{ 'front.home.work.join_years'|trans }}</span>
             </div>
           </div>
         </div>
@@ -75,8 +73,8 @@
               <span class="ico-circle"><i class="ion-checkmark-round"></i></span>
             </div>
             <div class="counter-num">
-              <p class="counter">{{ Work.join_project }}</p>
-              <span class="counter-text">{{ 'front.home.work.project'|trans }}</span>
+              <p class="counter">{{ Work.joinProjects }}</p>
+              <span class="counter-text">{{ 'front.home.work.join_projects'|trans }}</span>
             </div>
           </div>
         </div>
@@ -106,8 +104,8 @@
     </div>
   </div>
   {% endif %}
-  {% if Portfolios is defined and
-        Portfolios is not empty %}
+
+  {% if Portfolios is not empty %}
   <!-- PORTFOLIO -->
   <section id="portfolio" class="portfolio-mf sect-pt4 route">
     <div class="container">

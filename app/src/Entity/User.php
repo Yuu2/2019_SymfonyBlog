@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @author Yuu2
- * updated 2020.01.18
+ * updated 2020.04.09
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email")
  */
@@ -51,11 +51,6 @@ class User implements UserInterface {
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
-
-    /**
-     * @ORM\Embedded(class = "App\Entity\Work", columnPrefix = false) 
-     */
-    private $work;
 
     /**
      * @ORM\Embedded(class = "App\Entity\Profile", columnPrefix = false)

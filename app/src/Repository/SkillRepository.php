@@ -18,24 +18,28 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class SkillRepository extends ServiceEntityRepository {
 
-    /**
-     * @access public
-     * @param ManagerRegistry $registry
-     */
-    public function __construct(ManagerRegistry $registry) {
-      parent::__construct($registry, Skill::class);
-    }
+  /**
+   * @access public
+   * @param ManagerRegistry $registry
+   */
+  public function __construct(ManagerRegistry $registry) {
+    parent::__construct($registry, Skill::class);
+  }
 
-    /**
-     * @access public
-     * @return array
-     */
-    public function findAll(): ?array {
-      return $this->createQueryBuilder('s')
-        ->andWhere('s.visible = :visible')
-        ->setParameter('visible', true)
-        ->getQuery()
-        ->getResult()
-      ;
-    }
+  /**
+   * @access public
+   * @param int $count
+   * @return array
+   */
+  public function countSkills(int $count): ?array {
+
+    return $this->createQueryBuilder('s')
+      ->select()
+      ->andWhere('s.visible = :visible')
+      ->setParameter('visible', true)
+      ->getQuery()
+      ->setMaxResults($count)
+      ->getResult()
+    ;
+  }
 }
