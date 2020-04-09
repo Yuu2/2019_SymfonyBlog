@@ -27,13 +27,17 @@ class PortfolioRepository extends ServiceEntityRepository {
 
   /**
    * @access public
+   * @param int $count
    * @return array
    */
-  public function findAll(): ?array {
+  public function countPortfolios(int $count): ?array {
+
     return $this->createQueryBuilder('p')
+      ->select()
       ->andWhere('p.visible = :visible')
       ->setParameter('visible', true)
       ->getQuery()
+      ->setMaxResults($count)
       ->getResult()
     ;
   }

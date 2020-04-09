@@ -5,35 +5,70 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Embeddable
+ * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
  */
 class Work
 {
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
      */
-    private $join_year;
+    private $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $join_years;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $join_projects;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $join_project;
+    private $updated_at;
 
-    public function getJoinYear(): ?\DateTimeInterface {
-      return $this->join_year;
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
-    public function setJoinYear(\DateTimeInterface $join_year): self {
-      $this->join_year = $join_year;
-      return $this;
+    public function getJoinYears(): ?int
+    {
+        return $this->join_years;
     }
 
-    public function getJoinProject(): ?\DateTimeInterface {
-      return $this->join_project;
+    public function setJoinYears(int $join_years): self
+    {
+        $this->join_years = $join_years;
+
+        return $this;
     }
 
-    public function setJoinProject(\DateTimeInterface $join_project): self {
-      $this->join_project = $join_project;
-      return $this;
+    public function getJoinProjects(): ?int
+    {
+        return $this->join_projects;
+    }
+
+    public function setJoinProjects(int $join_projects): self
+    {
+        $this->join_projects = $join_projects;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
     }
 }

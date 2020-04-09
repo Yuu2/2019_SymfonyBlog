@@ -19,9 +19,6 @@ front.home.about.email: 이메일
 front.home.about.cert:
   <p>
     <small> - 계명대학교 인문국제학대학 일본학 전공 </small></br>
-    <small> - 정보처리기사 </small><br>
-    <small> - TOEIC 723 </small><br>
-    <small> - JLPT N1 </small>
   </p>
 front.home.about.description: 
   <p class="lead">
@@ -29,8 +26,8 @@ front.home.about.description:
       JAVA・PHP 개발자</br>
     </small>
   </p>
-front.home.work.year: 경력
-front.home.work.project: 참여 프로젝트
+front.home.work.join_years: 경력
+front.home.work.join_projects: 참여 프로젝트
 front.home.portfolio: 포트폴리오
 # 블로그
 front.blog: 블로그

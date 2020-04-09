@@ -29,8 +29,8 @@ front.home.about.description:
       JAVA・PHP エンジニアです。</br>
     </small>
   </p>
-front.home.work.year: 経歴
-front.home.work.project: 参加プロジェクト
+front.home.work.join_years: 経歴
+front.home.work.join_projects: 参加プロジェクト
 front.home.portfolio: ポートフォリオ
 # 블로그
 front.blog: ブログ
