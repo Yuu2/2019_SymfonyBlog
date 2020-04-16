@@ -1,24 +1,21 @@
 
-.DS_Store
-.vscode/
-.idea/
-
-###> symfony/framework-bundle ###
-app/.DS_Store
-app/.env
-app/.env.test
-app/.env.local
-app/.env.local.php
-app/composer.lock
-app/symfony.lock
-app/templates/index.html
-app/templates/bloge/
-app/templates/backup/
-app/templates/backup.html.twig
-app/public/bundles/
-app/public/upload/
-app/var/
-app/vendor/
-app/node_modules/
-###> symfony/phpunit-bridge ###
-app/bin/.phpunit/
+docker/.env
+docker/logs/
+# 프로젝트
+project/.env
+project/.env.test
+project/.env.local
+project/.env.local.php
+project/composer.lock
+project/symfony.lock
+project/templates/index.html
+project/templates/bloge/
+project/templates/backup/
+project/templates/backup.html.twig
+project/public/bundles/
+project/public/upload/
+project/var/
+project/vendor/
+# PHP 테스트
+project/bin/.phpunit/
+# 로그 
