@@ -1,21 +1,17 @@
+# Docker
+.env
+nginx/logs/
 
-docker/.env
-docker/logs/
-# 프로젝트
-project/.env
-project/.env.test
+# Symfony
 project/.env.local
 project/.env.local.php
 project/composer.lock
 project/symfony.lock
-project/templates/index.html
-project/templates/bloge/
-project/templates/backup/
-project/templates/backup.html.twig
 project/public/bundles/
 project/public/upload/
 project/var/
 project/vendor/
-# PHP 테스트
 project/bin/.phpunit/
-# 로그 
+
+# Dummy
+.DS_Store

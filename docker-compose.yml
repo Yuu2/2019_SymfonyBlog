@@ -1,0 +1,57 @@
+version: '3'
+services:
+  php-fpm:
+    build:
+      context: ./symfony
+    container_name: php-fpm
+    depends_on:
+      - mysql
+    environment:
+      - PROJECT_DIR=${PROJECT_DIR}
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@mysql:3306/${DATABASE_NAME}?serverVersion=8.0
+      - RECAPTCHA_SECRET=${RECAPTCHA_SECRET}
+    volumes:
+      - ./symfony:${PROJECT_DIR}
+      - ./symfony/var:${PROJECT_DIR}/var
+      - ./symfony/vendor:${PROJECT_DIR}/vendor
+    networks:
+      - network
+  
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    volumes:
+      - ./symfony:${PROJECT_DIR}
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - network
+
+  mysql:
+    build:
+      context: ./db
+    container_name: mysql
+    command: mysqld --sql_mode='' --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+    ports:
+      - 3306:3306
+    networks:
+      - network
+    # volumes:
+    # - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    # - ./database/data:/var/lib/mysql
+networks:
+  network:

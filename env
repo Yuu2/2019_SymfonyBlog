@@ -1,0 +1,16 @@
+# 가상 호스트의 프로젝트 경로
+PROJECT_DIR=/var/www/portfolio_blog
+
+# 프로젝트 환경 플래그 [dev]|[prod]
+APP_ENV=dev
+
+# 프로젝트의 암호
+APP_SECRET=
+
+# Google Recaptcha
+RECAPTCHA_SECRET=
+
+# Database
+DATABASE_NAME=
+DATABASE_PASSWORD=
+DATABASE_ROOT_PASSWORD=
