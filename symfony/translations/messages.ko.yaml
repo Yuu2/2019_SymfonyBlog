@@ -23,7 +23,7 @@ front.home.about.cert:
 front.home.about.description: 
   <p class="lead">
     <small>
-      JAVA・PHP 개발자</br>
+      //</br>
     </small>
   </p>
 front.home.work.join_years: 경력

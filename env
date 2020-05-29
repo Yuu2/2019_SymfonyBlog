@@ -1,5 +1,5 @@
 # 가상 호스트의 프로젝트 경로
-PROJECT_DIR=/var/www/portfolio_blog
+PROJECT_DIR=/var/www/html
 
 # 프로젝트 환경 플래그 [dev]|[prod]
 APP_ENV=dev

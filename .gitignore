@@ -1,5 +1,6 @@
 # Docker
 .env
+nginx/.htpasswd
 nginx/logs/
 
 # Symfony
@@ -7,7 +8,6 @@ project/.env.local
 project/.env.local.php
 project/composer.lock
 project/symfony.lock
-project/public/bundles/
 project/public/upload/
 project/var/
 project/vendor/
