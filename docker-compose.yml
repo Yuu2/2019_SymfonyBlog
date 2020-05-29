@@ -16,8 +16,6 @@ services:
       - ./symfony:${PROJECT_DIR}
       - ./symfony/var:${PROJECT_DIR}/var
       - ./symfony/vendor:${PROJECT_DIR}/vendor
-    networks:
-      - network
   
   nginx:
     build:
@@ -34,8 +32,7 @@ services:
     ports:
       - 80:80
       - 443:443
-    networks:
-      - network
+    restart: always
 
   mysql:
     build:
@@ -48,10 +45,6 @@ services:
       - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
     ports:
       - 3306:3306
-    networks:
-      - network
     # volumes:
     # - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     # - ./database/data:/var/lib/mysql
-networks:
-  network:
