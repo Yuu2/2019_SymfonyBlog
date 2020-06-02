@@ -17,8 +17,8 @@ class UserFixtures extends AbstractFixtures {
    */
   public function load(ObjectManager $manager): void {
 
-    $this->createMember($manager, 'admin@yuu2.dev','admin', TRUE);
-    $this->createMember($manager, 'user@yuu2.dev', 'user', FALSE);
+    $this->createMember($manager, 'admin@yuu2dev.me','admin', TRUE);
+    $this->createMember($manager, 'user@yuu2dev.me', 'user', FALSE);
 
     $manager->flush();
   }

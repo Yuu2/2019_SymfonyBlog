@@ -2,6 +2,9 @@
 /.env
 nginx/logs/
 
+# db
+db/data/
+
 # Symfony
 project/.env.local
 project/.env.local.php

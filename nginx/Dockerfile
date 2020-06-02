@@ -2,7 +2,7 @@ FROM nginx:alpine
 
 COPY .htpasswd /etc/nginx/.htpasswd
 
-COPY /nginx/ssl /etc/nginx/ssl
+COPY /ssl /etc/nginx/ssl
 
 RUN apk update \
     && apk add openssl;

@@ -22,8 +22,10 @@ ENV  COMPOSER_ALLOW_SUPERUSER 1
 COPY composer.json        /var/www/portfolio_blog/
 COPY composer.lock        /var/www/portfolio_blog/
 
-COPY symfony-entrypoint.sh /usr/local/bin/
+COPY symfony.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/symfony.sh
 
 EXPOSE 9000
 
-ENTRYPOINT [ "sh", "/usr/local/bin/symfony-entrypoint.sh" ]
+ENTRYPOINT [ "sh", "/usr/local/bin/symfony.sh" ]

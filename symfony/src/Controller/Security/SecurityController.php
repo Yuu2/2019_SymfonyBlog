@@ -13,9 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 /**
- * @author yuu2
- * updated 2020.01.27
+ * @author Yuu2dev
+ * updated 2020.05.30
  */
 class SecurityController extends AbstractController {
   
