@@ -162,9 +162,9 @@
       <ul class="navbar-nav">
         {% if app.user %}
           <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('sec_logout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
+          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('member_logout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
         {% else %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('sec_login') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
+          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('member_login') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
         {% endif %}
       </ul>
     </div>

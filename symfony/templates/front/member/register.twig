@@ -8,9 +8,9 @@
       <ul class="navbar-nav">
         {% if app.user %}
           <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('sec_logout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
+          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('member_logout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
         {% else %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('sec_login') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
+          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('member_login') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
         {% endif %}
       </ul>
     </div>
@@ -19,7 +19,7 @@
 {% block main %}
 <div class="form-security" style="margin: 0 auto; text-align: center; width: 500px;">    
   
-  <h1 class="h3 mb-3 font-weight-normal" style="margin: 30px 0;">{{ 'security.register'|trans }}</h1>
+  <h1 class="h3 mb-3 font-weight-normal" style="margin: 30px 0;">{{ 'front.member.register'|trans }}</h1>
   
   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 

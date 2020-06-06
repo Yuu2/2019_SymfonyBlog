@@ -16,8 +16,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @author Yuu2
- * updated 2020.01.29
+ * @author Yuu2dev
+ * updated 2020.06.03
  */
 class UserCreateType extends AbstractType {
   
@@ -41,19 +41,27 @@ class UserCreateType extends AbstractType {
    * @return void
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-  
+    
+    $translator = $this->translator;
+
     $builder
       ->add('email', EmailType::class, array(
-        'label' => 'email',
+        'label' => $translator->trans('front.member.register.email'),
+      ))
+      ->add('name', TextType::class, array(
+        'label' => $translator->trans('front.member.register.name'),
+        'mapped' => false
       ))
       ->add('password', RepeatedType::class, array(
         'type' => PasswordType::class,
-        'invalid_message' => '@todo',
+        'invalid_message' => $translator->trans('front.member.register.password1.err'),
         'required' => true,
-        'first_options'  => ['label' => 'Password'],
-        'second_options' => ['label' => 'Repeat Password'],
+        'first_options'  => ['label' => $translator->trans('front.member.register.password1')],
+        'second_options' => ['label' => $translator->trans('front.member.register.password2'),],
       ))
-      ->add('submit', SubmitType::class);
+      ->add('submit', SubmitType::class, array(
+        'label' => $translator->trans('front.member.register.submit')
+      ));
     ;
   }
 

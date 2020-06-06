@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Front\Blog;
+namespace App\Controller\Front;
 
 use App\Form\ArticleType;
 use App\Entity\Article;
@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @author Yuu2
+ * @author Yuu2dev
  * @todo 블로그 게시물 검색
- * updated 2020.01.27
+ * updated 2020.06.06
  */
 class BlogController extends AbstractController {
 

@@ -8,11 +8,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @author yuu2
- * @todo 이메일 인증
- * updated 2020.01.27
+ * @author yuu2dev
+ * updated 2020.06.03
  */
-class SecurityService {
+class MemberService {
 
   /**
    * @var EntityManagerInterface
@@ -57,11 +56,11 @@ class SecurityService {
   public function saveUser(User $user) {
     
     $encryptedPw = $this->passwordEncoder->encodePassword($user, $user->getPassword());
-
+    
     $user->setPassword($encryptedPw);
     $user->setRoles(['ROLE_USER']);
     $user->setCreatedAt(new \DateTime);
-    
+
     $this->entityManager->persist($user);
     $this->entityManager->flush();
   }

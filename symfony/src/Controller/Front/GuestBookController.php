@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Front\GuestBook;
+namespace App\Controller\Front;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

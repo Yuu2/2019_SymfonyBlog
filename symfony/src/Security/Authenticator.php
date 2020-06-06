@@ -73,7 +73,7 @@ class Authenticator extends AbstractFormLoginAuthenticator {
    */
   public function supports(Request $request): bool {
     
-    return 'sec_login' === $request->attributes->get('_route') && $request->isMethod('POST');
+    return 'member_login' === $request->attributes->get('_route') && $request->isMethod('POST');
   }
 
   /**
@@ -142,6 +142,6 @@ class Authenticator extends AbstractFormLoginAuthenticator {
    * @access public
    */
   protected function getLoginUrl() {
-    return $this->urlGenerator->generate('sec_login');
+    return $this->urlGenerator->generate('member_login');
   }
 }

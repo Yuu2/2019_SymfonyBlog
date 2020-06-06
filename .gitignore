@@ -1,5 +1,6 @@
-# Docker
-/.env
+.env
+
+# Nginx
 nginx/logs/
 
 # db
@@ -8,12 +9,9 @@ db/data/
 # Symfony
 project/.env.local
 project/.env.local.php
-project/composer.lock
-project/symfony.lock
 project/public/upload/
 project/var/
 project/vendor/
-project/bin/.phpunit/
 
 # Dummy
 .DS_Store

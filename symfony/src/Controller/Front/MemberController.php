@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller\Security;
+namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Form\UserCreateType;
-use App\Service\SecurityService;
+use App\Service\MemberService;
 use App\Util\ValidationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -15,15 +15,15 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
- * @author Yuu2dev
- * updated 2020.05.30
+ * @author yuu2dev
+ * updated 2020.06.03
  */
-class SecurityController extends AbstractController {
+class MemberController extends AbstractController {
   
   /**     
    * 로그인
-   * @Route("/security/login", name="sec_login", methods={"GET", "POST"})
-   * @Template("/security/login.twig")
+   * @Route("/member/login", name="member_login", methods={"GET", "POST"})
+   * @Template("/front/member/login.twig")
    * @access public
    * @param AuthenticationUtils $authenticationUtils
    */
@@ -43,7 +43,7 @@ class SecurityController extends AbstractController {
 
   /**
    * 로그아웃
-   * @Route("/logout", name="sec_logout", methods={"GET"}, options={"i18n"=false})
+   * @Route("/member/logout", name="member_logout", methods={"GET"}, options={"i18n"=false})
    * @access public
    * @return void
    */
@@ -51,20 +51,18 @@ class SecurityController extends AbstractController {
 
   /**
    * 등록
-   * @Route("/security/register", name="sec_register", methods={"GET", "POST"})
-   * @Template("/security/register.twig")
+   * @Route("/member/register", name="member_register", methods={"GET", "POST"})
+   * @Template("/front/member/register.twig")
    * @access public
    * @param Request $request
    * @param UserPasswordEncoderInterface $userPasswordEncoder
    * @param ValidationUtils $validationUtils
    * @param SecuriyService $securiyService
-   * @return array
+   * @return array|object
    */
-  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, ValidationUtils $validationUtils, SecurityService $securiyService): array {
+  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, ValidationUtils $validationUtils, MemberService $memberService): ?array {
 
-    $form = $this->createForm(UserCreateType::class, new User, array(
-        'attr' => array('novalidate' => 'novalidate')
-    ));
+    $form = $this->createForm(UserCreateType::class, new User);
     $form->handleRequest($request);
     
     if($form->isSubmitted() && $form->isValid()) {
@@ -77,8 +75,9 @@ class SecurityController extends AbstractController {
         default: 
           /** @var User */
           $user = $form->getData();
-          $securiyService->save($user);
-          return $this->redirectToRoute('sec_confirm');
+          $memberService->saveUser($user);
+
+          return $this->redirectToRoute('member_confirm');
       }
     }
 
@@ -90,8 +89,8 @@ class SecurityController extends AbstractController {
   /**
    * 등록 확인
    * @access public
-   * @Route("/security/confirm", name="sec_confirm", methods={"GET"})
-   * @Template("/security/confirm.twig")
+   * @Route("/member/confirm", name="member_confirm", methods={"GET"})
+   * @Template("/member/confirm.twig")
    */
   public function confirm() {
     return array();

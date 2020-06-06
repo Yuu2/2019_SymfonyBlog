@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Front\Contact;
+namespace App\Controller\Front;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
