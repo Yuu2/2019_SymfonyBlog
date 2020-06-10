@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author yuu2dev
  * updated 2020.06.10
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields="email", message="assert.member.email.un-unique")
+ * @UniqueEntity(fields="email", message="assert.member.email.unique")
  */
 class User implements UserInterface {
     
@@ -26,8 +26,9 @@ class User implements UserInterface {
 
     /**
      * @Assert\Email(message="assert.member.email.incorrent")
+     * @Assert\Length(max=255, maxMessage="assert.member.email.length.max")
      * @Assert\NotBlank(message="assert.member.email.empty")
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -38,8 +39,7 @@ class User implements UserInterface {
 
     /**
      * @Assert\NotBlank(message="assert.member.password.empty")
-     * @Assert\Regex(pattern="/^[a-z0-9_]{8,20}$/", message="assert.member.password.regex")
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $password;
   
@@ -54,10 +54,23 @@ class User implements UserInterface {
     private $updated_at;
 
     /** 
-     * Assert\NotBlank(message="assert.member.alias.empty")
-     * @ORM\Column(type = "string", nullable=false) 
+     * @Assert\Regex(pattern="/^[\w]$/", match=false, message="assert.member.alias.regex")
+     * @Assert\Length(max=20, maxMessage="assert.member.alias.length.max")
+     * @Assert\NotBlank(message="assert.member.alias.empty")
+     * @ORM\Column(type = "string") 
      */
     private $alias;
+
+    /**
+     * @Assert\Length(max=255, maxMessage="assert.member.thumbnail.length.max")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbnail;
+
+    /**
+     * @ORM\OneToOne(targetEntity=UserEmailAuth::class, cascade={"persist", "remove"})
+     */
+    private $userEmailAuth;
 
     public function getId(): ?int
     {
@@ -168,6 +181,30 @@ class User implements UserInterface {
     public function setAlias(string $alias): self
     {
         $this->alias = $alias;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function getUserEmailAuth(): ?UserEmailAuth
+    {
+        return $this->userEmailAuth;
+    }
+
+    public function setUserEmailAuth(?UserEmailAuth $userEmailAuth): self
+    {
+        $this->userEmailAuth = $userEmailAuth;
 
         return $this;
     }

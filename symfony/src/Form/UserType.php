@@ -47,52 +47,78 @@ class UserType extends AbstractType {
     $translator = $this->translator;
 
     $builder
-
+      // 이메일
       ->add('email', EmailType::class, array(
         'label' => $translator->trans('front.member.register.email'),
         'required' => true,
       ))
 
+      // 패스워드
       ->add('password', RepeatedType::class, array(
         'type' => PasswordType::class,
-        'invalid_message' => $translator->trans('front.member.register.password.err'),
-        'first_options'  => [
-          'help' => $translator->trans('front.member.register.password1.help'),
-          'label' => $translator->trans('front.member.register.password1'),
-        ],
-        'second_options' => [
-          'help' => $translator->trans('front.member.register.password2.help'),
-          'label' => $translator->trans('front.member.register.password2'),
-        ],
+        'invalid_message' => $translator->trans('front.member.register.password.invalid'),
+        'first_options'  => array(
+          'help' => $translator->trans('front.member.register.password.help'),
+          'label' => $translator->trans('front.member.register.password'),
+          'constraints' => $this->getPasswordConstraints()
+        ),
+        'second_options' => array(
+          'help' => $translator->trans('front.member.register.password.confirm.help'),
+          'label' => $translator->trans('front.member.register.password.confirm'),
+          'constraints' => $this->getPasswordConstraints() 
+        ),
         'required' => true,
       ))
 
-      ->add('name', TextType::class, array(
-        'label' => $translator->trans('front.member.register.name'),
-        'mapped' => false,
-        'required' => false
+      // 닉네임
+      ->add('alias', TextType::class, array(
+        'label' => $translator->trans('front.member.register.alias'),
+        'required' => true
       ))
 
+      // 썸네일
       ->add('thumbnail', FileType::class, array(
-        'constraints' => [
-          new File([
+        'constraints' => array(
+          new File(array(
               'maxSize' => '5120k',
-              'mimeTypes' => [
-                  'image/png',
-                  'image/jpg',
-                  'image/jpeg'
-              ],
-          ])
-        ],
+              'mimeTypes' => array(
+                'image/png',
+                'image/jpg',
+                'image/jpeg'
+              ),
+          ))
+        ),
         'help' => $translator->trans('front.member.register.thumbnail.help'),
-        'mapped' => false,
         'required' => false,
       ))
 
+      // 전송
       ->add('submit', SubmitType::class, array(
         'label' => $translator->trans('front.member.register.submit')
       ));
     ;
+  }
+
+  /**
+   * 패스워드 유효성 검사
+   * @see 중복코드제거
+   * @access public
+   * @return array
+   */
+  public function getPasswordConstraints(): ?array {
+    return array(
+      new Assert\Length(array(
+        'min'        => 8,
+        'max'        => 20,
+        'minMessage' => 'assert.member.password.length.min',
+        'maxMessage' => 'assert.member.password.length.max'
+      )),
+      new Assert\Regex(array(
+        'pattern' => '/^[\w]{8, 20}$/',
+        'match'   => false,
+        'message' => 'assert.member.password.regex'
+      )),
+    );
   }
 
   /**

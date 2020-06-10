@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.06.10
+ * updated 2020.06.11
  */
 class MemberController extends AbstractController {
   
@@ -54,7 +54,6 @@ class MemberController extends AbstractController {
   /**
    * 등록
    * @todo 썸네일 업로드
-   * @todo recaptcha 인증에러핸들링
    * @Route("/member/register", name="member_register", methods={"GET", "POST"})
    * @Template("/front/member/register.twig")
    * @access public
@@ -83,10 +82,11 @@ class MemberController extends AbstractController {
         break;
         
         default: 
+          dump($form->getData());
+          exit();
           /** @var User */
           $user = $form->getData();
           $memberService->saveUser($user);
-
           return $this->redirectToRoute('member_confirm');
       }
     }

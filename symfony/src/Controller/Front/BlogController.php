@@ -105,7 +105,7 @@ class BlogController extends AbstractController {
             return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
           } else {
             /** @todo 에러메시지 */
-            $this->addFlash('msg', $translator->trans('front.blog.article.flash.msg_write_error'));
+            $this->addFlash('msg', $translator->trans('front.blog.article.flash.err_save'));
           }
       }
     }

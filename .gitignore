@@ -6,12 +6,5 @@ nginx/logs/
 # db
 db/data/
 
-# Symfony
-project/.env.local
-project/.env.local.php
-project/public/upload/
-project/var/
-project/vendor/
-
 # Dummy
 .DS_Store

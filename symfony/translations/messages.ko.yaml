@@ -41,7 +41,7 @@ front.blog.article.visible.true: 공개
 front.blog.article.visible.false: 비공개
 front.blog.article.title.placeholder: 제목을 입력하세요.
 front.blog.article.hashtag.placeholder: 해시태그를 입력하세요.
-front.blog.article.flash.msg_write_error: 서버 장애로 인해 데이터를 보존 할 수 없습니다.
+front.blog.article.flash.err_save: 서버 장애로 인해 데이터를 보존 할 수 없습니다.
 
 # 질문하기
 front.contact: 질문하기
@@ -56,12 +56,12 @@ front.member.login.registerlink: 처음 방문 하셨나요?
 front.member.register: 방문객 등록
 front.member.register.thumbnail.help: 5MB 이하의 (png, jpg, jpeg) 유형의 사진만 가능합니다.
 front.member.register.email: 이메일
-front.member.register.name: 닉네임
-front.member.register.password1: 패스워드
-front.member.register.password1.help: 8 ~ 20 자리 수의 숫자와 문자 조합으로 구성 할 수 있습니다.
-front.member.register.password2: 패스워드 재확인
-front.member.register.password2.help: 다시 한번 더 패스워드를 입력 합니다.
-front.member.register.password.err: 패스워드가 일치하지 않습니다. 다시 입력 해주세요.
+front.member.register.alias: 닉네임
+front.member.register.password: 패스워드
+front.member.register.password.help: 8 ~ 20 자리 수의 숫자와 문자 조합 (공백문자 제외) 
+front.member.register.password.confirm: 패스워드 재확인
+front.member.register.password.confirm.help: 다시 한번 더 패스워드를 입력 합니다.
+front.member.register.password.invalid: 패스워드가 일치하지 않습니다. 다시 입력 해주세요.
 front.member.register.submit: 가입하기
 front.member.register.flash.err_csrftoken: 유효하지 않은 접근 입니다.
 front.member.register.flash.err_recaptcha: g-recaptcha 인증 실패 입니다.

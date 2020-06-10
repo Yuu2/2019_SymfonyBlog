@@ -1358,7 +1358,7 @@ input:checked + .form-switch-slider:before {
 
 .form-member .card-item .btn {
   display: flex;
-  margin: 20px 0 0 0;
+  margin: unset;
 }
 
 .form-member input {
