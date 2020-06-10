@@ -27,27 +27,26 @@ http {
   include /etc/nginx/conf.d/*.conf;
   include /etc/nginx/sites-available/*.conf;
   
+  client_max_body_size 20M;
+
   server {
     listen 80;
     listen [::]:80 ipv6only=on;
     
-    # 1-1. HTTP 도메인명
-    server_name yuu2dev.me www.yuu2dev.me;
+    server_name ${SERVER_DOMAIN} ${SERVER_DOMAIN_WWW};
 
-    return 301 https://$host$request_uri;
+    return 301 https://${S}host${S}request_uri;
   }
   
   server {
     
-    listen 443  ssl http2;
-    # 1-2. HTTPS 도메인명      
-    server_name yuu2dev.me www.yuu2dev.me;
+    listen 443  ssl http2;    
+    server_name ${SERVER_DOMAIN} ${SERVER_DOMAIN_WWW};
 
-    root /var/www/html/public;
+    root ${PROJECT_DIR}/public;
     
     index index.php index.html index.htm;
     
-    # 2. SSL 인증서 위치
     ssl_certificate           /etc/nginx/ssl/portfolio-blog.crt;
     ssl_certificate_key       /etc/nginx/ssl/portfolio-blog.key;
     
@@ -66,16 +65,16 @@ http {
     location / {
       auth_basic                    "auth_basic";
       auth_basic_user_file          /etc/nginx/.htpasswd;
-      try_files                     $uri $uri/ /index.php$is_args$args;
+      try_files                     ${S}uri ${S}uri/ /index.php${S}is_args${S}args;
     }
 
-    location ~ \.php$ {
-      try_files                     $uri /index.php =404;
+    location ~ \.php${S} {
+      try_files                     ${S}uri /index.php =404;
       fastcgi_pass                  php-upstream;
       fastcgi_index                 index.php;
       fastcgi_buffers               16 16k;
       fastcgi_buffer_size           32k;
-      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      fastcgi_param SCRIPT_FILENAME ${S}document_root${S}fastcgi_script_name;
       fastcgi_read_timeout          600;
       include                       fastcgi_params;
     }

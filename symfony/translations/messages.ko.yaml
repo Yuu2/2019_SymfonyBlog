@@ -1,6 +1,6 @@
 # 관리자정보
-administrator.id: Yuu2
-administrator.email: myco8332v2@gmail.com
+administrator.id: yuu2dev
+administrator.email: yuu2dev@gmail.com
 # 공통
 common.data.null: 데이터가 존재하지 않습니다.
 
@@ -41,20 +41,29 @@ front.blog.article.visible.true: 공개
 front.blog.article.visible.false: 비공개
 front.blog.article.title.placeholder: 제목을 입력하세요.
 front.blog.article.hashtag.placeholder: 해시태그를 입력하세요.
-front.blog.article.flash.msg_write_error: 옳바르지 않은 데이터는 저장 할 수 없습니다. (서버 에러)
+front.blog.article.flash.msg_write_error: 서버 장애로 인해 데이터를 보존 할 수 없습니다.
+
 # 질문하기
 front.contact: 질문하기
 
 # 멤버
-front.member.login: 포트폴리오 블로그 로그인
+front.member.login: 로그인
 front.member.login.email: 이메일
 front.member.login.password: 패스워드
 front.member.login.remember: 로그인 상태 유지
 front.member.login.submit: 로그인 하기
-front.member.register: 멤버 등록
+front.member.login.registerlink: 처음 방문 하셨나요?
+front.member.register: 방문객 등록
+front.member.register.thumbnail.help: 5MB 이하의 (png, jpg, jpeg) 유형의 사진만 가능합니다.
 front.member.register.email: 이메일
 front.member.register.name: 닉네임
-front.member.register.password1: 비밀번호
-front.member.register.password1.err: 잘못된 비밀번호입니다. 다시 입력 하세요.
-front.member.register.password2: 비밀번호 재확인
+front.member.register.password1: 패스워드
+front.member.register.password1.help: 8 ~ 20 자리 수의 숫자와 문자 조합으로 구성 할 수 있습니다.
+front.member.register.password2: 패스워드 재확인
+front.member.register.password2.help: 다시 한번 더 패스워드를 입력 합니다.
+front.member.register.password.err: 패스워드가 일치하지 않습니다. 다시 입력 해주세요.
 front.member.register.submit: 가입하기
+front.member.register.flash.err_csrftoken: 유효하지 않은 접근 입니다.
+front.member.register.flash.err_recaptcha: g-recaptcha 인증 실패 입니다.
+
+

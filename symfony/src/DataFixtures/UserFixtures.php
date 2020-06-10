@@ -5,8 +5,8 @@ namespace App\DataFixtures;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * @author Yuu2
- * updated 2020.01.18
+ * @author yuu2dev
+ * updated 2020.06.10
  */
 class UserFixtures extends AbstractFixtures {
 

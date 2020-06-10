@@ -126,17 +126,17 @@
             "ref": "d087df3e087f50da3955f2def05079380da5894b"
         }
     },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
-    },
-    "kms/froala-editor-bundle": {
-        "version": "3.0",
+    "helios-ag/fm-elfinder-bundle": {
+        "version": "10.0",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
-            "version": "3.0",
-            "ref": "666a78d430cecebe61a1990d7b8f638e45b2eeab"
+            "version": "10.0",
+            "ref": "dcc740749981bf9f4df447dae46483d41bad7f73"
         }
+    },
+    "jdorn/sql-formatter": {
+        "version": "v1.2.17"
     },
     "knplabs/knp-components": {
         "version": "v1.3.10"
@@ -203,6 +203,9 @@
         "files": [
             "config/packages/security_checker.yaml"
         ]
+    },
+    "studio-42/elfinder": {
+        "version": "2.1.57"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.3"
@@ -412,6 +415,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.13.1"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.4.4"

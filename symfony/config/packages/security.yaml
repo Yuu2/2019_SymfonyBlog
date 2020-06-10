@@ -23,14 +23,14 @@ security:
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             form_login:
-                check_path: sec_login
-                login_path: sec_login
+                check_path: member_login
+                login_path: member_login
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: blog_index
                 username_parameter: _email
             # https://symfony.com/doc/current/security/form_login_setup.html
             logout:
-                path: sec_logout
+                path: member_logout
                 target: blog_index
             remember_me:
                 secret: '%kernel.secret%'
@@ -41,7 +41,7 @@ security:
                     - App\Security\Authenticator
     access_control:
       # 로그인
-      - { path: ^/login,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/member/login,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
       # 관리자
       - { path: ^/admin,       roles: ROLE_ADMIN }
       # 블로그

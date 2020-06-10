@@ -8,18 +8,20 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @author Yuu2dev
- * updated 2020.06.03
+ * @author yuu2dev
+ * updated 2020.06.10
  */
-class UserCreateType extends AbstractType {
+class UserType extends AbstractType {
   
   /**
    * @var TranslatorInterface
@@ -45,20 +47,48 @@ class UserCreateType extends AbstractType {
     $translator = $this->translator;
 
     $builder
+
       ->add('email', EmailType::class, array(
         'label' => $translator->trans('front.member.register.email'),
+        'required' => true,
       ))
-      ->add('name', TextType::class, array(
-        'label' => $translator->trans('front.member.register.name'),
-        'mapped' => false
-      ))
+
       ->add('password', RepeatedType::class, array(
         'type' => PasswordType::class,
-        'invalid_message' => $translator->trans('front.member.register.password1.err'),
+        'invalid_message' => $translator->trans('front.member.register.password.err'),
+        'first_options'  => [
+          'help' => $translator->trans('front.member.register.password1.help'),
+          'label' => $translator->trans('front.member.register.password1'),
+        ],
+        'second_options' => [
+          'help' => $translator->trans('front.member.register.password2.help'),
+          'label' => $translator->trans('front.member.register.password2'),
+        ],
         'required' => true,
-        'first_options'  => ['label' => $translator->trans('front.member.register.password1')],
-        'second_options' => ['label' => $translator->trans('front.member.register.password2'),],
       ))
+
+      ->add('name', TextType::class, array(
+        'label' => $translator->trans('front.member.register.name'),
+        'mapped' => false,
+        'required' => false
+      ))
+
+      ->add('thumbnail', FileType::class, array(
+        'constraints' => [
+          new File([
+              'maxSize' => '5120k',
+              'mimeTypes' => [
+                  'image/png',
+                  'image/jpg',
+                  'image/jpeg'
+              ],
+          ])
+        ],
+        'help' => $translator->trans('front.member.register.thumbnail.help'),
+        'mapped' => false,
+        'required' => false,
+      ))
+
       ->add('submit', SubmitType::class, array(
         'label' => $translator->trans('front.member.register.submit')
       ));
@@ -72,8 +102,8 @@ class UserCreateType extends AbstractType {
    */
   public function configureOptions(OptionsResolver $resolver) {
     $resolver->setDefaults([
-      'data_class' => User::class,
-      'csrf_protection' => true
+      'csrf_protection' => true,
+      'data_class' => User::class
     ]);
   }
 }

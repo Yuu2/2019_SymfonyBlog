@@ -10,10 +10,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @author Yuu2
- * updated 2020.04.09
+ * @author yuu2dev
+ * updated 2020.06.10
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("email")
+ * @UniqueEntity(fields="email", message="assert.member.email.un-unique")
  */
 class User implements UserInterface {
     
@@ -25,7 +25,8 @@ class User implements UserInterface {
     private $id;
 
     /**
-     * @Assert\Email(message = "assert.seucirty.email.incorrent")
+     * @Assert\Email(message="assert.member.email.incorrent")
+     * @Assert\NotBlank(message="assert.member.email.empty")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -36,9 +37,9 @@ class User implements UserInterface {
     private $roles = [];
 
     /**
-     * @var string
-     * @Assert\NotBlank(message = "assert.security.password.empty")
-     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="assert.member.password.empty")
+     * @Assert\Regex(pattern="/^[a-z0-9_]{8,20}$/", message="assert.member.password.regex")
+     * @ORM\Column(type="string", nullable=false)
      */
     private $password;
   
@@ -52,11 +53,11 @@ class User implements UserInterface {
      */
     private $updated_at;
 
-    /**
-     * @ORM\Embedded(class = "App\Entity\Profile", columnPrefix = false)
+    /** 
+     * Assert\NotBlank(message="assert.member.alias.empty")
+     * @ORM\Column(type = "string", nullable=false) 
      */
-    private $profile;
-
+    private $alias;
 
     public function getId(): ?int
     {
@@ -112,7 +113,7 @@ class User implements UserInterface {
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -142,16 +143,6 @@ class User implements UserInterface {
         return $this;
     }
 
-    public function getProfile() 
-    {
-      return $this->profile;
-    }
-
-    public function setProfile(Profile $profile): self {
-      $this->profile = $profile;
-      return $this;
-    }
-
     /**
      * @see UserInterface
      */
@@ -167,5 +158,17 @@ class User implements UserInterface {
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getAlias(): ?string
+    {
+      return $this->alias;
+    }
+
+    public function setAlias(string $alias): self
+    {
+        $this->alias = $alias;
+
+        return $this;
     }
 }

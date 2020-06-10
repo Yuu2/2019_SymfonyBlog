@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
- * @author Yuu2
- * updated 2020.03.18
+ * @author yuu2dev
+ * updated 2020.06.10
  */
 class ValidationUtils {
 

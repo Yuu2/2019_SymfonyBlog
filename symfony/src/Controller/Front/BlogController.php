@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @author Yuu2dev
+ * @author yuu2dev
  * @todo 블로그 게시물 검색
- * updated 2020.06.06
+ * updated 2020.06.10
  */
 class BlogController extends AbstractController {
 
@@ -68,6 +68,7 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 게시물 작성
+   * @todo CKEditor 이미지 업로드 기능
    * @Route("/blog/new", name="blog_new", methods={"GET", "POST"})
    * @Template("front/blog/form.twig")
    * @access public

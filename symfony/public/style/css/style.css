@@ -1328,26 +1328,55 @@ input:checked + .form-switch-slider:before {
   border-radius: 50%;
 }
 
-/* 멤버 입력 폼 */
-.form-member.card {
+/* 멤버 폼 */
+
+.form-member.login.card {
   margin: 50px auto;
+  min-width: 300px;
   width: 30%;
 }
 
-.form-member.card-body {
+.form-member.register.card {
+  margin: 50px auto;
+  min-width: 400px;
+  width: 39%;
+}
+
+.form-member .card-body {
   text-align: center;
 }
 
-.form-member.submit {
-  margin: 5px 0;
-  width: 100%;
+.form-member .card-item {
+  margin: 20px 0 0 0;
 }
 
-.form-member.remember {
-  margin: 5px;
+.form-member .card-item img {
+  border-radius: 50%;
+  width: auto; height: auto;
+  max-height: 200px;
+}
+
+.form-member .card-item .btn {
+  display: flex;
+  margin: 20px 0 0 0;
 }
 
 .form-member input {
   margin: 5px 0;
+}
+
+.form-member.login.submit {
+  margin: 5px 0;
+  width: 100%;
+}
+
+.form-member.login.remember {
+  margin: 5px;
+}
+
+.form-member.g-recaptcha {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 

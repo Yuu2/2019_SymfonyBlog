@@ -19,16 +19,17 @@
 {% endblock %}
  
 {% block main %}
-<div class="form-member card">    
-  <form method="post" action="{{ path('member_login') }}" >
-  
-  {% if error %}
-    <div class="alert alert-danger">
-      {{ error.messageKey|trans(error.messageData, 'security') }}
-    </div>
-  {% endif %}
 
-    <h5 class="card-header">{{ 'front.member.login'|trans }}</h1>
+{% if error %}
+  <div class="alert alert-danger">
+    {{ error.messageKey|trans(error.messageData, 'security') }}
+  </div>
+{% endif %}
+
+<div class="form-member login card"> 
+  <form method="post" action="{{ path('member_login') }}" novalidate>
+
+    <h5 class="card-header">{{ 'front.member.login'|trans }}</h5>
     <div class="card-body">
       <input class="form-control" type="email" value="{{ last_username }}" name="_email" id="inputEmail" placeholder="Email" required autofocus>
       
@@ -37,7 +38,7 @@
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
       
       <div class="form-switch container">
-        <div class="form-member remember" >{{ 'front.member.login.remember'|trans }}</div>
+        <div class="form-member login remember" >{{ 'front.member.login.remember'|trans }}</div>
         <div class="form-switch">
           <label>
             <input type="checkbox" name="_remember_me">
@@ -46,7 +47,8 @@
         </div>
       </div>
       
-      <button class="form-member submit btn btn-sm btn-primary" type="submit">{{ 'front.member.login.submit'|trans }}</button>
+      <button class="form-member login submit btn btn-sm btn-primary" type="submit">{{ 'front.member.login.submit'|trans }}</button>
+      <a href="{{ path('member_register') }}"><small>{{ 'front.member.login.registerlink'|trans }}</small></a>
     </div>
   </form>
 </div>

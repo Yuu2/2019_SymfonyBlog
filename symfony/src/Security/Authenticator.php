@@ -107,7 +107,6 @@ class Authenticator extends AbstractFormLoginAuthenticator {
     
     if(!$this->csrfTokenManager->isTokenValid($token))
     throw new CustomUserMessageAuthenticationException('security.user.csrf');
-    
 
     $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 

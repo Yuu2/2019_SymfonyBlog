@@ -8,7 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @author Yuu2
+ * @author yuu2dev
+ * updated 2020.06.10
  */
 class ContactController extends AbstractController {
 

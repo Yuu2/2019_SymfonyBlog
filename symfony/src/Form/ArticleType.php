@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Category;
-use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,8 +18,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @author Yuu2
- * updated 2020.02.09
+ * @author yuu2dev
+ * updated 2020.06.10
  */
 class ArticleType extends AbstractType {
   
@@ -48,49 +48,39 @@ class ArticleType extends AbstractType {
 
     $builder
       // 제목
-      ->add('title', TextType::class, [
-        'constraints' => [
-          new Assert\NotBlank([
-            'message' => 'assert.blog.article.title.empty'
-          ])
-        ],
+      ->add('title', TextType::class, array(  
         'label' => $translator->trans('front.blog.article.title')
-      ])
+      ))
+
       // 내용
-      ->add('content', FroalaEditorType::class, [
-        'constraints' => [
-          new Assert\NotBlank([
-            'message' => 'assert.blog.article.content.empty'
-          ])
-        ],
-        'label' => FALSE
-      ])
+      ->add('content', CKEditorType::class, array(
+        'label' => false
+      ))
+
       // 공개여부
-      ->add('visible', ChoiceType::class, [
+      ->add('visible', ChoiceType::class, array(
         'choices' => [
           $translator->trans('front.blog.article.visible.true')  => TRUE,
           $translator->trans('front.blog.article.visible.false') => FALSE
         ],
-        'constraints' => [
-          new Assert\Type([
-            'type' => 'bool'
-          ])
-        ],
+        
         'label' => $translator->trans('front.blog.article.visible')
-      ])
+      ))
+
       // 카테고리
-      ->add('category', EntityType::class, [
+      ->add('category', EntityType::class, array(
         'choice_label' => function(Category $category) {
           return $category->getTitle();
         },
         'class' => Category::class,
         'label' => $translator->trans('front.blog.article.category')
-      ])
+      ))
+
       // 해시태그
-      ->add('hashtag', HiddenType::class, [
+      ->add('hashtag', HiddenType::class, array(
         'required' => false,
         'mapped'   => false,
-      ])
+      ))
     ;
   }
 
@@ -101,8 +91,8 @@ class ArticleType extends AbstractType {
    */
   public function configureOptions(OptionsResolver $resolver) {
     $resolver->setDefaults([
+      'csrf_protection' => true,
       'data_class' => Article::class,
-      'csrf_protection' => true
     ]);
   }
 }

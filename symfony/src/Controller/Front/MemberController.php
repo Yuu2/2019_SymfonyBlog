@@ -3,7 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Entity\User;
-use App\Form\UserCreateType;
+use App\Form\UserType;
 use App\Service\MemberService;
 use App\Util\ValidationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,10 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.06.03
+ * updated 2020.06.10
  */
 class MemberController extends AbstractController {
   
@@ -26,6 +27,7 @@ class MemberController extends AbstractController {
    * @Template("/front/member/login.twig")
    * @access public
    * @param AuthenticationUtils $authenticationUtils
+   * @return array
    */
   public function login(AuthenticationUtils $authenticationUtils): array {
 
@@ -51,27 +53,35 @@ class MemberController extends AbstractController {
 
   /**
    * 등록
+   * @todo 썸네일 업로드
+   * @todo recaptcha 인증에러핸들링
    * @Route("/member/register", name="member_register", methods={"GET", "POST"})
    * @Template("/front/member/register.twig")
    * @access public
    * @param Request $request
    * @param UserPasswordEncoderInterface $userPasswordEncoder
    * @param ValidationUtils $validationUtils
-   * @param SecuriyService $securiyService
+   * @param MemberService $memberService
+   * @param TranslatorInterface $translator
    * @return array|object
    */
-  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, ValidationUtils $validationUtils, MemberService $memberService): ?array {
+  public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, ValidationUtils $validationUtils, MemberService $memberService, TranslatorInterface $translator) {
 
-    $form = $this->createForm(UserCreateType::class, new User);
+    $form = $this->createForm(UserType::class, new User);
     $form->handleRequest($request);
-    
+
     if($form->isSubmitted() && $form->isValid()) {
-      
+         
       switch(true) {
         // CSRF Token 검증
-        case !$validationUtils->verifyCsrfToken($request): break;
+        case !$validationUtils->verifyCsrfToken($request): 
+          $this->addFlash('error', $translator->trans('front.member.register.flash.err_csrftoken'));
+        break;
         // Google Recaptcha 검증 
-        case !$validationUtils->verifyRecaptcha($request): break;
+        case $validationUtils->verifyRecaptcha($request): 
+          $this->addFlash('error', $translator->trans('front.member.register.flash.err_recaptcha'));
+        break;
+        
         default: 
           /** @var User */
           $user = $form->getData();

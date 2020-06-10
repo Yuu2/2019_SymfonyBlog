@@ -1,9 +1,0 @@
-kms_froala_editor:
-  imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif']
-  imageUploadFolder: "/upload"
-  language: '%locale%'
-  publicDir: "/public"
-  pluginsDisabled: ["save"]
-twig:
-  form_themes:
-    - '@KMSFroalaEditor/Form/froala_widget.html.twig'

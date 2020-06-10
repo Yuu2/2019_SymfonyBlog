@@ -8,8 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @author Yuu2
- * updated 2020.04.09
+ * @author yuu2dev
+ * updated 2020.06.10
  */
 class HomeController extends AbstractController {
 

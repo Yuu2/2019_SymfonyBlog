@@ -1,4 +1,9 @@
-assert.seucirty.email.incorrent: 정확하지 않은 이메일입니다.
-assert.security.password.empty: 패스워드가 공백입니다.
-assert.blog.article.title.empty: 제목을 입력해주세요.
-assert.blog.article.content.empty: 내용을 입력해주세요.
+assert.member.email.empty: 이메일을 입력해 주세요.
+assert.member.email.un-unique: 이미 사용 중인 이메일입니다.
+assert.member.email.incorrent: 유효하지 않은 이메일입니다.
+assert.member.password.regex: 8 ~ 20 자리 수의 숫자와 문자 조합이 아닙니다.
+assert.member.password.empty: 패스워드를 입력해 주세요.
+assert.member.name.empty: 닉네임을 입력해 주세요.
+
+assert.blog.article.title.empty: 제목을 입력해 주세요.
+assert.blog.article.content.empty: 내용을 입력해 주세요.

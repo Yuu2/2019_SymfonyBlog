@@ -16,8 +16,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @abstract 
- * @author Yuu2
- * updated 2020.01.18
+ * @author yuu2dev
+ * updated 2020.06.10
  */
 abstract class AbstractFixtures extends Fixture {
   
