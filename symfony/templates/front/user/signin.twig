@@ -9,9 +9,9 @@
       <ul class="navbar-nav">
         {% if app.user %}
           <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('member_logout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
+          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_singout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
         {% else %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('member_login') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
+          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signin') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
         {% endif %}
       </ul>
     </div>
@@ -26,10 +26,10 @@
   </div>
 {% endif %}
 
-<div class="form-member login card"> 
-  <form method="post" action="{{ path('member_login') }}" novalidate>
+<div class="form-user login card"> 
+  <form method="post" action="{{ path('user_signin') }}" novalidate>
 
-    <h5 class="card-header">{{ 'front.member.login'|trans }}</h5>
+    <h5 class="card-header">{{ 'front.user.signin'|trans }}</h5>
     <div class="card-body">
       <input class="form-control" type="email" value="{{ last_username }}" name="_email" id="inputEmail" placeholder="Email" required autofocus>
       
@@ -38,7 +38,7 @@
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
       
       <div class="form-switch container">
-        <div class="form-member login remember" >{{ 'front.member.login.remember'|trans }}</div>
+        <div class="form-user login remember" >{{ 'front.user.signin.remember'|trans }}</div>
         <div class="form-switch">
           <label>
             <input type="checkbox" name="_remember_me">
@@ -47,8 +47,8 @@
         </div>
       </div>
       
-      <button class="form-member login submit btn btn-sm btn-primary" type="submit">{{ 'front.member.login.submit'|trans }}</button>
-      <a href="{{ path('member_register') }}"><small>{{ 'front.member.login.registerlink'|trans }}</small></a>
+      <button class="form-user login submit btn btn-sm btn-primary" type="submit">{{ 'front.user.signin.submit'|trans }}</button>
+      <a href="{{ path('user_signup_form') }}"><small>{{ 'front.user.signin.signuplink'|trans }}</small></a>
     </div>
   </form>
 </div>

@@ -1,12 +1,13 @@
-assert.member.email.empty: 이메일을 입력해 주세요.
-assert.member.email.unique: 이미 사용 중인 이메일입니다.
-assert.member.email.incorrent: 유효하지 않은 이메일입니다.
-assert.member.password.regex: 숫자와 문자의 조합이 아닙니다.
-assert.member.password.empty: 패스워드를 입력해 주세요.
-assert.member.password.length.min: 패스워드는 8 글자 부터 설정 할 수 있습니다.
-assert.member.password.length.max: 패스워드는 20 글자 까지 설정 할 수 있습니다.
-assert.member.alias.regex: 특수문자, 공백은 불가합니다.
-assert.member.alias.empty: 닉네임을 입력해 주세요.
-
+assert.user.email.empty: 이메일을 입력해 주세요.
+assert.user.email.unique: 이미 사용 중인 이메일입니다.
+assert.user.email.incorrent: 유효하지 않은 이메일입니다.
+assert.user.password.regex: 숫자와 문자의 조합이 아닙니다.
+assert.user.password.empty: 패스워드를 입력해 주세요.
+assert.user.password.length.min: 패스워드는 8 글자 부터 설정 할 수 있습니다.
+assert.user.password.length.max: 패스워드는 20 글자 까지 설정 할 수 있습니다.
+assert.user.alias.regex: 특수문자, 공백은 불가합니다.
+assert.user.alias.empty: 닉네임을 입력해 주세요.
+assert.user.thumbnail.mimetype: png, jpg, jpeg 유형의 이미지만 허용 됩니다.
+assert.user.thumbnail.size.max: 현재 썸네일의 크기는 {{ size }} {{ suffix }}입니다. (최대{{ limit }} {{ suffix }}이하)
 assert.blog.article.title.empty: 제목을 입력해 주세요.
 assert.blog.article.content.empty: 내용을 입력해 주세요.

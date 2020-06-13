@@ -44,6 +44,7 @@ a:hover {
 .service-box,
 .work-box,
 .card-blog {
+  border-radius: 20px;
   box-shadow: 0 13px 8px -10px rgba(0, 0, 0, 0.1);
 }
 
@@ -1330,51 +1331,51 @@ input:checked + .form-switch-slider:before {
 
 /* 멤버 폼 */
 
-.form-member.login.card {
-  margin: 50px auto;
+.form-user.signin.card {
+  margin: 30px auto;
   min-width: 300px;
   width: 30%;
 }
 
-.form-member.register.card {
-  margin: 50px auto;
+.form-user.signup.card {
+  margin: 30px auto;
   min-width: 400px;
   width: 39%;
 }
 
-.form-member .card-body {
+.form-user .card-body {
   text-align: center;
 }
 
-.form-member .card-item {
+.form-user .card-item {
   margin: 20px 0 0 0;
 }
 
-.form-member .card-item img {
+.form-user .card-item img {
   border-radius: 50%;
   width: auto; height: auto;
   max-height: 200px;
 }
 
-.form-member .card-item .btn {
+.form-user .card-item .btn {
   display: flex;
   margin: unset;
 }
 
-.form-member input {
+.form-user input {
   margin: 5px 0;
 }
 
-.form-member.login.submit {
+.form-user.sign.submit {
   margin: 5px 0;
   width: 100%;
 }
 
-.form-member.login.remember {
+.form-user.sign.remember {
   margin: 5px;
 }
 
-.form-member.g-recaptcha {
+.form-user.g-recaptcha {
   display: flex;
   justify-content: center;
   margin-bottom: 10px;

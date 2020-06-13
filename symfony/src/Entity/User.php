@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author yuu2dev
  * updated 2020.06.10
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields="email", message="assert.member.email.unique")
+ * @UniqueEntity(fields="email", message="assert.user.email.unique")
  */
 class User implements UserInterface {
     
@@ -25,9 +25,9 @@ class User implements UserInterface {
     private $id;
 
     /**
-     * @Assert\Email(message="assert.member.email.incorrent")
-     * @Assert\Length(max=255, maxMessage="assert.member.email.length.max")
-     * @Assert\NotBlank(message="assert.member.email.empty")
+     * @Assert\Email(message="assert.user.email.incorrent")
+     * @Assert\Length(max=255, maxMessage="assert.user.email.length.max")
+     * @Assert\NotBlank(message="assert.user.email.empty")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
@@ -38,7 +38,7 @@ class User implements UserInterface {
     private $roles = [];
 
     /**
-     * @Assert\NotBlank(message="assert.member.password.empty")
+     * @Assert\NotBlank(message="assert.user.password.empty")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
@@ -54,15 +54,15 @@ class User implements UserInterface {
     private $updated_at;
 
     /** 
-     * @Assert\Regex(pattern="/^[\w]$/", match=false, message="assert.member.alias.regex")
-     * @Assert\Length(max=20, maxMessage="assert.member.alias.length.max")
-     * @Assert\NotBlank(message="assert.member.alias.empty")
+     * @Assert\Regex(pattern="/^[\w]$/", match=false, message="assert.user.alias.regex")
+     * @Assert\Length(max=20, maxMessage="assert.user.alias.length.max")
+     * @Assert\NotBlank(message="assert.user.alias.empty")
      * @ORM\Column(type = "string") 
      */
     private $alias;
 
     /**
-     * @Assert\Length(max=255, maxMessage="assert.member.thumbnail.length.max")
+     * @Assert\Length(max=255, maxMessage="assert.user.thumbnail.length.max")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $thumbnail;

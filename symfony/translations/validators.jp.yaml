@@ -1,4 +1,4 @@
-assert.seucirty.email.incorrent: メールを正しく入力してください。
-assert.security.password.empty: パースワードに空白が含まれています。
+assert.user.email.incorrent: メールを正しく入力してください。
+assert.user.password.empty: パースワードに空白が含まれています。
 assert.blog.article.title.empty: タイトルを入力してください。
 assert.blog.article.content.empty: コンテンツを入力してください。

@@ -9,7 +9,8 @@ events {
 }
 
 http {
-  
+  server_tokens off;
+
   default_type  application/octet-stream;
   access_log  /var/log/nginx/access.log;
   
@@ -27,7 +28,7 @@ http {
   include /etc/nginx/conf.d/*.conf;
   include /etc/nginx/sites-available/*.conf;
   
-  client_max_body_size 20M;
+  client_max_body_size 128M;
 
   server {
     listen 80;
@@ -42,7 +43,7 @@ http {
     
     listen 443  ssl http2;    
     server_name ${SERVER_DOMAIN} ${SERVER_DOMAIN_WWW};
-
+    
     root ${PROJECT_DIR}/public;
     
     index index.php index.html index.htm;

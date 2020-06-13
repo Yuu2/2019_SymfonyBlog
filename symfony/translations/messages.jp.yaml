@@ -1,34 +1,16 @@
 # 관리자정보
-administrator.id: Yuu2
-administrator.email: myco8332v2@gmail.com
+administrator.id: yuu2dev
+administrator.email: yuu2dev@gmail.com
 # 공통
 common.data.null: データなし
-# 시큐리티
-security.login: ログイン
-security.login.email: メール
-security.login.password: パスワード
-security.login.remember: ログイン状態を維持
-security.login.submit: ログイン
-security.register: メンバー登録
 # 홈
 front.home: ポートフォリオブログ
 front.home.intro: ポートフォリオブログにようこそ、おいでくださいました。
 front.home.about: 紹介
 front.home.about.skill: 自信あるスキル
 front.home.about.email: メールアドレス
-front.home.about.cert:
-  <p>
-    <small> - 啓明学大学 人文国際学部 日本学専門 </small></br>
-    <small> - 情報処理騎士(応用情報技術者) </small><br>
-    <small> - TOEIC 723 </small><br>
-    <small> - JLPT N1 </small>
-  </p>
-front.home.about.description: 
-  <p class="lead">
-    <small>
-      JAVA・PHP エンジニアです。</br>
-    </small>
-  </p>
+front.home.about.cert: //
+front.home.about.description: //
 front.home.work.join_years: 経歴
 front.home.work.join_projects: 参加プロジェクト
 front.home.portfolio: ポートフォリオ
