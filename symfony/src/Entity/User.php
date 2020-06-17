@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @author yuu2dev
- * updated 2020.06.10
+ * updated 2020.06.17
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="assert.user.email.unique")
  */
@@ -62,15 +62,14 @@ class User implements UserInterface {
     private $alias;
 
     /**
-     * @Assert\Length(max=255, maxMessage="assert.user.thumbnail.length.max")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $thumbnail;
 
     /**
-     * @ORM\OneToOne(targetEntity=UserEmailAuth::class, cascade={"persist", "remove"})
+     * @ORM\Column(type="boolean")
      */
-    private $userEmailAuth;
+    private $isVerified = false;
 
     public function getId(): ?int
     {
@@ -197,14 +196,14 @@ class User implements UserInterface {
         return $this;
     }
 
-    public function getUserEmailAuth(): ?UserEmailAuth
+    public function isVerified(): bool
     {
-        return $this->userEmailAuth;
+        return $this->isVerified;
     }
 
-    public function setUserEmailAuth(?UserEmailAuth $userEmailAuth): self
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->userEmailAuth = $userEmailAuth;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

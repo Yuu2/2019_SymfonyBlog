@@ -8,3 +8,4 @@ db/data/
 
 # Dummy
 .DS_Store
+/dummy

@@ -20,8 +20,8 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 /**
- * @author yuu2
- * updated 2020.01.27
+ * @author yuu2dev
+ * updated 2020.06.17
  */
 class Authenticator extends AbstractFormLoginAuthenticator {
 
@@ -73,7 +73,7 @@ class Authenticator extends AbstractFormLoginAuthenticator {
    */
   public function supports(Request $request): bool {
     
-    return 'member_login' === $request->attributes->get('_route') && $request->isMethod('POST');
+    return 'user_signin' === $request->attributes->get('_route') && $request->isMethod('POST');
   }
 
   /**
@@ -141,6 +141,6 @@ class Authenticator extends AbstractFormLoginAuthenticator {
    * @access public
    */
   protected function getLoginUrl() {
-    return $this->urlGenerator->generate('member_login');
+    return $this->urlGenerator->generate('user_signin');
   }
 }

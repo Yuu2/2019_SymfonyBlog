@@ -17,22 +17,14 @@
   </nav>
 {% endblock %}
 {% block main %}
-
-<!-- 에러 메시지 출력 -->
-{% for error in app.flashes('error') %}
-  <div class="alert alert-danger">
-    {{ error }}
-  </div>
-{% endfor %}
-
+{% include 'block/flash.twig' %}
 <div class="form-user signup card">    
   
   <h5 class="card-header">{{ 'front.user.signup'|trans }}</h5>
   <div class="card-body">
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+    {{ form_row(form._token) }}
 
     <!-- 썸네일 프리뷰 -->
     <div class="card-item preview">
@@ -58,9 +50,14 @@
     <div class="card-item">
       <i class="fa fa-envelope-o" aria-hidden="true"></i> 
       {{ form.email.vars.label }}<br />
-      {{ form_widget(form.email) }}
+      <div class="d-flex">
+        {{ form_widget(form.email) }}
+        {{ form_widget(form.check_email) }}
+        {{ form_widget(form.check_email_btn) }}
+      </div>
       <small>{{ form_help(form.email)}}</small>
       <small>{{ form_errors(form.email)}}</small>
+      <small>{{ form_errors(form.check_email)}}</small>
     </div>
     
     <!-- 패스워드 -->
@@ -82,11 +79,11 @@
     </div>
 
     <!-- Google Recaptcha -->
-    <div class="card-item auth">
+    <div class="card-item">
       <div class="form-user g-recaptcha" data-sitekey="6LeFy6gUAAAAAEXAe66NVeIl0mcTfGkk7xgqNuVw"></div>
     </div>
     
-    <div class="card-item btn">
+    <div class="card-item m-unset d-flex contents-center">
       {{ form_row(form.submit) }}
     </div>
 
@@ -97,30 +94,29 @@
 
 {% block javascripts %}
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="{{ asset('style/js/preview.js') }}"></script>
+  <script src="{{ asset('style/js/ajax.js') }}"></script>
   <script>
-    // 썸네일 프리뷰
     $(function() {
       
-      var imgId = '#{{ form.thumbnail.vars.id }}';
-      console.log(imgId);
-      readURL(imgId);
-
-      $(imgId).change(function() {
-        readURL(this);
+      
+      const email_check_id     = "#{{ form.check_email.vars.id }}";
+      const email_check_btn_id = "#{{ form.check_email_btn.vars.id }}";
+      const thumbnail_id       = "#{{ form.thumbnail.vars.id }}";
+      
+      // 썸네일 프리뷰
+      $(thumbnail_id).change(function() {
+        readURL(this, "#preview");
       });
-
-      function readURL(input) {
-
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            $('#preview').attr('src', e.target.result);
-
-            console.log(e.target.result);
-          }
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
+    
+      // 이메일 확인
+      $(email_check_btn_id).click(function(e) {
+        const _type  = "GET"
+        const _url   = "{{ path('user_signup_check_email') }}"
+        const _token = "{{ csrf_token('authenticate') }}"
+        let   _data  = {_csrf_token: _token};
+        ajax(_type, _url, _data);
+      });
     });
   </script>
 {% endblock %}

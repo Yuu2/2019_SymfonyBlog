@@ -29,15 +29,14 @@ class ValidationUtils {
    * @access public
    * @static
    * @param Request $request
+   * @param string $form
    * @return bool
    */
-  public function verifyCsrfToken(Request $request): bool {
+  public function verifyCsrfToken(Reqeust $request, ?string $formName): bool {
     
-    $token = $request->request->get('_csrf_token');
+    $_csrf_token = $request->get($form->getName())['_token'];
 
-    if(is_null($token)) return false; 
-
-    return $this->csrfTokenManager->getToken($token) ? true : false;
+    return $this->csrfTokenManager->isTokenValid($_csrf_token) ? true : false;
   }
 
   /**

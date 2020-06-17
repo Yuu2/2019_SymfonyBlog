@@ -23,28 +23,32 @@ security:
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             form_login:
-                check_path: member_login
-                login_path: member_login
+                check_path: user_signin
+                login_path: user_signin
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: blog_index
                 username_parameter: _email
             # https://symfony.com/doc/current/security/form_login_setup.html
             logout:
-                path: member_logout
+                path: user_signout
                 target: blog_index
             remember_me:
                 secret: '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
+                lifetime: 86400 # 1 week in seconds
                 path: /
             guard:
                 authenticators:
                     - App\Security\Authenticator
     access_control:
       # 로그인
-      - { path: ^/member/login,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/user/signin,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      # 가입하기
+      - { path: ^/user/signup,       roles: IS_AUTHENTICATED_FULLY }
+      # 이메일 인증
+      - { path: ^/user/verify_email, roles: IS_AUTHENTICATED_FULLY }
       # 관리자
-      - { path: ^/admin,       roles: ROLE_ADMIN }
+      - { path: ^/admin,             roles: ROLE_ADMIN }
       # 블로그
-      - { path:  /blog/new,    roles: ROLE_ADMIN }
-      - { path: ^/blog/edit,   roles: ROLE_ADMIN }
-      - { path: ^/blog/delete, roles: ROLE_ADMIN }
+      - { path:  /blog/new,          roles: ROLE_ADMIN }
+      - { path: ^/blog/edit,         roles: ROLE_ADMIN }
+      - { path: ^/blog/delete,       roles: ROLE_ADMIN }

@@ -8,17 +8,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @author yuu2
- * updated 2020.01.26
+ * @author yuu2dev
+ * updated 2020.06.16
  * @Route("/admin")
  */
-class ConfigController extends AbstractController {
+class HomeController extends AbstractController {
 
   /**
-   * 관리자 홈
+   * 홈
    * @access public
-   * @Route("/config", name="config", methods={"GET"})
-   * @Template("admin/config.twig")
+   * @Route("/", name="admin_home", methods={"GET"})
+   * @Template("admin/home.twig")
    * @return array
    */
   public function home(): ?array {

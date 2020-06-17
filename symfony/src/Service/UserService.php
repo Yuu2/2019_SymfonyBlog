@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.06.13
+ * updated 2020.06.17
  */
 class UserService {
 
@@ -82,19 +82,24 @@ class UserService {
   /**
    * @todo monolog
    * @access public
-   * @return bool
+   * @param File $thumbnail
+   * @return string
    */
-  public function saveThumbnail($thumbnail) {
- 
+  public function saveThumbnail($thumbnail): ?string {
+    
+    $thumbnail_src = null;
+    
     if ($thumbnail) {
+
       try {
-        $thumbnail->move(
-          $this->container->getParameter('upload_dir'),
-          pathinfo($thumbnail->getClientOriginalName(), PATHINFO_FILENAME).'-'.uniqid().'.'.$thumbnail->guessExtension()
-        );
+
+        $thumbnail_src = pathinfo($thumbnail->getClientOriginalName(), PATHINFO_FILENAME) . '-' . uniqid() . '.' . $thumbnail->guessExtension();
+        $thumbnail->move($this->container->getParameter('upload_dir'), $thumbnail_src);
       } catch (\FileException $fe) {
-      
+
+        $thumbnail_src = null;
       }
     }
+    return $thumbnail_src;
   }
 }

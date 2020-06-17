@@ -1,4 +1,19 @@
-assert.user.email.incorrent: メールを正しく入力してください。
+# 유저
+assert.user.email.empty: メールを入力してください。
+assert.user.email.unique: もはや使用しているメールアカウントです。
+assert.user.email.check: メールのチェックボタンを押してください。登録されているか確認します。
+assert.user.email.incorrent: メールでは有りません。正しく入力してください。
+assert.user.email.length.max: メール文字列の長さが非常に長くなっております。申し訳ございません。
+assert.user.password.regex: 数字と文字の組み合わせでは有りません。
 assert.user.password.empty: パースワードに空白が含まれています。
+assert.user.password.length.min: パースワードは 8 文字から入力できます。
+assert.user.password.length.max: パースワードは 20 文字まで入力できます。
+assert.user.alias.regex: 特殊文字と空白は不可になります。
+assert.user.alias.empty: ネームを入力してください。
+assert.user.alias.length.max: ネームは 20 文字まで入力できます。
+assert.user.thumbnail.mimetype: png, jpg, jpeg 型の画像だけ可能です。
+assert.user.thumbnail.size.max: 現在、画像のサイズは {{ size }} {{ suffix }}です。 (最大{{ limit }} {{ suffix }})
+
+# 블로그
 assert.blog.article.title.empty: タイトルを入力してください。
 assert.blog.article.content.empty: コンテンツを入力してください。

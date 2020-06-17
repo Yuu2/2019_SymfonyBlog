@@ -6,8 +6,10 @@ use App\Entity\User;
 use App\Entity\Profile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -19,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @author yuu2dev
- * updated 2020.06.10
+ * updated 2020.06.16
  */
 class UserType extends AbstractType {
   
@@ -47,10 +49,27 @@ class UserType extends AbstractType {
     $translator = $this->translator;
 
     $builder
+
       // 이메일
       ->add('email', EmailType::class, array(
         'label' => $translator->trans('front.user.signup.email'),
         'required' => true,
+      ))
+
+      // 이메일 확인
+      ->add('check_email', HiddenType::class, array(
+        // 'constraints'    => $this->getEmailCheckConstraints(),
+        'error_bubbling' => false,
+        'empty_data'     => false,
+        'mapped'         => false,
+        'required'       => true,
+      ))
+
+      ->add('check_email_btn', ButtonType::class, array(
+        'label' => $translator->trans('front.user.signup.email.check'),
+        'attr' => array(
+          'class' => 'btn-outline-primary btn-sm'
+        )
       ))
 
       // 패스워드
@@ -72,6 +91,7 @@ class UserType extends AbstractType {
 
       // 닉네임
       ->add('alias', TextType::class, array(
+        'help' => $translator->trans('front.user.signup.alias.help'),
         'label' => $translator->trans('front.user.signup.alias'),
         'required' => true
       ))
@@ -82,7 +102,7 @@ class UserType extends AbstractType {
         'help' => $translator->trans('front.user.signup.thumbnail.help'),
         'required' => false,
       ))
-
+      
       // 전송
       ->add('submit', SubmitType::class, array(
         'label' => $translator->trans('front.user.signup.submit')
@@ -90,7 +110,18 @@ class UserType extends AbstractType {
     ;
   }
 
-  
+  /**
+   * @access private
+   * @return array
+   */
+  private function getEmailCheckConstraints(): ?array{
+    return array(
+      new Assert\IsTrue(array(
+        'message' => 'assert.user.email.check'
+      ))
+    );
+  }
+
   /**
    * @access private
    * @return array
@@ -132,9 +163,10 @@ class UserType extends AbstractType {
    * @return void
    */
   public function configureOptions(OptionsResolver $resolver) {
+    
     $resolver->setDefaults([
       'csrf_protection' => true,
-      'data_class' => User::class
+      'data_class'      => User::class
     ]);
   }
 }

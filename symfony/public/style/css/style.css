@@ -39,6 +39,18 @@ a:hover {
   color: #4e4e4e;
 }
 
+.m-unset {
+  margin: unset;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.contents-center {
+  justify-content: center;
+}
+
 .box-shadow,
 .paralax-mf,
 .service-box,
@@ -1351,15 +1363,15 @@ input:checked + .form-switch-slider:before {
   margin: 20px 0 0 0;
 }
 
+.form-user .card-item .d-flex button {
+  margin: 5px;
+  padding: 0 10px;
+}
+
 .form-user .card-item img {
   border-radius: 50%;
   width: auto; height: auto;
   max-height: 200px;
-}
-
-.form-user .card-item .btn {
-  display: flex;
-  margin: unset;
 }
 
 .form-user input {

@@ -4,11 +4,11 @@ PROJECT_DIR=/var/www/html
 # 프로젝트 환경 플래그 [dev]|[prod]
 APP_ENV=dev
 
+APP_ADMIN_NAME=
+APP_ADMIN_EMAIL=
+
 # 프로젝트의 암호
 APP_SECRET=
-
-# Google Recaptcha
-RECAPTCHA_SECRET=
 
 # Database
 DATABASE_NAME=
@@ -18,3 +18,9 @@ DATABASE_ROOT_PASSWORD=
 # Nginx
 SERVER_DOMAIN=
 SERVER_DOMAIN_WWW=
+
+MAILER_URL=
+MAILER_DSN=
+
+# Google Recaptcha
+RECAPTCHA_SECRET=

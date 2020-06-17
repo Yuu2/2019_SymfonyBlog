@@ -1,8 +1,10 @@
-# 관리자정보
+# 관리자 정보
 administrator.id: yuu2dev
 administrator.email: yuu2dev@gmail.com
+
 # 공통
 common.data.null: データなし
+
 # 홈
 front.home: ポートフォリオブログ
 front.home.intro: ポートフォリオブログにようこそ、おいでくださいました。
@@ -14,6 +16,7 @@ front.home.about.description: //
 front.home.work.join_years: 経歴
 front.home.work.join_projects: 参加プロジェクト
 front.home.portfolio: ポートフォリオ
+
 # 블로그
 front.blog: ブログ
 front.blog.tag: タグ
@@ -32,6 +35,27 @@ front.blog.article.visible.true: 公開
 front.blog.article.visible.false: 非公開
 front.blog.article.title.placeholder: タイトルを入力してください。
 front.blog.article.flash.msg_write_error: 記事作成に失敗しました。（サーバエラー）
+
+# 유저
+front.user.signin: ログイン
+front.user.signin.email: メール
+front.user.signup.email.check: チェック
+front.user.signin.password: パースワード
+front.user.signin.remember: ログイン状態を維持
+front.user.signin.submit: ログインする
+front.user.signin.signuplink: 新規登録する。
+front.user.signup: メンバー登録
+front.user.signup.thumbnail.help: 5MB 以下の (png, jpg, jpeg) 型の画像だけ可能です。
+front.user.signup.email: メール
+front.user.signup.alias: あだ名
+front.user.signup.password: パースワード
+front.user.signup.password.help: ８〜20文字の数字と文字の組み合わせ（空白は含まれてはいけません。）
+front.user.signup.password.confirm: パースワードの再確認
+front.user.signup.password.confirm.help: もう一度パースワードを入力してください。
+front.user.signup.password.invalid: パースワードの不一致です。もう一度入力してください。
+front.user.signup.submit: 登録する
+front.user.signup.flash.csrftoken_error: 有効ではない接続です。
+front.user.signup.flash.recaptcha_error: g-recaptcha 認証失敗
 
 # 질문하기
 front.contact: 問い合わせ
