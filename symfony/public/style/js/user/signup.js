@@ -1,4 +1,5 @@
-function ajax(_type, _url, _data = null, _dataType = 'json', contentType = 'application/json') {
+
+function dupcheck(_type, _url, _data = null, _dataType = 'json', _contentType = 'application/json') {
 
   $.ajax({
     

@@ -6,7 +6,7 @@ use App\Form\ArticleType;
 use App\Entity\Article;
 use App\Service\BlogService;
 use App\Service\CategoryService;
-use App\Util\ValidationUtils;
+use App\Util\RecaptchaUtils;
 use App\Util\BlogUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,10 +77,10 @@ class BlogController extends AbstractController {
    * @param BlogUtils $blogUtils
    * @param CategoryService $categoryService
    * @param TranslatorInterface $translator
-   * @param ValidationUtils $validationUtils
+   * @param RecaptchaUtils $recaptchaUtils
    * @return array|object
    */
-  public function new(Request $request, BlogService $blogService, BlogUtils $blogUtils, CategoryService $categoryService, TranslatorInterface $translator, ValidationUtils $validationUtils) {
+  public function new(Request $request, BlogService $blogService, BlogUtils $blogUtils, CategoryService $categoryService, TranslatorInterface $translator, RecaptchaUtils $recaptchaUtils) {
     
     $form = $this->createForm(ArticleType::class, new Article);
     $form->handleRequest($request);
@@ -88,9 +88,6 @@ class BlogController extends AbstractController {
     if($form->isSubmitted() && $form->isValid()) {
       
       switch(true) {
-
-        // CSRF Token 검증
-        case !$validationUtils->verifyCsrfToken($request): break;
 
         default:
           /** @var String */
@@ -133,10 +130,10 @@ class BlogController extends AbstractController {
    * @param BlogUtils $blogUtils
    * @param CategoryService $categoryService
    * @param TranslatorInterface $translator
-   * @param ValidationUtils $validationUtils
+   * @param RecaptchaUtils $recaptchaUtils
    * @return array|object
    */
-  public function edit(Request $request, Article $article, BlogService $blogService,  BlogUtils $blogUtils, CategoryService $categoryService, TranslatorInterface $translator, ValidationUtils $validationUtils) {
+  public function edit(Request $request, Article $article, BlogService $blogService,  BlogUtils $blogUtils, CategoryService $categoryService, TranslatorInterface $translator, RecaptchaUtils $recaptchaUtils) {
 
     $form = $this->createForm(ArticleType::class, $article, ['method' => 'PUT']);
     $form->handleRequest($request);
@@ -145,9 +142,6 @@ class BlogController extends AbstractController {
       
       switch(true) {
 
-        // CSRF Token 검증
-        case !$validationUtils->verifyCsrfToken($request): break;
-        
         default:
 
           /** @var String */

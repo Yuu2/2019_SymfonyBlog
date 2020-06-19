@@ -1341,7 +1341,7 @@ input:checked + .form-switch-slider:before {
   border-radius: 50%;
 }
 
-/* 멤버 폼 */
+/* User */
 
 .form-user.signin.card {
   margin: 30px auto;
@@ -1378,12 +1378,12 @@ input:checked + .form-switch-slider:before {
   margin: 5px 0;
 }
 
-.form-user.sign.submit {
+.form-user.signin.submit {
   margin: 5px 0;
   width: 100%;
 }
 
-.form-user.sign.remember {
+.form-user.signin.remember {
   margin: 5px;
 }
 

@@ -1,23 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block nav %}
-  <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll" href="{{ path('home') }}">PortfolioBlog</a>
-    </div>
-    <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
-      <ul class="navbar-nav">
-        {% if app.user %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
-        {% else %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signin') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-{% endblock %}
 {% block main %}
-{% include 'block/flash.twig' %}
 <div class="form-user signup card">    
   
   <h5 class="card-header">{{ 'front.user.signup'|trans }}</h5>
@@ -95,10 +77,9 @@
 {% block javascripts %}
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="{{ asset('style/js/preview.js') }}"></script>
-  <script src="{{ asset('style/js/ajax.js') }}"></script>
+  <script src="{{ asset('style/js/user/signup.js') }}"></script>
   <script>
     $(function() {
-      
       
       const email_check_id     = "#{{ form.check_email.vars.id }}";
       const email_check_btn_id = "#{{ form.check_email_btn.vars.id }}";
@@ -111,11 +92,13 @@
     
       // 이메일 확인
       $(email_check_btn_id).click(function(e) {
-        const _type  = "GET"
-        const _url   = "{{ path('user_signup_check_email') }}"
-        const _token = "{{ csrf_token('authenticate') }}"
-        let   _data  = {_csrf_token: _token};
-        ajax(_type, _url, _data);
+        const _type  = "GET";
+        const _url   = "{{ path('user_signup_dupcheck') }}";
+        const _data  = {
+
+        };
+
+        dupcheck(_type, _url, _data);
       });
     });
   </script>

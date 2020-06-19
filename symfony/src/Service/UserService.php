@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.06.17
+ * updated 2020.06.19
  */
 class UserService {
 
@@ -24,7 +24,7 @@ class UserService {
    * @var LoggerInterface
    */
   private $logger;
-  
+
   /**
    * @var EntityManagerInterface
    */
@@ -54,13 +54,6 @@ class UserService {
     $this->passwordEncoder = $passwordEncoder;
     $this->userRepository = $userRepository;
   }
-
-  /**
-   * @todo 유저 중복 검사
-   * @access public
-   * @return bool
-   */
-  public function isDuplicated() : bool {}
   
   /**
    * @access public
@@ -102,4 +95,12 @@ class UserService {
     }
     return $thumbnail_src;
   }
+
+  /**
+   * @todo 유저 중복 검사
+   * @access public
+   * @return bool
+   */
+  public function isDuplicated() : bool {}
+
 }

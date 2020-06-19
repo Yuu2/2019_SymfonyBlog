@@ -1,32 +1,6 @@
 {% extends "base.html.twig" %}
-
-{% block nav %}
-  <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll" href="{{ path('home') }}">PortfolioBlog</a>
-    </div>
-    <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
-      <ul class="navbar-nav">
-        {% if app.user %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_singout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
-        {% else %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signin') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-{% endblock %}
- 
 {% block main %}
-
-{% if error %}
-  <div class="alert alert-danger">
-    {{ error.messageKey|trans(error.messageData, 'security') }}
-  </div>
-{% endif %}
-
-<div class="form-user login card"> 
+<div class="form-user signin card"> 
   <form method="post" action="{{ path('user_signin') }}" novalidate>
 
     <h5 class="card-header">{{ 'front.user.signin'|trans }}</h5>
@@ -38,7 +12,7 @@
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
       
       <div class="form-switch container">
-        <div class="form-user login remember" >{{ 'front.user.signin.remember'|trans }}</div>
+        <div class="form-user signin remember" >{{ 'front.user.signin.remember'|trans }}</div>
         <div class="form-switch">
           <label>
             <input type="checkbox" name="_remember_me">
@@ -47,8 +21,8 @@
         </div>
       </div>
       
-      <button class="form-user login submit btn btn-sm btn-primary" type="submit">{{ 'front.user.signin.submit'|trans }}</button>
-      <a href="{{ path('user_signup_form') }}"><small>{{ 'front.user.signin.signuplink'|trans }}</small></a>
+      <button class="form-user signin submit btn btn-sm btn-primary" type="submit">{{ 'front.user.signin.submit'|trans }}</button>
+      <a href="{{ path('user_signup') }}"><small>{{ 'front.user.signin.signup_link'|trans }}</small></a>
     </div>
   </form>
 </div>

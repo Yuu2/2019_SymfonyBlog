@@ -6,18 +6,14 @@
     </div>
     <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
       <ul class="navbar-nav">
-        {% if app.user %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
-        {% else %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signin') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
-        {% endif %}
+        {% include 'block/signin.twig' %}
       </ul>
     </div>
   </nav>
 {% endblock %}
 {% block intro %}{% endblock %}
 {% block main %}
+{% include 'block/flash.twig' %}
 {% if Article is not empty %}
   <ion-icon name="person"></ion-icon>
   <div class="intro intro-single route bg-image" style="background-image: url({{ asset('style/img/' ~ Article.thumbnail) }})">
