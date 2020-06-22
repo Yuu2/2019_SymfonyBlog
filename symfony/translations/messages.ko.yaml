@@ -58,10 +58,11 @@ front.user.signup.password.invalid: 패스워드가 일치하지 않습니다. �
 front.user.signup.submit: 가입하기
 front.user.signup.sender: 포트폴리오 블로그 가입 인증 메일입니다.
 
-front.user.signup.flash.recaptcha_invalid: g-recaptcha 인증 실패 입니다.
+front.user.signup.flash.recaptcha_fail: g-recaptcha 인증 실패 입니다.
 front.user.signup.flash.email_invalid: 이메일 인증 기한이 만료되었거나 유효하지 않은 접근 입니다.
 front.user.signup.flash.email_verified: 이메일이 인증 되었습니다.
 front.user.signup.flash.email_confirm: 인증 메일을 발신 했습니다. 이메일에 첨부된 링크를 클릭하면 등록이 완료 됩니다.
-
+front.user.signup.flash.email_duplicated: 사용하고 있는 이메일 입니다. 다시 입력 해 주세요.
+front.user.signup.flash.email_unduplicated: 사용 가능한 이메일 입니다.
 # 질문하기
 front.contact: 질문하기

@@ -3,15 +3,18 @@
 namespace App\Controller\Front;
 
 use App\Entity\User;
+use App\Event\FlashEvent;
+use App\Event\SecurityEvent;
 use App\Form\UserType;
 use App\Security\Authenticator;
 use App\Security\EmailVerifier;
 use App\Service\UserService;
 use App\Util\RecaptchaUtils;
-use App\Util\EmailUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -22,7 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @author yuu2dev
- * updated 2020.06.19
+ * updated 2020.06.20
  */
 class UserController extends AbstractController {
 
@@ -33,23 +36,21 @@ class UserController extends AbstractController {
    * @Template("/front/user/signin.twig")
    * @access public
    * @param AuthenticationUtils $authenticationUtils
+   * @param EventDispatcherInterface $eventDispatcher
    * @return array|object
    */
-  public function signIn(AuthenticationUtils $authenticationUtils) {
+  public function signIn(AuthenticationUtils $authenticationUtils, EventDispatcherInterface $eventDispatcher) {
     
-    if ($this->getUser()) { 
-      return $this->redirectToRoute($route); 
-    }
+    $eventDispatcher->dispatch(SecurityEvent::REDIRECT_IF_ROLE_USER);
 
     $error = $authenticationUtils->getLastAuthenticationError();
 
     $lastUsername = $authenticationUtils->getLastUsername();
     
-    return array (
-
+    return [
       'last_username' => $lastUsername, 
       'error' => $error
-    );
+    ];
   }
 
   /**
@@ -67,62 +68,83 @@ class UserController extends AbstractController {
    * @Template("/front/user/signup.twig")
    * @access public
    * @param Authenticator $authenticator
-   * @param EmailUtils $emailUtils
    * @param EmailVerifier $emailVerifier
+   * @param EventDispatcherInterface $eventDispatcher
    * @param GuardAuthenticatorHandler $guardAuthenticatorHandler
    * @param Request $request
    * @param RecaptchaUtils $recaptchaUtils
-   * @param UserService $userService
    * @param TranslatorInterface $translator
+   * @param UserService $userService
    * @return array|object
    */
-  public function signUpForm(Authenticator $authenticator, EmailUtils $emailUtils, EmailVerifier $emailVerifier,  GuardAuthenticatorHandler $guardAuthenticatorHandler,  Request $request, RecaptchaUtils $recaptchaUtils, UserService $userService, TranslatorInterface $translator) {
-
-    if ($this->getUser()) {  
-      return $this->redirectToRoute($route);
-    }
+  public function signUpForm(
+    Authenticator $authenticator, 
+    EmailVerifier $emailVerifier, 
+    EventDispatcherInterface $eventDispatcher, 
+    GuardAuthenticatorHandler $guardAuthenticatorHandler, 
+    Request $request, 
+    RecaptchaUtils $recaptchaUtils, 
+    TranslatorInterface $translator, 
+    UserService $userService
+  ) {
+    
+    $eventDispatcher->dispatch(SecurityEvent::REDIRECT_IF_ROLE_USER);
     
     $form = $this->createForm(UserType::class, new User);
     $form->handleRequest($request);
 
-    if($form->isSubmitted() && $form->isValid()) {
+    switch(true) {
+
+      /* FormType 검사 */
+      case !($form->isSubmitted() && $form->isValid()): break;
+      /* Google Recaptcha 검사 */ 
+      case !$recaptchaUtils->verifyRecaptcha($request): 
+        $eventDispatcher->dispatch(FlashEvent::SIGNUP_RECAPTCHAR_FAIL); break;
       
-      if($recaptchaUtils->verifyRecaptcha($request)) {
+      default:
 
         /** @var User */
         $user          = $form->getData();
         $thumbnail     = $form->get('thumbnail')->getData();
         $thumbnail_src = $userService->saveThumbnail($thumbnail);
-        
+          
         $user->setThumbnail($thumbnail_src);
         $userService->saveUser($user);
 
         /** 메일 인증 */
-        $email = $emailUtils->setVerifyEmail($user->getEmail(), $translator->trans('front.user.signup.sender'));
+        $email = $emailVerifier->setVerifyEmail($user->getEmail(), $translator->trans('front.user.signup.sender'));
         $emailVerifier->sendEmailConfirmation('user_signup_verify',  $user, $email);
-
-        $this->addFlash('info', $translator->trans('front.user.signup.flash.email_confirm'));
-        return $this->redirectToRoute('blank');
         
-      } else {
+        $guardAuthenticatorHandler->authenticateUserAndHandleSuccess($user, $request, $authenticator, 'main');
 
-        $this->addFlash('danger', $translator->trans('front.user.signup.flash.recaptcha_invalid'));
-      }
+        $eventDispatcher->dispatch(FlashEvent::SIGNUP_EMAIL_CONFIRM);
+
+        return $this->redirectToRoute('blank');
     }
 
-    return array(
+    return [
       'form' => $form->createView()
-    );
+    ];
   }
 
   /**
    * 이메일 중복검사
-   * @access public
    * @Route("/signup/dupcheck", name="user_signup_dupcheck", methods={"GET"})
+   * @access public
+   * @param Request $request
+   * @param UserService $userService
+   * @return JsonResponse
    */
-  public function signUpCheckEmail() {
+  public function signUpCheckEmail(Request $request, UserService $userService): JsonResponse {
+    
+    $_email = $request->get('_email');
+    $_token = $request->get('_token');
 
-    return new JsonResponse(null);
+    $isDuplicated = $userService->isDuplicatedEmail($_email);
+    
+    return new JsonResponse([
+      'isDuplicated' => $isDuplicated
+    ]);
   }
 
   /**
@@ -130,25 +152,23 @@ class UserController extends AbstractController {
    * @todo 이벤트 리스너
    * @access public
    * @param EmailVerifier $emailVerifier
+   * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
-   * @param TranslatorInterface $translator
-   * @param object
+   * @return
    * @Route("/signup/verify", name="user_signup_verify", methods={"GET"})
    */
-  public function signUpVerifyEmail(EmailVerifier $emailVerifier, Request $request, TranslatorInterface $translator): object {
+  public function signUpVerifyEmail(EmailVerifier $emailVerifier, EventDispatcherInterface $eventDispatcher, Request $request) {
     
     try {
       
       $emailVerifier->handleEmailConfirmation($request, $this->getUser());
       
+      $eventDispatcher->dispatch(FlashEvent::SIGNUP_EMAIL_CONFIRM);
+
     } catch (VerifyEmailExceptionInterface $verifyEmailException) {
       
-      $this->addFlash('danger', $translator->trans('front.user.signup.flash.email_invalid'));
-      
-      return $this->redirectToRoute('blank');
+      $eventDispatcher->dispatch(FlashEvent::SIGNUP_EMAIL_INVALID);
     }
-    
-    $this->addFlash('success', $translator->trans('front.user.signup.flash.email_verified'));
 
     return $this->redirectToRoute('blank');
   }

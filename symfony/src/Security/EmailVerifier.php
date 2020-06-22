@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Security\Core\User\UserInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
@@ -17,27 +18,27 @@ use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 class EmailVerifier {
 
   /**
-   * @var VerifyEmailHelperInterface
+   * @var EntityManagerInterface
    */
-  private $verifyEmailHelper;
+  private $entityManager;
   
   /**
    * @var MailerInterface
    */
   private $mailer;
-  
+
   /**
-   * @var EntityManagerInterface
+   * @var VerifyEmailHelperInterface
    */
-  private $entityManager;
+  private $verifyEmailHelper;
 
   /**
    * @access public
-   * @param VerifyEmailHelperInterface $verifyEmailHelper
-   * @param MailerInterface $mailer
    * @param EntityManagerInterface $entityManager
+   * @param MailerInterface $mailer
+   * @param VerifyEmailHelperInterface $verifyEmailHelper
    */
-  public function __construct(VerifyEmailHelperInterface $verifyEmailHelper, MailerInterface $mailer, EntityManagerInterface $entityManager) {
+  public function __construct(EntityManagerInterface $entityManager, MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper) {
     
     $this->verifyEmailHelper = $verifyEmailHelper;
     $this->mailer = $mailer;
@@ -82,5 +83,20 @@ class EmailVerifier {
 
     $this->entityManager->persist($user);
     $this->entityManager->flush();
+  }
+
+  /**
+   * 메일 인증 템플릿
+   * @access public
+   * @param string $to
+   * @return TemplatedEmail
+   */
+  public function setVerifyEmail($to, $subject): TemplatedEmail {
+
+    return (new TemplatedEmail())
+      ->from(new Address($_SERVER['APP_HOST_EMAIL'], $_SERVER['APP_HOST']))
+      ->to($to)
+      ->subject($subject)
+      ->htmlTemplate('email/signup.twig');
   }
 }

@@ -88,6 +88,7 @@ class UserService {
 
         $thumbnail_src = pathinfo($thumbnail->getClientOriginalName(), PATHINFO_FILENAME) . '-' . uniqid() . '.' . $thumbnail->guessExtension();
         $thumbnail->move($this->container->getParameter('upload_dir'), $thumbnail_src);
+      
       } catch (\FileException $fe) {
 
         $thumbnail_src = null;
@@ -99,8 +100,13 @@ class UserService {
   /**
    * @todo 유저 중복 검사
    * @access public
+   * @param string $_email
    * @return bool
    */
-  public function isDuplicated() : bool {}
+  public function isDuplicatedEmail(string $_email) : bool {
 
+    $email = $this->userRepository->findOneBy(['email' => $_email]);
+
+    return $email ? true : false;
+  }
 }

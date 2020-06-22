@@ -7,7 +7,7 @@
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_row(form._token) }}
-
+    
     <!-- 썸네일 프리뷰 -->
     <div class="card-item preview">
       <img id="preview" src="{{ asset('style/img/user_thumb.png') }}" alt="none" />
@@ -77,28 +77,45 @@
 {% block javascripts %}
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="{{ asset('style/js/preview.js') }}"></script>
-  <script src="{{ asset('style/js/user/signup.js') }}"></script>
+  <script src="{{ asset('style/js/flash.js') }}"></script>
   <script>
     $(function() {
-      
+      const email_id           = "#{{ form.email.vars.id }}";
       const email_check_id     = "#{{ form.check_email.vars.id }}";
+      const email_check_val    = "#{{ form.check_email.vars.value }}";
       const email_check_btn_id = "#{{ form.check_email_btn.vars.id }}";
       const thumbnail_id       = "#{{ form.thumbnail.vars.id }}";
-      
+      const token_id           = "#{{ form._token.vars.id }}";
       // 썸네일 프리뷰
       $(thumbnail_id).change(function() {
         readURL(this, "#preview");
       });
-    
+
       // 이메일 확인
       $(email_check_btn_id).click(function(e) {
-        const _type  = "GET";
-        const _url   = "{{ path('user_signup_dupcheck') }}";
-        const _data  = {
 
+        const _data  = { 
+          '_token': $(token_id).val(),
+          '_email': $(email_id).val()
         };
 
-        dupcheck(_type, _url, _data);
+        $.ajax({
+          type: "GET",
+          url:  "{{ url('user_signup_dupcheck') }}",
+          data: _data,
+          dataType: "json",
+          contentType: "application/json",
+          async: false
+        })
+        .done(function(result) {
+
+        })
+        .fail(function(result, status, xhr) {
+          
+        })
+        .always(function(){
+         
+        })
       });
     });
   </script>
