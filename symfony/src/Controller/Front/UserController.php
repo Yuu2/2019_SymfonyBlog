@@ -25,7 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @author yuu2dev
- * updated 2020.06.20
+ * updated 2020.06.29
  */
 class UserController extends AbstractController {
 
@@ -43,13 +43,13 @@ class UserController extends AbstractController {
     
     $eventDispatcher->dispatch(SecurityEvent::REDIRECT_IF_ROLE_USER);
 
-    $error = $authenticationUtils->getLastAuthenticationError();
+    $lastAuthenticationError = $authenticationUtils->getLastAuthenticationError();
 
     $lastUsername = $authenticationUtils->getLastUsername();
     
     return [
       'last_username' => $lastUsername, 
-      'error' => $error
+      'last_authentication_error' => $lastAuthenticationError
     ];
   }
 
@@ -97,12 +97,13 @@ class UserController extends AbstractController {
 
       /* FormType 검사 */
       case !($form->isSubmitted() && $form->isValid()): break;
+      
       /* Google Recaptcha 검사 */ 
       case !$recaptchaUtils->verifyRecaptcha($request): 
         $eventDispatcher->dispatch(FlashEvent::SIGNUP_RECAPTCHAR_FAIL); break;
       
       default:
-
+        
         /** @var User */
         $user          = $form->getData();
         $thumbnail     = $form->get('thumbnail')->getData();
@@ -129,22 +130,32 @@ class UserController extends AbstractController {
 
   /**
    * 이메일 중복검사
-   * @Route("/signup/dupcheck", name="user_signup_dupcheck", methods={"GET"})
+   * @Route("/signup/dupcheck", name="user_signup_dupcheck", methods={"GET", "POST"})
    * @access public
    * @param Request $request
    * @param UserService $userService
    * @return JsonResponse
    */
   public function signUpCheckEmail(Request $request, UserService $userService): JsonResponse {
-    
-    $_email = $request->get('_email');
-    $_token = $request->get('_token');
 
-    $isDuplicated = $userService->isDuplicatedEmail($_email);
-    
-    return new JsonResponse([
-      'isDuplicated' => $isDuplicated
-    ]);
+    $_email = $request->request->get('_email');
+
+    $jsonResponse = new JsonResponse();
+
+    switch(true) {
+
+      case is_null($_email): 
+        $jsonResponse->setStatusCode(Response::HTTP_BAD_REQUEST); break;
+      
+      default:
+        $isDuplicated = $userService->isDuplicatedEmail($_email);
+        $jsonResponse->setStatusCode(Response::HTTP_OK);
+        $jsonResponse->setData([
+          'isDuplicated' => $isDuplicated
+        ]);
+    }
+
+    return $jsonResponse;
   }
 
   /**
@@ -163,7 +174,7 @@ class UserController extends AbstractController {
       
       $emailVerifier->handleEmailConfirmation($request, $this->getUser());
       
-      $eventDispatcher->dispatch(FlashEvent::SIGNUP_EMAIL_CONFIRM);
+      $eventDispatcher->dispatch(FlashEvent::SIGNUP_EMAIL_VERIFIED);
 
     } catch (VerifyEmailExceptionInterface $verifyEmailException) {
       

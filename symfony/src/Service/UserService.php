@@ -73,6 +73,7 @@ class UserService {
   }
 
   /**
+   * 썸네일 파일 업로드
    * @todo monolog
    * @access public
    * @param File $thumbnail
@@ -103,9 +104,13 @@ class UserService {
    * @param string $_email
    * @return bool
    */
-  public function isDuplicatedEmail(string $_email) : bool {
-
-    $email = $this->userRepository->findOneBy(['email' => $_email]);
+  public function isDuplicatedEmail(?string $_email) : bool {
+    
+    if (is_null($_email)) {
+      return false;
+    } else {
+      $email = $this->userRepository->findOneBy(['email' => $_email]);
+    }
 
     return $email ? true : false;
   }

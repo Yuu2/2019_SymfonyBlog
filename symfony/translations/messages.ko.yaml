@@ -48,6 +48,11 @@ front.user.signup: 방문객 등록
 front.user.signup.thumbnail.help: 5MB 이하의 (png, jpg, jpeg) 유형의 사진만 가능합니다.
 front.user.signup.email: 이메일
 front.user.signup.email.check: 확인
+front.user.signup.email.duplicated: 이미 등록된 이메일 입니다.
+front.user.signup.email.unduplicated: 사용가능한 이메일 입니다.
+front.user.signup.email.check.checking: 확인중
+front.user.signup.email.check.passed: 완료
+front.user.signup.email.check.failed: 이메일을 다시 입력해 주세요.
 front.user.signup.alias: 닉네임
 front.user.signup.alias.help: 다른 유저에게 공개 하는 이름 입니다.
 front.user.signup.password: 패스워드
@@ -62,7 +67,5 @@ front.user.signup.flash.recaptcha_fail: g-recaptcha 인증 실패 입니다.
 front.user.signup.flash.email_invalid: 이메일 인증 기한이 만료되었거나 유효하지 않은 접근 입니다.
 front.user.signup.flash.email_verified: 이메일이 인증 되었습니다.
 front.user.signup.flash.email_confirm: 인증 메일을 발신 했습니다. 이메일에 첨부된 링크를 클릭하면 등록이 완료 됩니다.
-front.user.signup.flash.email_duplicated: 사용하고 있는 이메일 입니다. 다시 입력 해 주세요.
-front.user.signup.flash.email_unduplicated: 사용 가능한 이메일 입니다.
 # 질문하기
 front.contact: 질문하기

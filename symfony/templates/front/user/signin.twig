@@ -1,5 +1,15 @@
 {% extends "base.html.twig" %}
 {% block main %}
+
+<!-- 시큐리티 메시지 -->
+{% if last_authentication_error %}
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    {{ last_authentication_error.messageKey|trans(last_authentication_error.messageData, 'security') }}
+  </div>
+{% endif %}
+
+<!-- 입력 폼 -->
 <div class="form-user signin card"> 
   <form method="post" action="{{ path('user_signin') }}" novalidate>
 

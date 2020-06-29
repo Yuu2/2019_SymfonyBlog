@@ -56,9 +56,8 @@ class UserType extends AbstractType {
         'required' => true,
       ))
 
-      // 이메일 확인
       ->add('check_email', HiddenType::class, array(
-        // 'constraints'    => $this->getEmailCheckConstraints(),
+        'constraints'    => $this->getEmailCheckConstraints(),
         'error_bubbling' => false,
         'empty_data'     => false,
         'mapped'         => false,
