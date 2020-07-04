@@ -55,3 +55,6 @@ security:
       - { path:  /blog/new,           roles: ROLE_ADMIN }
       - { path: ^/blog/edit,          roles: ROLE_ADMIN }
       - { path: ^/blog/delete,        roles: ROLE_ADMIN }
+      # elfinder
+      - { path: ^/efconnect,          roles: ROLE_ADMIN }
+      - { path: ^/elfinder,           roles: ROLE_ADMIN }

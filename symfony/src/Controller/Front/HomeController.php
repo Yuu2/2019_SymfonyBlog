@@ -24,9 +24,9 @@ class HomeController extends AbstractController {
   public function home(HomeService $homeService) {
     
     return array(
-      'Portfolios' => $homeService->renderPortfolios(),
-      'Skills'     => $homeService->renderSkills(),
-      'Work'       => $homeService->renderWork()
+      'Portfolios' => $homeService->findPortfolios(),
+      'Skills'     => $homeService->findSkills(),
+      'Work'       => $homeService->findWork()
     );
   }
 

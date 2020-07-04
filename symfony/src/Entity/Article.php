@@ -36,7 +36,7 @@ class Article
     /**
      * @ORM\Column(type="boolean", options={"default": true})
      */
-    private $visible = TRUE;
+    private $visible = true;
 
     /**
      * @ORM\Column(type="datetime")
@@ -54,15 +54,15 @@ class Article
     private $deleted_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="article")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Tag", mappedBy="article", orphanRemoval=true)
      */
     private $tag;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="article")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     public function __construct()
     {
@@ -158,18 +158,6 @@ class Article
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Tag[]
      */
@@ -197,6 +185,18 @@ class Article
                 $tag->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

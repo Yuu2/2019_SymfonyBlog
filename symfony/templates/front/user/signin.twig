@@ -1,6 +1,10 @@
 {% extends "base.html.twig" %}
-{% block main %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('style/css/user/signin.css') }}">
+{% endblock %}
+
+{% block main %}
 <!-- 시큐리티 메시지 -->
 {% if last_authentication_error %}
   <div class="alert alert-danger alert-dismissible" role="alert">

@@ -1,48 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-  <style>
-    .article-new {
-      margin: 0 auto;
-      text-align: center; 
-      max-width: 800px;
-    }
-
-    .article-new h1 {
-      margin: 30px 0;
-    }
-    
-    .content-box {
-      margin-bottom: 5px;
-    }
-
-    .hashtag-box {
-      margin-bottom: 10px;
-    }
-    
-    .hashtag-view {
-      margin-bottom: 5px;
-    }
-
-    .hashtag-view li {
-      border-radius: 5px;
-      display: inline-block;
-      margin: 3px;
-      padding: 5px;
-      list-style-type: none;
-    }
-
-    .hashtag-view li span {
-      cursor: pointer;
-      margin-left: 3px;
-      color: #404146;
-    }
-
-    .navbar-b.navbar-reduce {
-      padding-bottom: 0;
-    }
-
-  </style>
+  <link rel="stylesheet" href="{{ asset('style/css/blog/form.css') }}">
 {% endblock %}
 
 {% block javascripts %}
@@ -103,7 +62,7 @@
 
         removeHashtag(idx);
 
-        hashtag.parent().remove();
+        hashtag.parent().parent().remove();
       });
 
       // 해시태그 키보드 스크립트
@@ -156,68 +115,58 @@
 {% block nav %}
   <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll" href="{{ path('blog_index') }}">{{ 'front.home'|trans }}</a>
-    </div>
-    <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
-      <ul class="navbar-nav">
-        {% if app.user %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
-        {% else %}
-          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signin') }}"><i class="fa fa-user-circle fa-lg"></i></a></li>
-        {% endif %}
-      </ul>
+      <a class="navbar-brand js-scroll" href="{{ path('blog_index') }}">{{ 'front.blog'|trans }}</a>
+      <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('home') }}">{{ 'front.home.alias'|trans }}</a></li>
+          {% include 'block/signin.twig' %}
+        </ul>
+      </div>
     </div>
   </nav>
 {% endblock %}
+
 {% block main %}
-<div class="article-new">    
-  
-  <h1 >{{ 'front.blog.article'|trans }}</h1>
-  
-  {% for message in app.flashes('msg') %}
-    <div class="alert alert-danger">
-      {{ message }}
-    </div>
-  {% endfor %}
-  
-  {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    
-    <div>
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token('user') }}"/>
-    </div>
-    
-    <diV>
-      {{ form_row(form.category) }}
-    </div>
-    
-    <diV>
-      {{ form_row(form.visible) }}
-    </div>
 
-    <div>
-      {{ form_row(form.title, {'attr': {'placeholder': 'front.blog.article.title.placeholder'|trans }}) }}
-    </div>
-    
-    <div class="content-box">
-      {{ form_widget(form.content) }}
-      {{ form_errors(form.content) }}
-    </div>
+  <!-- 입력 폼-->
+  <div class="form-blog card">
 
-    <div class="hashtag-view">
-      <ul></ul>
-      {{ form_row(form.hashtag) }}
-    </div> 
+    <h5 class="card-header">{{ 'front.blog.article'|trans }}</h5>
+    <div class="card-body">
+      {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+          
+      <div class="card-item">
+        {{ form_row(form.category) }}
+      </div>
+          
+      <div class="card-item">
+        {{ form_row(form.visible) }}
+      </div>
 
-  {{ form_end(form) }}
-  
-  <div class="hashtag-box">
-    <input id="hashtag" name="hashtag" type="text" class="form-control" placeholder="{{ 'front.blog.article.hashtag.placeholder'|trans }}" />
+      <div class="card-item">
+        {{ form_row(form.title, {'attr': {'placeholder': 'front.blog.article.title.placeholder'|trans }}) }}
+      </div>
+          
+      <div class="content-box">
+        {{ form_widget(form.content) }}
+        {{ form_errors(form.content) }}
+      </div>
+
+      <div class="hashtag-view">
+        <ul></ul>
+        {{ form_row(form.hashtag) }}
+      </div> 
+
+      {{ form_end(form) }}
+
+      <div class="hashtag-box">
+        <input id="hashtag" name="hashtag" type="text" class="form-control" placeholder="{{ 'front.blog.article.hashtag.placeholder'|trans }}" />
+      </div>
+
+      <div class="submit-box">
+        <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
+        <button id="submit" type="submit" class="btn btn-primary">{{ 'front.blog.article.submit'|trans }}</button>
+      </div>
+    </div>
   </div>
-
-  <div class="submit-box">
-    <button id="cancel" type="button" class="btn btn-danger">{{ 'front.blog.article.cancel'|trans }}</button>
-    <button id="submit" type="submit" class="btn btn-primary">{{ 'front.blog.article.submit'|trans }}</button>
-  </div>
-</div>
 {% endblock %}

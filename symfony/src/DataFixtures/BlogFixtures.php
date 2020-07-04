@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * @author Yuu2
+ * @author yuu2dev
  * updated 2020.01.19
  */
 class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface {
@@ -23,9 +23,9 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
    */
   public function load(ObjectManager $manager): void {
     
-    $this->createCategories($manager, 10);
+    // $this->createCategories($manager, 10);
 
-    $manager->flush();
+    // $manager->flush();
   }
 
   /**

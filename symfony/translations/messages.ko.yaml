@@ -7,24 +7,28 @@ common.data.null: 데이터가 존재하지 않습니다.
 
 # 홈
 front.home: 포트폴리오 블로그
+front.home.alias: Home
+front.home.blog: 블로그
 front.home.intro: 포트폴리오 블로그에 오신 것을 환영합니다.
 front.home.about: 소개
 front.home.about.skill: 경험한 스킬
 front.home.about.email: 이메일
-front.home.about.cert: //
-front.home.about.description: //
+front.home.about.cert: #
+front.home.about.description: #
 front.home.work.join_years: 경력
 front.home.work.join_projects: 참여 프로젝트
 front.home.portfolio: 포트폴리오
+front.home.contact: 질문하기
 
 # 블로그
-front.blog: 블로그
+front.blog: 포트폴리오 블로그
 front.blog.tag: 태그
 front.blog.category: 카테고리
 front.blog.recently: 최근 작성한 게시물
 front.blog.search: 블로그 내 검색
 front.blog.search.placeholder: 제목, 내용 ...
-front.blog.article: 블로그 게시물 작성
+front.blog.article: 글쓰기
+front.blog.article.cnt: 전체 게시글
 front.blog.article.title: 제목
 front.blog.article.content: 내용
 front.blog.article.visible: 공개여부
@@ -35,8 +39,9 @@ front.blog.article.visible.true: 공개
 front.blog.article.visible.false: 비공개
 front.blog.article.title.placeholder: 제목을 입력하세요.
 front.blog.article.hashtag.placeholder: 해시태그를 입력하세요.
-front.blog.article.save_error: 서버 장애로 인해 데이터를 보존 할 수 없습니다.
-
+front.blog.article.wrtie.fail: 게시글 작성 실패
+front.blog.article.wrtie.success: 신규 게시글이 등록 되었습니다.
+  
 # 유저
 front.user.signin: 로그인
 front.user.signin.email: 이메일
@@ -67,5 +72,3 @@ front.user.signup.flash.recaptcha_fail: g-recaptcha 인증 실패 입니다.
 front.user.signup.flash.email_invalid: 이메일 인증 기한이 만료되었거나 유효하지 않은 접근 입니다.
 front.user.signup.flash.email_verified: 이메일이 인증 되었습니다.
 front.user.signup.flash.email_confirm: 인증 메일을 발신 했습니다. 이메일에 첨부된 링크를 클릭하면 등록이 완료 됩니다.
-# 질문하기
-front.contact: 질문하기

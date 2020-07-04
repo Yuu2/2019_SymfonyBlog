@@ -9,8 +9,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @author Yuu2
- * updated 2020.01.19
+ * @author yuu2dev
+ * updated 2020.07.03
  *
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
  * @method Article|null findOneBy(array $criteria, array $orderBy = null)
@@ -53,8 +53,10 @@ class ArticleRepository extends ServiceEntityRepository {
       case $category:
         $query
           ->innerJoin('a.category', 'c')
-          ->where('c.id = :category_id')
-          ->setParameter('category_id', $category);
+          ->andWhere('c.id = :category_id')
+          ->andWhere('c.visible = :visible')
+          ->setParameter('category_id', $category)
+          ->setParameter('visible', true);
       break;
       // 태그
       case $tag:
@@ -84,6 +86,24 @@ class ArticleRepository extends ServiceEntityRepository {
   
     return $this->paginator->paginate($query, $page, 3);
   }
+
+  /**
+   * 게시글 조회
+   * @access public
+   * @param int $id
+   * @return
+   */
+  public function findArticleById(int $id) {
+    return $this->createQueryBuilder('a')
+      ->innerJoin('a.category', 'c')
+      ->andWhere('a.id = :id')
+      ->andWhere('c.visible = :visible')
+      ->setParameter('id', $id)
+      ->setParameter('visible', true)
+      ->getQuery()
+      ->getOneOrNullResult();
+  }
+
   /**
    * 최근 작성한 게시물
    * @access public
@@ -92,12 +112,29 @@ class ArticleRepository extends ServiceEntityRepository {
    */
   public function recentArticles(int $count): ?array {
     return $this->createQueryBuilder('a')
+      ->innerJoin('a.category', 'c')
+      ->andWhere('c.visible = :visible')
+      ->setParameter('visible', true)
       ->addOrderBy('a.updated_at', 'DESC')
       ->addOrderBy('a.created_at', 'DESC')
       ->addOrderBy('a.id', 'DESC')
       ->getQuery()
       ->setMaxResults($count)
       ->getResult();
+  }
+  
+  /**
+   * @access public
+   * @return string
+   */
+  public function countArticles(): ?string {
+    return $this->createQueryBuilder('a')
+      ->select('count(a.id)')
+      ->innerJoin('a.category', 'c')
+      ->andWhere('c.visible = :visible')
+      ->setParameter('visible', true)
+      ->getQuery()
+      ->getSingleScalarResult();
   }
 
   /**

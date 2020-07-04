@@ -4,7 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Event\FlashEvent;
-use App\Event\SecurityEvent;
+use App\Event\RedirectEvent;
 use App\Form\UserType;
 use App\Security\Authenticator;
 use App\Security\EmailVerifier;
@@ -25,7 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @author yuu2dev
- * updated 2020.06.29
+ * updated 2020.07.03
  */
 class UserController extends AbstractController {
 
@@ -41,7 +41,7 @@ class UserController extends AbstractController {
    */
   public function signIn(AuthenticationUtils $authenticationUtils, EventDispatcherInterface $eventDispatcher) {
     
-    $eventDispatcher->dispatch(SecurityEvent::REDIRECT_IF_ROLE_USER);
+    $eventDispatcher->dispatch(RedirectEvent::REDIRECT_IF_AUTH, new RedirectEvent);
 
     $lastAuthenticationError = $authenticationUtils->getLastAuthenticationError();
 
@@ -88,7 +88,7 @@ class UserController extends AbstractController {
     UserService $userService
   ) {
     
-    $eventDispatcher->dispatch(SecurityEvent::REDIRECT_IF_ROLE_USER);
+    $eventDispatcher->dispatch(RedirectEvent::REDIRECT_IF_AUTH,  new RedirectEvent);
     
     $form = $this->createForm(UserType::class, new User);
     $form->handleRequest($request);

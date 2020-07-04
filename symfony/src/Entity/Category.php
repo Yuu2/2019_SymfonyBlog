@@ -19,29 +19,32 @@ class Category
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subcategories")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $parent;
+    private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
+     * @ORM\Column(type="integer")
      */
-    private $subcategories;
+    private $sort_no;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="category")
      */
     private $article;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" : true})
+     */
+    private $visible = true;
+
     public function __construct()
     {
-        $this->subcategories = new ArrayCollection();
         $this->article = new ArrayCollection();
     }
 
@@ -62,45 +65,26 @@ class Category
         return $this;
     }
 
-    public function getParent(): ?self
+    public function getDescription(): ?string
     {
-        return $this->parent;
+        return $this->description;
     }
 
-    public function setParent(?self $parent): self
+    public function setDescription(?string $description): self
     {
-        $this->parent = $parent;
+        $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return Collection|self[]
-     */
-    public function getSubcategories(): Collection
+    public function getSortNo(): ?int
     {
-        return $this->subcategories;
+        return $this->sort_no;
     }
 
-    public function addSubcategory(self $subcategory): self
+    public function setSortNo(int $sort_no): self
     {
-        if (!$this->subcategories->contains($subcategory)) {
-            $this->subcategories[] = $subcategory;
-            $subcategory->setParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSubcategory(self $subcategory): self
-    {
-        if ($this->subcategories->contains($subcategory)) {
-            $this->subcategories->removeElement($subcategory);
-            // set the owning side to null (unless already changed)
-            if ($subcategory->getParent() === $this) {
-                $subcategory->setParent(null);
-            }
-        }
+        $this->sort_no = $sort_no;
 
         return $this;
     }
@@ -132,6 +116,18 @@ class Category
                 $article->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
 
         return $this;
     }

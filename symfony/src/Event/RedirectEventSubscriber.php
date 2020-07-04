@@ -3,7 +3,7 @@
 namespace App\Event;
 
 use App\Event\FlashEvent;
-use App\Event\SecurityEvent;
+use App\Event\RedirectEvent;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -18,9 +18,9 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.06.20
+ * updated 2020.07.03
  */
-class SecurityEventSubscriber implements EventSubscriberInterface {
+class RedirectEventSubscriber implements EventSubscriberInterface {
 
   /**
    * @var AuthorizationCheckerInterface
@@ -55,7 +55,7 @@ class SecurityEventSubscriber implements EventSubscriberInterface {
   /**
    * @var string
    */
-  private $kernelResponseUrl;
+  private $kernelResponsePath;
 
   /**
    * @access public
@@ -81,19 +81,59 @@ class SecurityEventSubscriber implements EventSubscriberInterface {
 
     return array(
       KernelEvents::RESPONSE => 'onKernelResponse',
-      SecurityEvent::REDIRECT_IF_ROLE_USER => 'onRedirectIfRoleUser'
+      RedirectEvent::REDIRECT_IF_AUTH => 'onRedirectIfAuthenticated',
+      RedirectEvent::REDIRECT_IF_INVISIBLE_ARTICLE => 'onRedirectIfInvisibleArticle',
     );
+  }
+
+  /**
+   * 권한이 있는 대상일 경우
+   * @access public
+   * @param RedirectEvent $event
+   * @return void
+   */
+  public function onRedirectIfAuthenticated(RedirectEvent $event): void {
+    
+    $kernelResponseFlag = $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY');
+
+    if ($kernelResponseFlag) {
+      
+      $this->kernelResponseFlag = $kernelResponseFlag;
+      $this->kernelResponsePath = $event->getRedirectPath();
+    }
+  }
+
+  /**
+   * 관리자 권한이 아닐 경우
+   * @access public
+   * @param RedirectEvent $event
+   * @return void
+   */
+  public function onRedirectIfNotRoleAdmin(RedirectEvent $event): void {
+
+    $kernelResponseFlag = !$this->authorizationChecker->isGranted('ROLE_ADMIN');
+  
+    if ($kernelResponseFlag) {
+
+      $this->kernelResponseFlag = $kernelResponseFlag;
+      $this->kernelResponsePath = $event->getRedirectPath();
+    }
   }
   
   /**
+   * 게시글을 조회 할 수 없을 경우
    * @access public
+   * @param RedirectEvent $event
    * @return void
    */
-  public function onRedirectIfRoleUser(): void {
+  public function onRedirectIfInvisibleArticle(RedirectEvent $event): void {
 
-    if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
-      $this->kernelResponseFlag = true;
-      $this->kernelResponseUrl  = 'home';
+    $kernelResponseFlag = is_null($event->getArticle());
+
+    if ($kernelResponseFlag) {
+      
+      $this->kernelResponseFlag = $kernelResponseFlag;
+      $this->kernelResponsePath = $event->getRedirectPath();
     }
   }
 
@@ -103,9 +143,17 @@ class SecurityEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onKernelResponse(ResponseEvent $event): void {
+    
+    $kernelResponseFlag = $this->kernelResponseFlag;
+    $kernelResponsePath = $this->kernelResponsePath;
+    
+    if ($kernelResponseFlag) {
 
-    if ($this->kernelResponseFlag) {
-      $event->setResponse(new RedirectResponse($this->router->generate($this->kernelResponseUrl)));
+      $redirectRouter   = $this->router->generate($kernelResponsePath);
+      
+      $redirectResponse = new RedirectResponse($redirectRouter);
+
+      $event->setResponse($redirectResponse);
     }
   }
 }

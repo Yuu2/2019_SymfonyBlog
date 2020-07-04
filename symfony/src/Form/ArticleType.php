@@ -16,13 +16,19 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.06.10
+ * updated 2020.07.04
  */
 class ArticleType extends AbstractType {
   
+  /**
+   * @var ParameterBagInterface $params
+   */
+  private $params;
+
   /**
    * @var TranslatorInterface
    */
@@ -30,9 +36,11 @@ class ArticleType extends AbstractType {
 
   /**
    * @access public
+   * @param ParameterBagInterface $params
    * @param TranslatorInterface $translator
    */
-  public function __construct(TranslatorInterface $translator) {
+  public function __construct(ParameterBagInterface $params, TranslatorInterface $translator) {
+    $this->params = $params;
     $this->translator = $translator;
   }
 
@@ -48,40 +56,109 @@ class ArticleType extends AbstractType {
 
     $builder
       // 제목
-      ->add('title', TextType::class, array(  
-        'label' => $translator->trans('front.blog.article.title')
-      ))
+      ->add('title', TextType::class, [ 
+        'label' => $translator->trans('front.blog.article.title'),
+        'constraints' => $this->getTitleConstraints(),
+      ])
 
       // 내용
-      ->add('content', CKEditorType::class, array(
-        'label' => false
-      ))
+      ->add('content', CKEditorType::class, [
+        'label'  => false,
+        'config' => [
+          'toolbar'  => 'full',
+          'required' => true,
+          'extraPlugins' => 'codesnippet', 
+          'codeSnippet_theme' =>'monokai_sublime'
+        ],
+        'plugins' => [
+          'codesnippet' => [
+            'path' => $this->params->get("ckeditor_plugins_dir") . "codesnippet/",
+            'filename' => 'plugin.js'
+          ]
+        ],
+        'constraints' => $this->getContentConstraints(),
+      ])
 
       // 공개여부
-      ->add('visible', ChoiceType::class, array(
+      ->add('visible', ChoiceType::class, [
         'choices' => [
-          $translator->trans('front.blog.article.visible.true')  => TRUE,
-          $translator->trans('front.blog.article.visible.false') => FALSE
+          $translator->trans('front.blog.article.visible.true')  => true,
+          $translator->trans('front.blog.article.visible.false') => false
         ],
-        
-        'label' => $translator->trans('front.blog.article.visible')
-      ))
+        'label' => $translator->trans('front.blog.article.visible'),
+        'constraints' => $this->getVisibleConstraints(),
+      ])
 
       // 카테고리
-      ->add('category', EntityType::class, array(
+      ->add('category', EntityType::class, [
         'choice_label' => function(Category $category) {
           return $category->getTitle();
         },
         'class' => Category::class,
-        'label' => $translator->trans('front.blog.article.category')
-      ))
+        'label' => $translator->trans('front.blog.article.category'),
+        'constraints' => $this->getCategoryConstraints(),
+      ])
 
       // 해시태그
-      ->add('hashtag', HiddenType::class, array(
+      ->add('hashtag', HiddenType::class, [
         'required' => false,
         'mapped'   => false,
-      ))
+      ])
     ;
+  }
+
+  /**
+   * @access private
+   */
+  private function getTitleConstraints(): array {
+    return [
+      new Assert\NotBlank([
+        'message' => 'assert.blog.article.title.blank'
+      ]),
+      new Assert\Length([
+        'min'        => 1,
+        'max'        => 40,
+        'minMessage' => 'assert.blog.article.title.length.min',
+        'maxMessage' => 'assert.blog.article.title.length.max'
+      ]),
+    ];
+  }
+
+  /**
+   * @access private
+   */
+  private function getContentConstraints(): array {
+    return [
+      new Assert\NotBlank([
+        'message' => 'assert.blog.article.content.blank'
+      ])
+    ];
+  }
+
+  /**
+   * @access private
+   */
+  private function getVisibleConstraints(): array {
+    return [
+      new Assert\NotBlank([
+        'message' => 'assert.blog.article.visible.blank'
+      ]),
+      new Assert\Type([
+        'type'    => 'bool',
+        'message' => 'assert.blog.article.visible.type'
+      ]),
+    ];
+  }
+
+  /**
+   * @access private
+   */
+  private function getCategoryConstraints(): array {
+    return [
+      new Assert\NotBlank([
+        'message' => 'assert.blog.article.category.blank'
+      ])
+    ];
   }
 
   /**

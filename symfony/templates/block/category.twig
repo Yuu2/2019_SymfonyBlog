@@ -1,0 +1,13 @@
+<div class="widget-sidebar">
+  <h5 class="sidebar-title">{{ 'front.blog.category'|trans }}</h5>
+  <div class="sidebar-content">
+    <a href="{{ path('blog_index') }}">{{ 'front.blog.article.cnt'|trans }} ({{ Articles_cnt }})</a>
+    <ul class="list-sidebar">
+      {% if Categories is not empty %}
+        {% for Category in Categories %}
+          <li><a href="{{ path('blog_index', { 'category': Category.id })}}">{{ Category.title }}</a></li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+</div>

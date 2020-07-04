@@ -46,10 +46,12 @@ class FlashEventSubscriber implements EventSubscriberInterface {
     
     return array(
       
-      FlashEvent::SIGNUP_EMAIL_CONFIRM   => 'onSignUpConfirmEmail',
-      FlashEvent::SIGNUP_EMAIL_INVALID   => 'onSignUpInvalidEmail',
-      FlashEvent::SIGNUP_EMAIL_VERIFIED  => 'onSignUpVerifiedEmail',
-      FlashEvent::SIGNUP_RECAPTCHAR_FAIL => 'onSignUpFailRecaptcha',
+      FlashEvent::SIGNUP_EMAIL_CONFIRM       => 'onSignUpConfirmEmail',
+      FlashEvent::SIGNUP_EMAIL_INVALID       => 'onSignUpInvalidEmail',
+      FlashEvent::SIGNUP_EMAIL_VERIFIED      => 'onSignUpVerifiedEmail',
+      FlashEvent::SIGNUP_RECAPTCHAR_FAIL     => 'onSignUpFailRecaptcha',
+      FlashEvent::BLOG_ARTICLE_WRITE_FAIL    => 'onBlogArticleFailWrtie',
+      FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS => 'onBlogArticleSuccessWrtie',
     );
   }
 
@@ -80,6 +82,22 @@ class FlashEventSubscriber implements EventSubscriberInterface {
    */
   public function onSignUpFailRecaptcha(): void {  
     $this->flashBag->add('danger', $this->translator->trans('front.user.signup.flash.recaptcha_fail')); 
+  }
+  
+  /**
+   * @access public
+   * @return void
+   */
+  public function onBlogArticleFailWrtie(): void {  
+    $this->flashBag->add('danger', $this->translator->trans('front.blog.article.wrtie.fail')); 
+  }
+
+  /**
+   * @access public
+   * @return void
+   */
+  public function onBlogArticleSuccessWrtie(): void {  
+    $this->flashBag->add('success', $this->translator->trans('front.blog.article.wrtie.success')); 
   }
 
 }

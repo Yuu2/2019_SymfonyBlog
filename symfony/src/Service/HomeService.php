@@ -7,7 +7,7 @@ use App\Repository\SkillRepository;
 use App\Repository\WorkRepository;
 
 /**
- * @author Yuu2
+ * @author yuu2dev
  * updated 2020.04.09
  */
 class HomeService {
@@ -48,7 +48,7 @@ class HomeService {
    * @param int $count
    * @return array
    */
-  public function renderPortfolios(int $count = 10): ?array {
+  public function findPortfolios(int $count = 10): ?array {
     
     return $this->portfolioRepository->countPortfolios($count);
   }
@@ -58,7 +58,7 @@ class HomeService {
    * @param int $count
    * @return array
    */
-  public function renderSkills(int $count = 10): ?array {
+  public function findSkills(int $count = 10): ?array {
 
     return $this->skillRepository->countSkills($count);
   }
@@ -68,7 +68,7 @@ class HomeService {
    * @access public
    * @return object
    */
-  public function renderWork(): ?object {
+  public function findWork(): ?object {
     
     return $this->workRepository->findOneBy([], []);
   }

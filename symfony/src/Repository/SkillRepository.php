@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  *
- * @author Yuu2
+ * @author yuu2dev
  * updated 2020.01.18
  * 
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)

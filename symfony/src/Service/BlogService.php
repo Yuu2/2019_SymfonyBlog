@@ -3,16 +3,17 @@
 namespace App\Service;
 
 use App\Entity\Article;
-use App\Entity\Tag;
 use App\Entity\ArticleTag;
+use App\Entity\Tag;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @author Yuu2
- * updated 2020.01.29
+ * @author yuu2dev
+ * updated 2020.06.30
  */
 class BlogService {
 
@@ -27,6 +28,11 @@ class BlogService {
   private $articleRepository;
 
   /**
+   * @var CategoryRepository
+   */
+  private $categoryRepository;
+
+  /**
    * @var TagRepository
    */
   protected $tagRepository;
@@ -35,15 +41,18 @@ class BlogService {
    * @access public
    * @param EntityManagerInterface $entityManager
    * @param ArticleRepository $articleRepository
+   * @param CategoryRepository $categoryRepository
    * @param TagRepository $tagRepository
    */
   public function __construct(
     EntityManagerInterface $entityManager, 
     ArticleRepository $articleRepository,
+    CategoryRepository $categoryRepository,
     TagRepository $tagRepository
   ) {
     $this->entityManager = $entityManager;
     $this->articleRepository = $articleRepository;
+    $this->categoryRepository = $categoryRepository;
     $this->tagRepository = $tagRepository;
   }
 
@@ -72,8 +81,16 @@ class BlogService {
    * @return array
    */
   public function recentArticles(int $count = 10): ?array {
-
     return $this->articleRepository->recentArticles($count);
+  }
+
+  /**
+   * 총 게시글 수
+   * @access public
+   * @return string
+   */
+  public function countArticles(): ?string {
+    return $this->articleRepository->countArticles();
   }
 
   /**
@@ -87,6 +104,15 @@ class BlogService {
     return $this->tagRepository->countTags($count);
   }
   
+  /**
+   * @access public
+   * @return array
+   */
+  public function findCategories(): ?array {
+    
+    return $this->categoryRepository->visibleCategories();
+  }
+
   /**
    * 블로그 게시글 작성
    * @access public
@@ -164,5 +190,22 @@ class BlogService {
 
     $this->entityManager->remove($tag);
     $this->entityManager->flush();
+  }
+
+  /**
+   * 해시태그 문자열을 배열로
+   * @access public
+   * @param string $hashtag
+   * @return array
+   */
+  public function hashtagStringToArray(?string $hashtag): array {
+    
+    $hashtagArr = [];
+
+    if (!empty($hashtag)) {
+      $hashtagArr = explode(',', $hashtag);
+    }
+
+    return $hashtagArr;
   }
 }

@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @author Yuu2
+ * @author yuu2dev
  * updated 2020.01.19
  * 
  * @method Tag|null find($id, $lockMode = null, $lockVersion = null)

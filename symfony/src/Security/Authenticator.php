@@ -48,6 +48,10 @@ class Authenticator extends AbstractFormLoginAuthenticator {
   private $passwordEncoder;
 
   /**
+   * @var string
+   */
+
+  /**
    * @access public
    * @param EntityManagerInterface $entityManager
    * @param UrlGeneratorInterface $urlGenerator, 
@@ -105,14 +109,17 @@ class Authenticator extends AbstractFormLoginAuthenticator {
     
     $token = new CsrfToken('authenticate', $credentials['csrf_token']);
     
-    if(!$this->csrfTokenManager->isTokenValid($token))
-    throw new CustomUserMessageAuthenticationException('security.user.csrf');
+    if(!$this->csrfTokenManager->isTokenValid($token)) {
+      
+      throw new CustomUserMessageAuthenticationException('security.user.csrf');
+    }
 
     $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
-    if(!$user)
-    throw new CustomUserMessageAuthenticationException('security.user.notfound');
-    
+    if(!$user) {
+      throw new CustomUserMessageAuthenticationException('security.user.notfound');
+    }
+
     return $user;
   }
 
@@ -122,6 +129,7 @@ class Authenticator extends AbstractFormLoginAuthenticator {
    * @param UserInterface $user
    */
   public function checkCredentials($credentials, UserInterface $user) {
+
     return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
   }
 
@@ -130,7 +138,7 @@ class Authenticator extends AbstractFormLoginAuthenticator {
    */
   public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
     
-    if($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+    if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
       return new RedirectResponse($targetPath);
     }
 
@@ -141,6 +149,7 @@ class Authenticator extends AbstractFormLoginAuthenticator {
    * @access public
    */
   protected function getLoginUrl() {
+
     return $this->urlGenerator->generate('user_signin');
   }
 }

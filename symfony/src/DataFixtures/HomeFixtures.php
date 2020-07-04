@@ -10,12 +10,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * @author yuu2dev
- * updated 2020.06.10
+ * updated 2020.06.30
  */
 class HomeFixtures extends AbstractFixtures {
 
   public function load(ObjectManager $manager) {
-    
+    /*
     $portfolio = $this->createPortfolio($manager, "JavaFx-Chat", "Window/Mac 어플리케이션", "https://github.com/Yuu2/javafx-chat");
 
     $this->createPortfolioSkill(
@@ -30,6 +30,7 @@ class HomeFixtures extends AbstractFixtures {
     );
     
     $manager->flush();
+    */
   }
   
   /**

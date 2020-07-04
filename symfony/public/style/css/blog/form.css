@@ -1,0 +1,45 @@
+
+/* form */
+.form-blog.card {
+  margin: 30px auto;
+  min-width: 330px;
+  width: 70%;
+}
+
+.form-blog .card-body {
+  text-align: center;
+}
+
+.form-blog .card-item {
+  margin: 20px 0 0 0;
+}
+
+.content-box {
+  margin-bottom: 5px;
+}
+
+.hashtag-box {
+  margin-bottom: 10px;
+}
+    
+.hashtag-view {
+  margin-bottom: 5px;
+}
+
+.hashtag-view li {
+  border-radius: 5px;
+  display: inline-block;
+  margin: 3px;
+  padding: 5px;
+  list-style-type: none;
+}
+
+.hashtag-view li span {
+  cursor: pointer;
+  margin-left: 3px;
+  color: #404146;
+}
+
+.navbar-b.navbar-reduce {
+  padding-bottom: 0;
+}

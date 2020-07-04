@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * @abstract 
  * @author yuu2dev
- * updated 2020.06.10
+ * updated 2020.06.30
  */
 abstract class AbstractFixtures extends Fixture {
   
@@ -39,17 +39,21 @@ abstract class AbstractFixtures extends Fixture {
    * @param ObjectManager $manager
    * @param string $email
    * @param string $password
+   * @param string $alias
+   * @param string $thumbnail
    * @param bool $admin
    * @return User
    */
-  protected function createMember(Object $manager, string $email, string $password, bool $admin): ?User {
+  protected function createMember(Object $manager, string $email, string $password, string $alias, bool $admin, ?string $thumbnail = null): ?User {
 
     $user = new User();
-
     $user->setEmail($email);
     $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
     $admin ? $user->setRoles(['ROLE_ADMIN']) : $user->setRoles(['ROLE_USER']);
     $user->setCreatedAt(new \DateTime);
+    $user->setAlias($alias);
+    $user->setThumbnail($thumbnail);
+    $user->setIsVerified(true);
 
     $manager->persist($user);
 

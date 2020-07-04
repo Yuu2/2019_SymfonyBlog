@@ -15,5 +15,10 @@ assert.user.thumbnail.mimetype: png, jpg, jpeg 유형의 이미지만 허용 됩
 assert.user.thumbnail.size.max: 현재 썸네일의 크기는 {{ size }} {{ suffix }}입니다. (최대{{ limit }} {{ suffix }}이하)
 
 # 블로그
-assert.blog.article.title.empty: 제목을 입력해 주세요.
-assert.blog.article.content.empty: 내용을 입력해 주세요.
+assert.blog.article.title.blank: 제목을 입력해 주세요.
+assert.blog.article.title.length.min: 제목의 최소 길이는 1 글자 이상입니다.
+assert.blog.article.title.length.max: 제목의 최대 길이는 40 글자 미만입니다. (현재 {{ value }}) 
+assert.blog.article.content.blank: 내용을 입력해 주세요.
+assert.blog.article.visible.blank: 공개여부가 설정되지 않았습니다.
+assert.blog.article.visible.type: 반드시 '{{ type }}'타입 이여야합니다.
+assert.blog.article.category.blank: 카테고리가 설정되지 않았습니다.
