@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author yuu2dev
- * updated 2020.06.30
+ * updated 2020.08.01
  */
 class BlogService {
 
@@ -91,6 +91,27 @@ class BlogService {
    */
   public function countArticles(): ?string {
     return $this->articleRepository->countArticles();
+  }
+
+  /**
+   * 게시글 댓글 수
+   * @access public
+   * @param Article $article
+   * @return int
+   */
+  public function countCommentsByEntity(Article $article): int {
+    
+    $count = 0;
+
+    $parents = $article->getComment()->getValues();
+    
+    foreach($parents as $child) {
+      $count += count($child->getRecomment());
+    }
+
+    $count += count($parents);
+
+    return $count;
   }
 
   /**

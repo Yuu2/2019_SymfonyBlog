@@ -18,6 +18,16 @@ class ArticleComment
      * @ORM\Column(type="integer")
      */
     private $id;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -28,6 +38,16 @@ class ArticleComment
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ip;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $device;
 
     /**
      * @ORM\Column(type="datetime")
@@ -38,11 +58,6 @@ class ArticleComment
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $deleted_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comment", fetch="LAZY")
@@ -118,18 +133,6 @@ class ArticleComment
         return $this;
     }
 
-    public function getDeletedAt(): ?\DateTimeInterface
-    {
-        return $this->deleted_at;
-    }
-
-    public function setDeletedAt(?\DateTimeInterface $deleted_at): self
-    {
-        $this->deleted_at = $deleted_at;
-
-        return $this;
-    }
-
     public function getParent(): ?self
     {
         return $this->parent;
@@ -169,6 +172,53 @@ class ArticleComment
                 $recomment->setParent(null);
             }
         }
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    public function getIp(): ?string
+    {
+        return $this->ip;
+    }
+
+    public function setIp(string $ip): self
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    public function getDevice(): ?string
+    {
+        return $this->device;
+    }
+
+    public function setDevice(string $device): self
+    {
+        $this->device = $device;
 
         return $this;
     }

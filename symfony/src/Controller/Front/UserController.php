@@ -25,7 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @author yuu2dev
- * updated 2020.07.03
+ * updated 2020.08.01
  */
 class UserController extends AbstractController {
 
@@ -92,7 +92,7 @@ class UserController extends AbstractController {
     
     $form = $this->createForm(UserType::class, new User);
     $form->handleRequest($request);
-
+    
     switch(true) {
 
       /* FormType 검사 */
@@ -142,19 +142,15 @@ class UserController extends AbstractController {
 
     $jsonResponse = new JsonResponse();
 
-    switch(true) {
-
-      case is_null($_email): 
-        $jsonResponse->setStatusCode(Response::HTTP_BAD_REQUEST); break;
-      
-      default:
-        $isDuplicated = $userService->isDuplicatedEmail($_email);
-        $jsonResponse->setStatusCode(Response::HTTP_OK);
-        $jsonResponse->setData([
-          'isDuplicated' => $isDuplicated
-        ]);
+    if (is_null($e_mail)) {
+      $jsonResponse->setStatusCode(Response::HTTP_BAD_REQUEST);
+    } else {
+      $isDuplicated = $userService->isDuplicatedEmail($_email);
+      $jsonResponse->setStatusCode(Response::HTTP_OK);
+      $jsonResponse->setData([
+        'isDuplicated' => $isDuplicated
+      ]);
     }
-
     return $jsonResponse;
   }
 

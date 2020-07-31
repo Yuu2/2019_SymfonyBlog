@@ -7,12 +7,15 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 /**
  * @author yuu2dev
- * updated 2020.07.03
+ * updated 2020.08.01
  */
 class RedirectEvent extends Event {
 
   public const REDIRECT_IF_AUTH              = "redirect.redirect.if.authenticated";
-  public const REDIRECT_IF_NOT_ROLE_ADMIN    = "redirect.redirect.if.not.role_admin";
+  public const REDIRECT_IF_NOT_AUTH          = "redirect.redirect.if.not.authenticated";
+  public const REDIRECT_IF_USER              = "redirect.redirect.if.role_user";
+  public const REDIRECT_IF_ADMIN             = "redirect.redirect.if.role_admin";
+  public const REDIRECT_IF_NOT_ADMIN         = "redirect.redirect.if.not.role_admin";
   public const REDIRECT_IF_INVISIBLE_ARTICLE = "redirect.redirect.if.invisible.article";
   
   /**

@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block javascripts %}
+  <script src="{{ asset('style/js/validator.js') }}"></script>
   <script>
     $(function(){
       
@@ -27,7 +28,7 @@
       // 해시태그 객체 추가
       function addHashtag(value) {
         
-        if(isDuplicated(value)) return;
+        if (isDuplicated(value, hashtags)) return;
 
         var idx = Object.keys(hashtags).length;
         hashtags[idx] = value;
@@ -81,24 +82,9 @@
         }
       });
 
-      // 중복검사
-      function isDuplicated(value) {
-        return (Object.values(hashtags).indexOf(value)) != -1 ? true : false;
-      }
-
-      // 공백검사
-      function isEmpty(str) {
-        return (!str || 0 === str.length);
-      }
-
-      // 키보드검사
-      function isKeyboard(keyCode) {
-        return (keyCode == 32 | keyCode == 13 | keyCode == 188) ? true : false;
-      }
-
       // Cancel버튼 스크립트
       $('#cancel').one('click', function(event){
-        $(location).attr('href', "{{ url('blog_index') }}");
+        $(location).attr('href', "{{ url('blog_article_index') }}");
       });
 
       // Submit버튼 스크립트
@@ -115,7 +101,7 @@
 {% block nav %}
   <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll" href="{{ path('blog_index') }}">{{ 'front.blog'|trans }}</a>
+      <a class="navbar-brand js-scroll" href="{{ path('blog_article_index') }}">{{ 'front.blog'|trans }}</a>
       <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
         <ul class="navbar-nav">
           <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('home') }}">{{ 'front.home.alias'|trans }}</a></li>

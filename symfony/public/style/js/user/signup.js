@@ -56,17 +56,6 @@ function signUpEmailCheck(signup) {
     }
   }
 
-  // 공백 검사
-  function isEmpty(value) {
-    return (value.trim() == "") ? true : false;
-  }
-
-  // 이메일 정규식 검사
-  function isEmail(email) {
-    var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    return regex.test(email);
-  }
-
   // ajax 성공시 버튼 렌더링
   function renderBtnIfDone(signup, response) {
     

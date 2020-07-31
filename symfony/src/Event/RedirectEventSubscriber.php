@@ -18,7 +18,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.07.03
+ * updated 2020.08.01
  */
 class RedirectEventSubscriber implements EventSubscriberInterface {
 
@@ -81,45 +81,84 @@ class RedirectEventSubscriber implements EventSubscriberInterface {
 
     return array(
       KernelEvents::RESPONSE => 'onKernelResponse',
-      RedirectEvent::REDIRECT_IF_AUTH => 'onRedirectIfAuthenticated',
+      RedirectEvent::REDIRECT_IF_AUTH => 'onRedirectIfAuth',
+      RedirectEvent::REDIRECT_IF_NOT_AUTH => 'onRedirectIfNotAuth',
+      RedirectEvent::REDIRECT_IF_USER => 'onRedirectIfUser',
+      RedirectEvent::REDIRECT_IF_ADMIN => 'onRedirectIfAdmin',
+      RedirectEvent::REDIRECT_IF_NOT_ADMIN => 'onRedirectIfNotAdmin',
       RedirectEvent::REDIRECT_IF_INVISIBLE_ARTICLE => 'onRedirectIfInvisibleArticle',
     );
   }
 
   /**
-   * 권한이 있는 대상일 경우
+   * 권한이 있는 대상
    * @access public
    * @param RedirectEvent $event
    * @return void
    */
-  public function onRedirectIfAuthenticated(RedirectEvent $event): void {
-    
-    $kernelResponseFlag = $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY');
-
-    if ($kernelResponseFlag) {
-      
-      $this->kernelResponseFlag = $kernelResponseFlag;
-      $this->kernelResponsePath = $event->getRedirectPath();
+  public function onRedirectIfAuth(RedirectEvent $event): void {
+  
+    if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        $this->kernelResponseFlag = $kernelResponseFlag;
+        $this->kernelResponsePath = $event->getRedirectPath();
+    }
+  }
+  /**
+   * 권한이 없는 대상
+   * @access public
+   * @param RedirectEvent $event
+   * @return void
+   */
+  public function onRedirectIfNotAuth(RedirectEvent $event): void {
+  
+    if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        $this->kernelResponseFlag = $kernelResponseFlag;
+        $this->kernelResponsePath = $event->getRedirectPath();
     }
   }
 
   /**
-   * 관리자 권한이 아닐 경우
+   * 일반유저 권한이 있는 대상
    * @access public
    * @param RedirectEvent $event
    * @return void
    */
-  public function onRedirectIfNotRoleAdmin(RedirectEvent $event): void {
+  public function onRedirectIfUser(RedirectEvent $event): void {
 
-    $kernelResponseFlag = !$this->authorizationChecker->isGranted('ROLE_ADMIN');
-  
-    if ($kernelResponseFlag) {
-
-      $this->kernelResponseFlag = $kernelResponseFlag;
-      $this->kernelResponsePath = $event->getRedirectPath();
+    if ($this->authorizationChecker->isGranted('ROLE_USER')) {
+        $this->kernelResponseFlag = $kernelResponseFlag;
+        $this->kernelResponsePath = $event->getRedirectPath();
     }
   }
-  
+
+  /**
+   * 관리자 권한이 있는 대상
+   * @access public
+   * @param RedirectEvent $event
+   * @return void
+   */
+  public function onRedirectIfAdmin(RedirectEvent $event): void {
+
+    if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+        $this->kernelResponseFlag = $kernelResponseFlag;
+        $this->kernelResponsePath = $event->getRedirectPath();
+    }
+  }
+
+  /**
+   * 관리자 권한이 없는 대상
+   * @access public
+   * @param RedirectEvent $event
+   * @return void
+   */
+  public function onRedirectIfNotAdmin(RedirectEvent $event): void {
+
+    if (!$this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+        $this->kernelResponseFlag = $kernelResponseFlag;
+        $this->kernelResponsePath = $event->getRedirectPath();
+    }
+  }
+
   /**
    * 게시글을 조회 할 수 없을 경우
    * @access public

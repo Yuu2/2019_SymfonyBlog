@@ -1,0 +1,38 @@
+<div class="form-comments">
+
+  <div class="title-box-4">
+    <h5 class="title-left">{{ 'front.blog.article.comment.write'|trans }}</h5>
+  </div>
+  
+  {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+  
+  <div style="display: flex;">
+    <!-- 유저명 -->
+    {{ form.username.vars.label }}
+    {{ form_widget(form.username) }}
+    <small>{{ form_help(form.username)}}</small>
+    <small>{{ form_errors(form.username)}}</small>
+
+    <!-- 패스워드 -->
+    {{ form.password.vars.label }}
+    {{ form_widget(form.password) }}
+    <small>{{ form_help(form.password)}}</small>
+    <small>{{ form_errors(form.password)}}</small>
+
+    <!-- 공개여부 -->
+    {{ form_widget(form.visible) }}
+    <small>{{ form_help(form.visible)}}</small>
+    <small>{{ form_errors(form.visible)}}</small>
+  </div>
+
+
+  <!-- 내용 -->
+  <div>
+    {{ form.content.vars.label }}<br />
+    {{ form_widget(form.content) }}
+    <small>{{ form_help(form.content)}}</small>
+    <small>{{ form_errors(form.content)}}</small>
+  </div>
+
+  {{ form_end(form) }}
+</div>

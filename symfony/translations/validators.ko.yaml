@@ -6,8 +6,8 @@ assert.user.email.length.max: 이메일 문자열의 길이 초과
 assert.user.email.check: 이메일을 확인해 주세요.
 assert.user.password.regex: 숫자와 문자의 조합이 아닙니다.
 assert.user.password.empty: 패스워드를 입력해 주세요.
-assert.user.password.length.min: 패스워드는 8 자 부터 입력 할 수 있습니다.
-assert.user.password.length.max: 패스워드는 20 자 까지 입력 할 수 있습니다.
+assert.user.password.length.min: 패스워드는 8 글자 부터 입력 할 수 있습니다.
+assert.user.password.length.max: 패스워드는 20 글자 까지 입력 할 수 있습니다.
 assert.user.alias.regex: 특수문자, 공백은 불가합니다.
 assert.user.alias.empty: 닉네임을 입력해 주세요.
 assert.user.alias.length.max: 닉네임은 20 자 까지 입력 할 수 있습니다.

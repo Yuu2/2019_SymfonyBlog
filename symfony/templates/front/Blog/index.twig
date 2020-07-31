@@ -8,7 +8,7 @@
 {% block nav %}
   <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll" href="{{ path('blog_index') }}">{{ 'front.blog'|trans }}</a>
+      <a class="navbar-brand js-scroll" href="{{ path('blog_article_index') }}">{{ 'front.blog'|trans }}</a>
       <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
         <ul class="navbar-nav">
           <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('home') }}">{{ 'front.home.alias'|trans }}</a></li>
@@ -48,7 +48,7 @@
           {% else %}
           {% for Article in Articles %}
             <div class="post-box">
-              <a href="{{ path('blog_show', {'id': Article.id}) }}">
+              <a href="{{ path('blog_article_show', {'id': Article.id}) }}">
                 <h1 class="article-title">{{ Article.title }}</h1>
               </a>
               <div class="article-content">
@@ -61,7 +61,7 @@
             
                     {% for Tag in Article.tag %}
                       <li>
-                        <small><a href="{{ url('blog_index', { 'tag': Tag.name })}}">{{ Tag.name }}</a></small>
+                        <small><a href="{{ url('blog_article_index', { 'tag': Tag.name })}}">{{ Tag.name }}</a></small>
                       </li>
                     {% endfor %}
                   </li>
@@ -86,7 +86,7 @@
           <div class="widget-sidebar sidebar-search">
             <h5 class="sidebar-title">{{ 'front.blog.search'|trans }}</h5>
             <div class="sidebar-content">
-              <form method="GET" action="{{ path('blog_index') }}">
+              <form method="GET" action="{{ path('blog_article_index') }}">
                 <div class="input-group">
                   <input type="text" name="search" class="form-control" placeholder="{{ 'front.blog.search.placeholder'|trans }}">
                   <span class="input-group-btn">
@@ -109,7 +109,7 @@
               <ul class="list-sidebar">
                 {% if RecentArticles is not empty %}
                 {% for RecentArticle in RecentArticles %}
-                  <li><a href="{{ path('blog_show', {'id': RecentArticle.id} )}}">{{ RecentArticle.title }} <small>{{ RecentArticle.createdAt|date('l, Y/m/d')}}</small></a></li>
+                  <li><a href="{{ path('blog_article_show', {'id': RecentArticle.id} )}}">{{ RecentArticle.title }} <small>{{ RecentArticle.createdAt|date('l, Y/m/d')}}</small></a></li>
                 {% endfor %}
                 {% endif %}
               </ul>
@@ -123,7 +123,7 @@
               <ul>
                 {% for Tag in RecentTags %}
                 <li>
-                  <form method="GET" action="{{ path('blog_index') }}">
+                  <form method="GET" action="{{ path('blog_article_index') }}">
                     <input type="hidden" name="tag" value="{{ Tag.name }}" />
                     <button class="btn btn-outline-primary btn-sm" type="submit">{{ Tag.name }}</button>
                   </form>
@@ -143,7 +143,7 @@
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
   
   {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('blog_new') }}" class="rightside btn-new"><i class="fa fa-edit"></i></a>
+    <a href="{{ path('blog_article_new') }}" class="rightside btn-new"><i class="fa fa-edit"></i></a>
   {% endif %}
 
 {% endblock %}
