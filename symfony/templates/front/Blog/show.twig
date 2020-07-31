@@ -72,28 +72,43 @@
           </div>
 
           <!-- 블로그 댓글 -->
-          
-          <!--
           <div class="box-comments">
             <div class="title-box-2">
               <h4 class="title-comments title-left">Comments (34)</h4>
             </div>
             <ul class="list-comments">
+              {% for ArticleComment in Article.comment %}
               <li>
                 <div class="comment-avatar">
                   <img src="img/testimonial-2.jpg" alt="">
                 </div>
                 <div class="comment-details">
-                  <h4 class="comment-author">Oliver Colmenares</h4>
-                  <span>18 Sep 2017</span>
+                  <h4 class="comment-author">..</h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                    ipsam temporibus maiores
-                    quae natus libero optio, at qui beatae ducimus placeat debitis voluptates amet corporis.
+                    {{ ArticleComment.content }}
                   </p>
-                  <a href="3">Reply</a>
+                  <span><small>{{ ArticleComment.createdAt|date("Y.m.d h:i:s") }}</small></span>
+                  <a href="#"><small>Reply</small></a><hr />
                 </div>
+
+                {% for recomment in ArticleComment.recomment %}
+                <li class="comment-children">
+                  <div class="comment-avatar">
+                    <img src="img/testimonial-2.jpg" alt="">
+                  </div>
+                  <div class="comment-details">
+                    <h4 class="comment-author">..</h4>
+                    <p>
+                      {{ recomment.content}}
+                    </p>
+                    <span><small>{{ recomment.createdAt|date("Y.m.d h:i:s") }}</small></span>
+                    <a href="3"><small>Reply</small></a>
+                  </div>
+                </li>
+                {% endfor %}
               </li>
+              {% endfor %}
+              <!--
               <li>
                 <div class="comment-avatar">
                   <img src="img/testimonial-4.jpg" alt="">
@@ -110,51 +125,11 @@
                   <a href="3">Reply</a>
                 </div>
               </li>
-              <li class="comment-children">
-                <div class="comment-avatar">
-                  <img src="img/testimonial-2.jpg" alt="">
-                </div>
-                <div class="comment-details">
-                  <h4 class="comment-author">Oliver Colmenares</h4>
-                  <span>18 Sep 2017</span>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                    ipsam temporibus maiores
-                    quae.
-                  </p>
-                  <a href="3">Reply</a>
-                </div>
-              </li>
-              <li>
-                <div class="comment-avatar">
-                  <img src="img/testimonial-2.jpg" alt="">
-                </div>
-                <div class="comment-details">
-                  <h4 class="comment-author">Oliver Colmenares</h4>
-                  <span>18 Sep 2017</span>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                    ipsam temporibus maiores
-                    quae natus libero optio.
-                  </p>
-                  <a href="3">Reply</a>
-                </div>
-              </li>
+              
+              -->
             </ul>
           </div>
-          -->
-
-          <div id="disqus_thread"></div>
-          <script>
-            (function() {
-            var d = document, s = d.createElement('script');
-              s.src = 'https://yuu2-portfolio-blog.disqus.com/embed.js';
-              s.setAttribute('data-timestamp', +new Date());
-              (d.head || d.body).appendChild(s);
-            })();
-          </script>
-           
-          <!--
+          <!-- 블로그 댓글 작성 -->
           <div class="form-comments">
             <div class="title-box-2">
               <h3 class="title-left">
@@ -190,7 +165,7 @@
               </div>
             </form>
           </div>
-          -->
+ 
 
         </div>
         <!-- 검색 -->

@@ -1,14 +1,14 @@
+src/Migrations
 
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/public/uploads/
+.env.local
+.env.local.php
+.env.*.local
+config/secrets/prod/prod.decrypt.private.php
+public/uploads/
 !/public/uplaods/.gitignore
-/var/
-/vendor/
+var/
+vendor/
 
 ###> symfony/web-server-bundle ###
 /.web-server-pid

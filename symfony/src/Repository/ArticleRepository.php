@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @author yuu2dev
- * updated 2020.07.03
+ * updated 2020.07.12
  *
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
  * @method Article|null findOneBy(array $criteria, array $orderBy = null)
@@ -88,16 +88,18 @@ class ArticleRepository extends ServiceEntityRepository {
   }
 
   /**
-   * 게시글 조회
+   * 블로그 게시글 상세
    * @access public
    * @param int $id
    * @return
    */
   public function findArticleById(int $id) {
     return $this->createQueryBuilder('a')
-      ->innerJoin('a.category', 'c')
+      ->select('a')
+      ->innerJoin('a.category', 'ct')
+      ->innerJoin('a.comment', 'cm')
       ->andWhere('a.id = :id')
-      ->andWhere('c.visible = :visible')
+      ->andWhere('ct.visible = :visible')
       ->setParameter('id', $id)
       ->setParameter('visible', true)
       ->getQuery()
