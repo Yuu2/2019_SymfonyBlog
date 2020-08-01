@@ -5,10 +5,11 @@ src/Migrations
 .env.local.php
 .env.*.local
 config/secrets/prod/prod.decrypt.private.php
-public/uploads/
+public/uploads
+public/bundles
 !/public/uplaods/.gitignore
-var/
-vendor/
+var
+vendor
 
 ###> symfony/web-server-bundle ###
 /.web-server-pid

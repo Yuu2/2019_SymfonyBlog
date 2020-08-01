@@ -1,3 +1,7 @@
+<script>
+
+</script>
+
 <div class="form-comments">
 
   <div class="title-box-4">
@@ -6,33 +10,36 @@
   
   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
   
-  <div style="display: flex;">
-    <!-- 유저명 -->
-    {{ form.username.vars.label }}
-    {{ form_widget(form.username) }}
-    <small>{{ form_help(form.username)}}</small>
-    <small>{{ form_errors(form.username)}}</small>
+    <div style="display: flex;">
+      <!-- 유저명 -->
+      {{ form.username.vars.label }}
+      {{ form_widget(form.username) }}
+      <small>{{ form_help(form.username)}}</small>
+      <small>{{ form_errors(form.username)}}</small>
 
-    <!-- 패스워드 -->
-    {{ form.password.vars.label }}
-    {{ form_widget(form.password) }}
-    <small>{{ form_help(form.password)}}</small>
-    <small>{{ form_errors(form.password)}}</small>
+      <!-- 패스워드 -->
+      {{ form.password.vars.label }}
+      {{ form_widget(form.password) }}
+      <small>{{ form_help(form.password)}}</small>
+      <small>{{ form_errors(form.password)}}</small>
+    </div>
 
-    <!-- 공개여부 -->
-    {{ form_widget(form.visible) }}
-    <small>{{ form_help(form.visible)}}</small>
-    <small>{{ form_errors(form.visible)}}</small>
-  </div>
+    <div>
+      <!-- 내용 -->
+      {{ form.content.vars.label }}<br />
+      {{ form_widget(form.content) }}
+      <small>{{ form_help(form.content)}}</small>
+      <small>{{ form_errors(form.content)}}</small>
+    </div>
 
+    <div>
+      <!-- 공개여부 -->
+      {{ form_widget(form.visible) }}
+      <small>{{ form_help(form.visible)}}</small>
+      <small>{{ form_errors(form.visible)}}</small>
+    </div>
 
-  <!-- 내용 -->
-  <div>
-    {{ form.content.vars.label }}<br />
-    {{ form_widget(form.content) }}
-    <small>{{ form_help(form.content)}}</small>
-    <small>{{ form_errors(form.content)}}</small>
-  </div>
+    <button class="btn btn-primary">{{ 'front.blog.article.comment.submit'|trans }}</button>
 
   {{ form_end(form) }}
 </div>

@@ -1,0 +1,17 @@
+{% if RecentTags %}
+  <div class="widget-sidebar widget-tags">
+    <h5 class="sidebar-title">{{ 'front.blog.tag'|trans }}</h5>
+    <div class="sidebar-content">
+      <ul>
+        {% for Tag in RecentTags %}
+        <li>
+          <form method="GET" action="{{ path('blog_article_index') }}">
+            <input type="hidden" name="tag" value="{{ Tag.name }}" />
+            <button class="btn btn-outline-primary btn-sm" type="submit">{{ Tag.name }}</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}

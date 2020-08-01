@@ -1,0 +1,14 @@
+<div class="col-md-4">
+  <div class="widget-sidebar sidebar-search">
+    <h5 class="sidebar-title">{{ 'front.blog.search'|trans }}</h5>
+    <div class="sidebar-content">
+    <form method="GET" action="{{ path('blog_article_index') }}">
+      <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="{{ 'front.blog.search.placeholder'|trans }}">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary btn-search" type="submit"><span class="ion-android-search"></span></button>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>

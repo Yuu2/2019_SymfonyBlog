@@ -69,6 +69,9 @@
               </ul>
             </div>
           </div>
+          
+          <!-- 블로그 댓글 폼 -->
+          {{ render(url('blog_comment_new')) }}
 
           <!-- 블로그 댓글 -->
           <div id="comment" class="box-comments">
@@ -102,60 +105,18 @@
               {% endfor %}
             </ul>
           </div>
-          <!-- 블로그 댓글 작성 -->
-          {{ render(url('blog_comment_new')) }}
         </div>
         <!-- 검색 -->
-        <div class="col-md-4">
-          <div class="widget-sidebar sidebar-search">
-            <h5 class="sidebar-title">{{ 'front.blog.search'|trans }}</h5>
-            <div class="sidebar-content">
-              <form method="GET" action="{{ path('blog_article_index') }}">
-                <div class="input-group">
-                  <input type="text" name="search" class="form-control" placeholder="{{ 'front.blog.search.placeholder'|trans }}">
-                  <span class="input-group-btn">
-                    <button class="btn btn-secondary btn-search" type="submit">
-                      <span class="ion-android-search"></span>
-                    </button>
-                  </span>
-                </div>
-              </form>
-            </div>
-          </div>
-          <!-- 카테고리 -->
-          {% include 'block/category.twig' %}
+        {% include 'block/search.twig' %}
 
-          <!-- 최근 작성한 게시물 -->
-          <div class="widget-sidebar">
-            <h5 class="sidebar-title">{{ 'front.blog.recently'|trans }}</h5>
-            <div class="sidebar-content">
-              <ul class="list-sidebar">
-                {% if RecentArticles is not empty %}
-                {% for RecentArticle in RecentArticles %}
-                  <li><a href="{{ path('blog_article_show', {'id': RecentArticle.id} )}}">{{ RecentArticle.title }} <small>{{ RecentArticle.createdAt|date('l, Y/m/d')}}</small></a></li>
-                {% endfor %}
-                {% endif %}
-              </ul>
-            </div>
-          </div>
+        <!-- 카테고리 -->
+        {% include 'block/category.twig' %}
 
-          <!-- 최근 추가된 태그 -->
-          <div class="widget-sidebar widget-tags">
-            <h5 class="sidebar-title">{{ 'front.blog.tag'|trans }}</h5>
-            <div class="sidebar-content">
-              <ul>
-                {% for Tag in RecentTags %}
-                <li>
-                  <form method="GET" action="{{ path('blog_article_index') }}">
-                    <input type="hidden" name="tag" value="{{ Tag.name }}" />
-                    <button class="btn btn-outline-primary btn-sm" type="submit">{{ Tag.name }}</button>
-                  </form>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-        </div>
+        <!-- 최근 작성한 게시물 -->
+        {% include 'block/recent_articles.twig' %}
+
+        <!-- 최근 추가된 태그 -->
+        {% include 'block/recent_tags.twig' %}
       </div>
     </div>
   </section>

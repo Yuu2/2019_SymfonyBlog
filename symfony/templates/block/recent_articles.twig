@@ -1,0 +1,12 @@
+{% if RecentArticles %}
+  <div class="widget-sidebar">
+    <h5 class="sidebar-title">{{ 'front.blog.recently'|trans }}</h5>
+    <div class="sidebar-content">
+      <ul class="list-sidebar">
+        {% for RecentArticle in RecentArticles %}
+          <li><a href="{{ path('blog_article_show', {'id': RecentArticle.id} )}}">{{ RecentArticle.title }} <small>{{ RecentArticle.createdAt|date('l, Y/m/d')}}</small></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}
