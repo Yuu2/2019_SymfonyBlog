@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -101,7 +103,7 @@ class BlogController extends AbstractController {
       /** @var Article */
       $article = $form->getData();
           
-      if ($blogService->write($article, $hashtagForm)) {
+      if ($blogService->writeArticle($article, $hashtagForm)) {
         
         $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS);
         return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
@@ -139,24 +141,39 @@ class BlogController extends AbstractController {
   }
 
   /**
-   * 블로그 댓글 작성
+   * 블로그 댓글 작성 및 수정
    * @Route("/blog/comment/new", name="blog_comment_new", methods={"GET", "POST"})
-   * @Route("/blog/comment/edit/{id}", name="blog_comment_edit", methods={"GET, PUT"}, requirements={"id":"\d+"})
+   * @Route("/blog/comment/edit/{id}", name="blog_comment_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
    * @Template("front/blog/comment.twig")
    * @access public
+   * @param ArticleComment $comment
+   * @param BlogService $blogService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
-   * @return array|object
+   * @return array|JsonResponse
    */
-  public function comment_form(?ArticleComment $comment, EventDispatcherInterface $eventDispatcher, Request $request): ?array {
+  public function comment_form(?ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
     
-    $eventDispatcher->dispatch(RedirectEvent::REDIRECT_IF_NOT_AUTH, new RedirectEvent('blog_article_index'));
-    
-    $form = $comment ? $this->createForm(CommentType::class, $comment, ['method' => 'PUT']) : $this->createForm(CommentType::class, new ArticleComment);
+    if ($comment) {
+      $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('blog_comment_new'), 'method' => 'PUT']);
+    } else {
+      $form = $this->createForm(CommentType::class, new ArticleComment, ['action' => $this->generateUrl('blog_comment_new'), 'method' => 'POST']);
+    }
+
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
       
+      $eventDispatcher->dispatch(RedirectEvent::REDIRECT_IF_NOT_AUTH, new RedirectEvent('blog_article_index'));
+    
+      /** @var ArticleComment */
+      $comment = $form->getData();
+      
+      $response = new JsonResponse;
+
+      $blogService->writeComment($comment) ? $response->setStatusCode(Response::HTTP_OK) : $response->setStatusCode(Response::HTTP_FORBIDDEN);
+      
+      return $response;
     }
 
     return array(

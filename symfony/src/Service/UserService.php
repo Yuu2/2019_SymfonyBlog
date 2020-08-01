@@ -28,17 +28,17 @@ class UserService {
   /**
    * @var EntityManagerInterface
    */
-  protected $entityManager;
+  private $entityManager;
  
   /**
    * @var UserPasswordEncoderInterface
    */
-  protected $passwordEncoder;
+  private $passwordEncoder;
 
   /**
    * @var UserRepository
    */
-  protected $userRepository;
+  private $userRepository;
 
   /**
    * @access public

@@ -43,7 +43,7 @@ function signUpEmailCheck(signup) {
     $(signup.email_check_btn_id).attr('class', 'btn-warning btn-sm btn');
     $(signup.email_check_btn_id).html(signup.button.email_checking);
 
-    const email = $(signup.email_id).val();
+    var email = $(signup.email_id).val();
     // 비어 있는가?
     if (isEmpty(email)) {
       alert(signup.alert.email_is_empty); 

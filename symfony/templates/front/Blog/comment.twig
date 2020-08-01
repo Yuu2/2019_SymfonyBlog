@@ -1,45 +1,52 @@
-<script>
 
-</script>
-
-<div class="form-comments">
-
-  <div class="title-box-4">
-    <h5 class="title-left">{{ 'front.blog.article.comment.write'|trans }}</h5>
-  </div>
-  
-  {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-  
-    <div style="display: flex;">
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+  {{ form_row(form._token) }}
+  <div class="top-layer">
+    {% if app.user %}
       <!-- 유저명 -->
-      {{ form.username.vars.label }}
-      {{ form_widget(form.username) }}
-      <small>{{ form_help(form.username)}}</small>
-      <small>{{ form_errors(form.username)}}</small>
-
+      <div class="input-box flex">
+        {% if app.user.thumbnail %}
+          <img class="thumb "src="{{ app.user.thumbnail }}" alt="#" />
+        {% else %}
+          <img class="thumb "src="{{ asset('style/img/user_thumb.png') }}" alt="#" />
+        {% endif %}
+        <span>{{ app.user.username }}</span>
+      </div>
+      
+    {% else %}
+      <!-- 유저명 -->
+      <div class="input-box">
+        {{ form_widget(form.username) }}
+        <small>{{ form_help(form.username)}}</small>
+        <small>{{ form_errors(form.username)}}</small>
+      </div>
       <!-- 패스워드 -->
-      {{ form.password.vars.label }}
-      {{ form_widget(form.password) }}
-      <small>{{ form_help(form.password)}}</small>
-      <small>{{ form_errors(form.password)}}</small>
-    </div>
+      <div class="input-box">
+        {{ form_widget(form.password) }}
+        <small>{{ form_help(form.password)}}</small>
+        <small>{{ form_errors(form.password)}}</small>
+      </div>
+    {% endif %}
+  </div>
 
-    <div>
-      <!-- 내용 -->
-      {{ form.content.vars.label }}<br />
+  <div class="bottom-layer">
+    <!-- 내용 -->
+    <div class="input-box">
       {{ form_widget(form.content) }}
       <small>{{ form_help(form.content)}}</small>
       <small>{{ form_errors(form.content)}}</small>
     </div>
-
-    <div>
-      <!-- 공개여부 -->
+    <!-- 공개여부 -->
+    <div class="input-box">
       {{ form_widget(form.visible) }}
       <small>{{ form_help(form.visible)}}</small>
       <small>{{ form_errors(form.visible)}}</small>
     </div>
 
-    <button class="btn btn-primary">{{ 'front.blog.article.comment.submit'|trans }}</button>
+    <!-- 작성 -->
+    <div class="input-box">
+      <button type="button" class="btn btn-primary">{{ 'front.blog.article.comment.submit'|trans }}</button>
+    </div>
+  </div>
 
-  {{ form_end(form) }}
-</div>
+{{ form_end(form, {'render_rest': false}) }}

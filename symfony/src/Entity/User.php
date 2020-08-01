@@ -42,24 +42,14 @@ class User implements UserInterface {
      * @ORM\Column(type="string", length=255)
      */
     private $password;
-  
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated_at;
 
     /** 
-     * @Assert\Regex(pattern="/^[\w]$/", match=false, message="assert.user.alias.regex")
-     * @Assert\Length(max=20, maxMessage="assert.user.alias.length.max")
-     * @Assert\NotBlank(message="assert.user.alias.empty")
+     * @Assert\Regex(pattern="/^[\w]$/", match=false, message="assert.user.username.regex")
+     * @Assert\Length(max=20, maxMessage="assert.user.username.length.max")
+     * @Assert\NotBlank(message="assert.user.username.empty")
      * @ORM\Column(type = "string") 
      */
-    private $alias;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -70,6 +60,21 @@ class User implements UserInterface {
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    public function __construct()
+    {
+
+    }
 
     public function getId(): ?int
     {
@@ -86,16 +91,6 @@ class User implements UserInterface {
         $this->email = $email;
 
         return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
     }
 
     /**
@@ -172,14 +167,14 @@ class User implements UserInterface {
         // $this->plainPassword = null;
     }
 
-    public function getAlias(): ?string
+    public function getUsername(): ?string
     {
-      return $this->alias;
+      return $this->username;
     }
 
-    public function setAlias(string $alias): self
+    public function setUsername(string $username): self
     {
-        $this->alias = $alias;
+        $this->username = $username;
 
         return $this;
     }

@@ -1237,7 +1237,7 @@ footer .site a {
   .form-comments,
   .box-comments,
   .widget-sidebar {
-    padding: 3rem;
+    padding: 2rem;
   }
 
   .blog-wrapper .article-title {
@@ -1245,7 +1245,7 @@ footer .site a {
   }
 
   .box-comments .list-comments .comment-author {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 }
 
@@ -1271,4 +1271,12 @@ footer .site a {
   .back-to-top {
     bottom: 15px;
   }
+}
+
+.input-box {
+  margin: 10px;
+}
+
+.flex {
+  display: flex;
 }

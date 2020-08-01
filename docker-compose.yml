@@ -43,8 +43,8 @@ services:
 
     volumes:
       - ./symfony:${PROJECT_DIR}
-      - ./symfony/var:${PROJECT_DIR}/var
-      - ./symfony/vendor:${PROJECT_DIR}/vendor
+      - ./symfony/var:${PROJECT_DIR}/var:cached
+      - ./symfony/vendor:${PROJECT_DIR}/vendor:cached
       - ./symfony/php.ini:/usr/local/etc/php/php.ini
     networks:
       - web

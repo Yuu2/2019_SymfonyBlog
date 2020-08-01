@@ -89,9 +89,9 @@ class UserType extends AbstractType {
       ])
 
       // 닉네임
-      ->add('alias', TextType::class, [
-        'help' => $translator->trans('front.user.signup.alias.help'),
-        'label' => $translator->trans('front.user.signup.alias'),
+      ->add('username', TextType::class, [
+        'help' => $translator->trans('front.user.signup.username.help'),
+        'label' => $translator->trans('front.user.signup.username'),
         'required' => true
       ])
 

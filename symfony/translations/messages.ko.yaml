@@ -45,12 +45,12 @@ front.blog.article.comment: 댓글
 front.blog.article.comment.username: 유저명
 front.blog.article.comment.password: 암호
 front.blog.article.comment.content: 내용
-front.blog.article.comment.write: 댓글 작성
+front.blog.article.comment.write: 댓글쓰기
 front.blog.article.comment.reply: 답글
 front.blog.article.comment.visible: 공개여부
 front.blog.article.comment.visible.true: 공개
 front.blog.article.comment.visible.false: 비공개
-
+front.blog.article.comment.submit: 작성
 # 유저
 front.user.signin: 로그인
 front.user.signin.email: 이메일
@@ -67,8 +67,8 @@ front.user.signup.email.unduplicated: 사용가능한 이메일 입니다.
 front.user.signup.email.check.checking: 확인중
 front.user.signup.email.check.passed: 완료
 front.user.signup.email.check.failed: 이메일을 다시 입력해 주세요.
-front.user.signup.alias: 닉네임
-front.user.signup.alias.help: 다른 유저에게 공개 하는 이름 입니다.
+front.user.signup.username: 닉네임
+front.user.signup.username.help: 다른 유저에게 공개 하는 이름 입니다.
 front.user.signup.password: 패스워드
 front.user.signup.password.help: 8 ~ 20 자리 수의 숫자와 문자 조합 (공백문자 제외) 
 front.user.signup.password.confirm: 패스워드 재확인

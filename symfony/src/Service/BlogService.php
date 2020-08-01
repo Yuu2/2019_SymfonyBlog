@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Article;
+use App\Entity\ArticleComment;
 use App\Entity\ArticleTag;
 use App\Entity\Tag;
 use App\Repository\ArticleRepository;
@@ -10,17 +11,13 @@ use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @author yuu2dev
  * updated 2020.08.01
  */
 class BlogService {
-
-  /**
-   * @var EntityManagerInterface
-   */
-  private $entityManager;
   
   /**
    * @var ArticleRepository
@@ -28,32 +25,51 @@ class BlogService {
   private $articleRepository;
 
   /**
+   * @var EntityManagerInterface
+   */
+  private $entityManager;
+
+  /**
    * @var CategoryRepository
    */
   private $categoryRepository;
+  
+  /**
+   * @var UserPasswordEncoderInterface
+   */
+  private $passwordEncoder;
 
   /**
    * @var TagRepository
    */
-  protected $tagRepository;
+  private $tagRepository;
+
+  /**
+   * @var TokenStorageInterface
+   */
+  private $tokenStorage;
+
 
   /**
    * @access public
-   * @param EntityManagerInterface $entityManager
    * @param ArticleRepository $articleRepository
+   * @param EntityManagerInterface $entityManager
    * @param CategoryRepository $categoryRepository
    * @param TagRepository $tagRepository
+   * @param TokenStorageInterface $tokenStorage
    */
   public function __construct(
-    EntityManagerInterface $entityManager, 
     ArticleRepository $articleRepository,
+    EntityManagerInterface $entityManager, 
     CategoryRepository $categoryRepository,
-    TagRepository $tagRepository
+    TagRepository $tagRepository,
+    TokenStorageInterface $tokenStorage
   ) {
     $this->entityManager = $entityManager;
     $this->articleRepository = $articleRepository;
     $this->categoryRepository = $categoryRepository;
     $this->tagRepository = $tagRepository;
+    $this->tokenStorage = $tokenStorage;
   }
 
   /**
@@ -121,16 +137,15 @@ class BlogService {
    * @return array
    */
   public function recentTags(int $count = 30): ?array {
-
     return $this->tagRepository->countTags($count);
   }
   
   /**
+   * 공개 카테고리 목록
    * @access public
    * @return array
    */
   public function findCategories(): ?array {
-    
     return $this->categoryRepository->visibleCategories();
   }
 
@@ -141,7 +156,7 @@ class BlogService {
    * @param array $hashtagForm
    * @return bool
    */
-  public function write(Article $article, array $hashtags): bool {
+  public function writeArticle(Article $article, array $hashtags): bool {
     
     try {
       
@@ -155,7 +170,7 @@ class BlogService {
       // 해시태그 주입 시 
       foreach(array_diff($hashtags, $artitags) as $hashtag) {
 
-        $tag = new Tag();
+        $tag = new Tag;
         
         $tag->setName($hashtag);
         $tag->setCreatedAt(new \DateTime);
@@ -182,9 +197,38 @@ class BlogService {
       $this->entityManager->flush();
 
       return true;
-    
     } catch(\Exception $e) {
+      return false;
+    }
+  }
 
+  /**
+   * 블로그 댓글 작성
+   * @access public
+   * @param ArticleComment $comment
+   * @return bool
+   */
+  public function writeComment(ArticleComment $comment): bool {
+    
+    try {
+      
+      $user = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
+      
+      if ($user) {
+        $comment->setUserId($user);
+        $comment->setUsername($user->getUsername());
+      } else {
+        $comment->setPassword(password_hash($comment->getPassword(), PASSWORD_BCRYPT, 8));
+      }
+      $comment->setIp($_SERVER['REMOTE_ADDR'] .':'.$_SERVER['SERVER_PORT']);
+      $comment->setDevice($_SERVER['HTTP_USER_AGENT']);
+      $comment->getCreatedAt() ? $comment->setUpdatedAt(new \DateTime) : $comment->setCreatedAt(new \DateTime);
+      
+      $this->entityManager->persist($comment);
+      $this->entityManager->flush();
+
+      return true;
+    } catch (\Exception $e) {
       return false;
     }
   }
@@ -202,7 +246,7 @@ class BlogService {
   }
 
   /**
-   * 블로그 게시글 삭제
+   * 블로그 태그 삭제
    * @access public
    * @param Tag $tag
    * @return void

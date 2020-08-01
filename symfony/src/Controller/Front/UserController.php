@@ -92,7 +92,7 @@ class UserController extends AbstractController {
     
     $form = $this->createForm(UserType::class, new User);
     $form->handleRequest($request);
-    
+
     switch(true) {
 
       /* FormType 검사 */
@@ -142,7 +142,7 @@ class UserController extends AbstractController {
 
     $jsonResponse = new JsonResponse();
 
-    if (is_null($e_mail)) {
+    if (is_null($_email)) {
       $jsonResponse->setStatusCode(Response::HTTP_BAD_REQUEST);
     } else {
       $isDuplicated = $userService->isDuplicatedEmail($_email);

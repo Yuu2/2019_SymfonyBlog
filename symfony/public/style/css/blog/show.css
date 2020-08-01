@@ -1,5 +1,32 @@
+.form-comments {
+  padding: 0 !important; 
+}
 .comment-parent, .comment-children {
   background-color: #c0c0c01a;
   border-radius: 20px;
   margin: 0 0 10px 0;
+}
+.form-comments .form-box {
+  padding: 1.5rem;
+}
+
+.form-comments .form-box .top-layer {
+  display: flex;
+}
+
+.form-comments .form-header {
+  background-color: #0078ff;
+  color: #fff;
+  text-align: right;
+  cursor: pointer;
+}
+
+.form-comments .form-header i {
+  margin: 8px;
+}
+
+.form-comments img.thumb {
+  border-radius: 50%;
+  width: 25px;
+  margin: 0 5px 0 0;
 }
