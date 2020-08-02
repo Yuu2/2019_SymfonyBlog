@@ -1,6 +1,7 @@
 # 관리자 정보
-administrator.id: yuu2dev
-administrator.email: yuu2dev@gmail.com
+admin.id: yuu2dev
+admin.email: yuu2dev@gmail.com
+admin.github: https://github.com/yuu2dev/portfolio-blog
 
 # 공통
 common.data.null: 데이터가 존재하지 않습니다.
@@ -30,6 +31,8 @@ front.blog.search.placeholder: 제목, 내용 ...
 front.blog.article: 글쓰기
 front.blog.article.cnt: 전체 게시글
 front.blog.article.title: 제목
+front.blog.article.title.placeholder: 제목을 입력하세요.
+front.blog.article.hashtag.placeholder: 해시태그를 입력하세요.
 front.blog.article.content: 내용
 front.blog.article.visible: 공개여부
 front.blog.article.category: 카테고리
@@ -37,20 +40,23 @@ front.blog.article.submit: 작성
 front.blog.article.cancel: 취소
 front.blog.article.visible.true: 공개
 front.blog.article.visible.false: 비공개
-front.blog.article.title.placeholder: 제목을 입력하세요.
-front.blog.article.hashtag.placeholder: 해시태그를 입력하세요.
-front.blog.article.wrtie.fail: 게시글 작성 실패
-front.blog.article.wrtie.success: 신규 게시글이 등록 되었습니다.
 front.blog.article.comment: 댓글
 front.blog.article.comment.username: 유저명
+front.blog.article.comment.unknown: 익명
 front.blog.article.comment.password: 암호
 front.blog.article.comment.content: 내용
 front.blog.article.comment.write: 댓글쓰기
 front.blog.article.comment.reply: 답글
+front.blog.article.comment.edit: 수정
+front.blog.article.comment.delete: 삭제
 front.blog.article.comment.visible: 공개여부
 front.blog.article.comment.visible.true: 공개
 front.blog.article.comment.visible.false: 비공개
 front.blog.article.comment.submit: 작성
+
+front.blog.article.flash.write.fail: 서버 오류로 인한 게시글 작성 실패
+front.blog.article.flash.write.success: 게시글이 등록 되었습니다.
+front.blog.article.flash.invisible: 해당 게시글은 열람 할 수 없습니다.
 # 유저
 front.user.signin: 로그인
 front.user.signin.email: 이메일
@@ -77,7 +83,7 @@ front.user.signup.password.invalid: 패스워드가 일치하지 않습니다. �
 front.user.signup.submit: 가입하기
 front.user.signup.sender: 포트폴리오 블로그 가입 인증 메일입니다.
 
-front.user.signup.flash.recaptcha_fail: g-recaptcha 인증 실패 입니다.
-front.user.signup.flash.email_invalid: 이메일 인증 기한이 만료되었거나 유효하지 않은 접근 입니다.
-front.user.signup.flash.email_verified: 이메일이 인증 되었습니다.
-front.user.signup.flash.email_confirm: 인증 메일을 발신 했습니다. 이메일에 첨부된 링크를 클릭하면 등록이 완료 됩니다.
+front.user.signup.flash.recaptcha.fail: G-recaptcha 인증 실패 입니다.
+front.user.signup.flash.email.invalid: 이메일 인증 기한이 만료되었거나 유효하지 않은 접근 입니다.
+front.user.signup.flash.email.verified: 이메일이 인증 되었습니다.
+front.user.signup.flash.email.confirm: 인증 메일을 발신 했습니다. 이메일에 첨부된 링크를 클릭하면 등록이 완료 됩니다.

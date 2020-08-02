@@ -88,6 +88,7 @@ class ArticleRepository extends ServiceEntityRepository {
   }
 
   /**
+   * @todo 관리자일 경우 열람가능 처리
    * 블로그 게시글 상세
    * @access public
    * @param int $id
@@ -97,8 +98,9 @@ class ArticleRepository extends ServiceEntityRepository {
     return $this->createQueryBuilder('a')
       ->select('a')
       ->innerJoin('a.category', 'ct')
-      ->innerJoin('a.comment', 'cm')
+      ->innerJoin('a.comments', 'cm')
       ->andWhere('a.id = :id')
+      ->andWhere('a.visible  = :visible')
       ->andWhere('ct.visible = :visible')
       ->setParameter('id', $id)
       ->setParameter('visible', true)

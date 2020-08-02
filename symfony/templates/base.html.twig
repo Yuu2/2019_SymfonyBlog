@@ -58,7 +58,7 @@
         <div class="intro-content display-table">
           <div class="table-cell">
             <div class="container">
-              <h1 class="intro-title mb-4">{{ 'administrator.id'|trans }}</h1>
+              <h1 class="intro-title mb-4">{{ 'admin.id'|trans }}</h1>
               <p class="intro-subtitle">
                 <span class="text-slider-items">{{ 'front.home.intro'|trans }}</span>
                 <strong class="text-slider"></strong>
@@ -69,11 +69,8 @@
       </div>
     {% endblock %}
     
-    <!-- 플래시 메시지 -->
-    {% block flash %}
-      {% include 'block/flash.twig' %}
-    {% endblock %}
-    
+    {% include 'block/flash.twig' %}
+
     <!-- 본문 -->
     {% block main %}
     {% endblock %}
@@ -87,10 +84,10 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="copyright-box">
-                <p class="copyright">&copy; Copyright <strong>{{ 'administrator.id'|trans }}</strong>. All Rights Reserved</p>
+                <p class="copyright">&copy; Copyright <strong>{{ 'admin.id'|trans }}</strong>. All Rights Reserved</p>
               </div>
               <div class="site-box">
-                <p class="site"><a href="https://github.com/yuu2dev/portfolio-blog"><i class="fa fa-github fa-2x"></i></a></p>
+                <p class="site"><a href="{{'admin.github'|trans}}"><i class="fa fa-github fa-2x"></i></a></p>
               </div>
             </div>
           </div>
@@ -98,10 +95,12 @@
       </footer>
     </section>
     {% endblock %}
-
-    {% block rightside %}
+    
+    <div id="rightside">
       <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-    {% endblock %}
+      {% block rightside %}
+      {% endblock %}
+    </div>
 
     <div id="preloader"></div>
 

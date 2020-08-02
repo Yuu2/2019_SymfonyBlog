@@ -39,21 +39,6 @@ class Article
     private $visible = true;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $deleted_at;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Tag", mappedBy="article", orphanRemoval=true)
      */
     private $tag;
@@ -67,12 +52,22 @@ class Article
     /**
      * @ORM\OneToMany(targetEntity=ArticleComment::class, mappedBy="article", orphanRemoval=true)
      */
-    private $comment;
+    private $comments;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function __construct()
     {
         $this->tag = new ArrayCollection();
-        $this->comment = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,18 +119,6 @@ class Article
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getDeletedAt(): ?\DateTimeInterface
-    {
-        return $this->deleted_at;
-    }
-
-    public function setDeletedAt(?\DateTimeInterface $deleted_at): self
-    {
-        $this->deleted_at = $deleted_at;
 
         return $this;
     }
@@ -210,15 +193,15 @@ class Article
     /**
      * @return Collection|ArticleComment[]
      */
-    public function getComment(): Collection
+    public function getComments(): Collection
     {
-        return $this->comment;
+        return $this->comments;
     }
 
     public function addComment(ArticleComment $comment): self
     {
-        if (!$this->comment->contains($comment)) {
-            $this->comment[] = $comment;
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
             $comment->setArticle($this);
         }
 
@@ -227,8 +210,8 @@ class Article
 
     public function removeComment(ArticleComment $comment): self
     {
-        if ($this->comment->contains($comment)) {
-            $this->comment->removeElement($comment);
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
             if ($comment->getArticle() === $this) {
                 $comment->setArticle(null);

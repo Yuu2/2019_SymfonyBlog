@@ -81,13 +81,24 @@ class RedirectEventSubscriber implements EventSubscriberInterface {
 
     return array(
       KernelEvents::RESPONSE => 'onKernelResponse',
+      RedirectEvent::REDIRECT => 'onRedirect',
       RedirectEvent::REDIRECT_IF_AUTH => 'onRedirectIfAuth',
       RedirectEvent::REDIRECT_IF_NOT_AUTH => 'onRedirectIfNotAuth',
       RedirectEvent::REDIRECT_IF_USER => 'onRedirectIfUser',
       RedirectEvent::REDIRECT_IF_ADMIN => 'onRedirectIfAdmin',
       RedirectEvent::REDIRECT_IF_NOT_ADMIN => 'onRedirectIfNotAdmin',
-      RedirectEvent::REDIRECT_IF_INVISIBLE_ARTICLE => 'onRedirectIfInvisibleArticle',
     );
+  }
+
+  /**
+   * 리다이렉트
+   * @access public
+   * @param RedirectEvent $event
+   * @return void
+   */
+  public function onRedirect(RedirectEvent $event) {
+    $this->kernelResponseFlag = true;
+    $this->kernelResponsePath = $event->getRedirectPath();
   }
 
   /**
@@ -97,7 +108,6 @@ class RedirectEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onRedirectIfAuth(RedirectEvent $event): void {
-  
     if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
         $this->kernelResponseFlag = $kernelResponseFlag;
         $this->kernelResponsePath = $event->getRedirectPath();
@@ -110,7 +120,6 @@ class RedirectEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onRedirectIfNotAuth(RedirectEvent $event): void {
-  
     if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
         $this->kernelResponseFlag = $kernelResponseFlag;
         $this->kernelResponsePath = $event->getRedirectPath();
@@ -124,7 +133,6 @@ class RedirectEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onRedirectIfUser(RedirectEvent $event): void {
-
     if ($this->authorizationChecker->isGranted('ROLE_USER')) {
         $this->kernelResponseFlag = $kernelResponseFlag;
         $this->kernelResponsePath = $event->getRedirectPath();
@@ -138,7 +146,6 @@ class RedirectEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onRedirectIfAdmin(RedirectEvent $event): void {
-
     if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
         $this->kernelResponseFlag = $kernelResponseFlag;
         $this->kernelResponsePath = $event->getRedirectPath();
@@ -152,27 +159,9 @@ class RedirectEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onRedirectIfNotAdmin(RedirectEvent $event): void {
-
     if (!$this->authorizationChecker->isGranted('ROLE_ADMIN')) {
         $this->kernelResponseFlag = $kernelResponseFlag;
         $this->kernelResponsePath = $event->getRedirectPath();
-    }
-  }
-
-  /**
-   * 게시글을 조회 할 수 없을 경우
-   * @access public
-   * @param RedirectEvent $event
-   * @return void
-   */
-  public function onRedirectIfInvisibleArticle(RedirectEvent $event): void {
-
-    $kernelResponseFlag = is_null($event->getArticle());
-
-    if ($kernelResponseFlag) {
-      
-      $this->kernelResponseFlag = $kernelResponseFlag;
-      $this->kernelResponsePath = $event->getRedirectPath();
     }
   }
 

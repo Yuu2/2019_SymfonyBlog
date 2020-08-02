@@ -29,11 +29,6 @@ class UserService {
    * @var EntityManagerInterface
    */
   private $entityManager;
- 
-  /**
-   * @var UserPasswordEncoderInterface
-   */
-  private $passwordEncoder;
 
   /**
    * @var UserRepository

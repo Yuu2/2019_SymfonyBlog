@@ -1,7 +1,10 @@
-
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-  {{ form_row(form._token) }}
+
+{{ form_widget(form._token) }}
+{{ form_widget(form.article, {'value': app.request.get('article')}) }}
+
   <div class="top-layer">
+
     {% if app.user %}
       <!-- 유저명 -->
       <div class="input-box flex">

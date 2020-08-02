@@ -11,8 +11,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * @author yuu2dev
  * updated 2020.08.01
@@ -33,11 +32,6 @@ class BlogService {
    * @var CategoryRepository
    */
   private $categoryRepository;
-  
-  /**
-   * @var UserPasswordEncoderInterface
-   */
-  private $passwordEncoder;
 
   /**
    * @var TagRepository
@@ -45,7 +39,7 @@ class BlogService {
   private $tagRepository;
 
   /**
-   * @var TokenStorageInterface
+   * @var AuthorizationCheckerInterface $authorizationChecker
    */
   private $tokenStorage;
 
@@ -70,6 +64,15 @@ class BlogService {
     $this->categoryRepository = $categoryRepository;
     $this->tagRepository = $tagRepository;
     $this->tokenStorage = $tokenStorage;
+  }
+  /**
+   * 블로그 게시글 가져오기
+   * @access public
+   * @param int $id
+   * @return Article
+   */
+  public function findArticle(int $id): ?Article {
+    return $this->articleRepository->findArticleById($id);
   }
 
   /**
@@ -119,7 +122,7 @@ class BlogService {
     
     $count = 0;
 
-    $parents = $article->getComment()->getValues();
+    $parents = $article->getComments()->getValues();
     
     foreach($parents as $child) {
       $count += count($child->getRecomment());
@@ -214,12 +217,13 @@ class BlogService {
       
       $user = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
       
-      if ($user) {
-        $comment->setUserId($user);
+      if (!$user == 'anon.') {
+        $comment->setUser($user);
         $comment->setUsername($user->getUsername());
       } else {
         $comment->setPassword(password_hash($comment->getPassword(), PASSWORD_BCRYPT, 8));
       }
+      
       $comment->setIp($_SERVER['REMOTE_ADDR'] .':'.$_SERVER['SERVER_PORT']);
       $comment->setDevice($_SERVER['HTTP_USER_AGENT']);
       $comment->getCreatedAt() ? $comment->setUpdatedAt(new \DateTime) : $comment->setCreatedAt(new \DateTime);

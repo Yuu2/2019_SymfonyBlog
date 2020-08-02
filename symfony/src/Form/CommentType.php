@@ -56,17 +56,26 @@ class CommentType extends AbstractType {
     $translator = $this->translator;
 
     $builder
+      ->add('article', HiddenType::class, [
+        'constraints' => $this->getArticleConstraints(),
+        'required' => true,
+        'mapped' => false,
+      ]) 
       // 유저명
       ->add('username', TextType::class, [
-        'label' => $translator->trans('front.blog.article.comment.username'),
         'constraints' => $this->getUsernameConstraints(),
-        'required' => false
+        'required' => false,
+        'attr' => [
+          'placeholder' => $translator->trans('front.blog.article.comment.username'),
+        ]
       ])
       // 비밀번호
       ->add('password', PasswordType::class, [
-        'label' => $translator->trans('front.blog.article.comment.password'),
         'constraints' => $this->getPasswordConstraints(),
-        'required' => true
+        'required' => true,
+        'attr' => [
+          'placeholder' => $translator->trans('front.blog.article.comment.password'),
+        ]
       ])
       // 공개여부
       ->add('visible', ChoiceType::class, [
@@ -74,17 +83,21 @@ class CommentType extends AbstractType {
           $translator->trans('front.blog.article.comment.visible.true')  => true,
           $translator->trans('front.blog.article.comment.visible.false') => false
         ],
-        'label' => $translator->trans('front.blog.article.comment.visible'),
         'constraints' => $this->getVisibleConstraints(),
+        'required' => true
       ])
       // 내용
       ->add('content', TextareaType::class, [ 
         'label' => $translator->trans('front.blog.article.comment.content'),
         'constraints' => $this->getContentConstraints(),
+        'required' => true
       ])
     ;
   }
   
+  private function getArticleConstraints() {
+    return;
+  }
   private function getUsernameConstraints() {
     return;
   }

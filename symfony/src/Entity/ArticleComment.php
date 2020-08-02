@@ -50,21 +50,6 @@ class ArticleComment
     private $device;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comment", fetch="LAZY")
-     */
-    private $article;
-
-    /**
      * @ORM\ManyToOne(targetEntity=ArticleComment::class, inversedBy="recomment")
      */
     private $parent;
@@ -74,6 +59,26 @@ class ArticleComment
      */
     private $recomment;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -219,6 +224,30 @@ class ArticleComment
     public function setDevice(string $device): self
     {
         $this->device = $device;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }

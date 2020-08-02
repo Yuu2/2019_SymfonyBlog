@@ -26,12 +26,12 @@ security:
                 check_path: user_signin
                 login_path: user_signin
                 csrf_token_generator: security.csrf.token_manager
-                default_target_path: blog_index
+                default_target_path: blog_article_index
                 username_parameter: _email
             # https://symfony.com/doc/current/security/form_login_setup.html
             logout:
                 path: user_signout
-                target: blog_index
+                target: blog_article_index
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 86400 # 1 week in seconds

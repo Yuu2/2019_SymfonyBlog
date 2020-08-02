@@ -967,7 +967,7 @@ a:hover {
 /*------/ Comments /------*/
 
 .box-comments .list-comments li {
-  padding-bottom: 40px;
+  padding: 20px 10px;
 }
 
 .box-comments .list-comments .comment-avatar {
@@ -978,6 +978,7 @@ a:hover {
 .box-comments .list-comments .comment-avatar img {
   width: 80px;
   height: 80px;
+  border-radius: 50%;
 }
 
 .box-comments .list-comments .comment-author {
@@ -1279,4 +1280,48 @@ footer .site a {
 
 .flex {
   display: flex;
+}
+
+/* rightside 단축 버튼 */
+.btn-shortcut {
+  position: fixed;
+  display: inline;
+  background: #0078ff;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  line-height: 1;
+  font-size: 24px;
+  border-radius: 50%;
+  transition: background 0.5s;
+  z-index: 11;
+}
+
+.btn-shortcut i {
+  color: #f2f2f2;
+  padding: 10px 0 0 0;
+}
+
+.one {
+  right: 15px;
+  bottom: 70px;
+}
+
+.two {
+  right: 15px;
+  bottom: 125px;
+}
+
+.three {
+  right: 15px;
+  bottom: 180px;
+}
+
+/** 
+ * 블로그 게시글 이미지 종횡비
+ */
+.article-content input {
+  width: 100% !important;
+  height: 100% !important;
 }
