@@ -6,12 +6,14 @@ use App\Entity\Article;
 use App\Entity\ArticleComment;
 use App\Entity\ArticleTag;
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 /**
  * @author yuu2dev
  * updated 2020.08.01
@@ -39,7 +41,7 @@ class BlogService {
   private $tagRepository;
 
   /**
-   * @var AuthorizationCheckerInterface $authorizationChecker
+   * @var TokenStorageInterface
    */
   private $tokenStorage;
 
@@ -217,13 +219,13 @@ class BlogService {
       
       $user = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
       
-      if (!$user == 'anon.') {
+      if ($user instanceof User) {
         $comment->setUser($user);
         $comment->setUsername($user->getUsername());
       } else {
-        $comment->setPassword(password_hash($comment->getPassword(), PASSWORD_BCRYPT, 8));
+        $comment->setPassword(password_hash($comment->getPassword(), PASSWORD_BCRYPT, ['cost' => 8]));
       }
-      
+
       $comment->setIp($_SERVER['REMOTE_ADDR'] .':'.$_SERVER['SERVER_PORT']);
       $comment->setDevice($_SERVER['HTTP_USER_AGENT']);
       $comment->getCreatedAt() ? $comment->setUpdatedAt(new \DateTime) : $comment->setCreatedAt(new \DateTime);
@@ -233,6 +235,7 @@ class BlogService {
 
       return true;
     } catch (\Exception $e) {
+      dump($e);
       return false;
     }
   }

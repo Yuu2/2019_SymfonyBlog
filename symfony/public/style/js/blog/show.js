@@ -21,14 +21,15 @@ $('.form-box button').on('click', function(event) {
     url: form_action,
     data: form.serialize()
   })
-  .always(function() {
-    submit.attr('class', 'btn btn-primary');
-    submit.attr('disabled', false);
-  })
   .done(function(responseData) {
-    
+    submit.attr('class', 'btn btn-success');
+    submit.attr('disabled', false);
+    alert(blog.article.comment.write.success);
+    location.replace(blog.article.comment.redirect);
   })
   .fail(function(responseData, status, xhr) {
-
+    alert(blog.article.comment.write.fail);
+    submit.attr('class', 'btn btn-primary');
+    submit.attr('disabled', false);
   });
 });

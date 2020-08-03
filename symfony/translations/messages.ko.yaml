@@ -53,7 +53,8 @@ front.blog.article.comment.visible: 공개여부
 front.blog.article.comment.visible.true: 공개
 front.blog.article.comment.visible.false: 비공개
 front.blog.article.comment.submit: 작성
-
+front.blog.article.comment.write.success: 댓글이 정상적으로 등록되었습니다.
+front.blog.article.comment.write.fail: 서버 오류로 인한 댓글 작성 실패
 front.blog.article.flash.write.fail: 서버 오류로 인한 게시글 작성 실패
 front.blog.article.flash.write.success: 게시글이 등록 되었습니다.
 front.blog.article.flash.invisible: 해당 게시글은 열람 할 수 없습니다.
