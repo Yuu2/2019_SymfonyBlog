@@ -69,13 +69,39 @@
             </div>
           </div>
           
-          <!-- 블로그 댓글 폼 -->
-          <div class="form-comments">
+          <!-- 블로그 신규 댓글 폼 -->
+          <div class="form-comments" id="new">
             <div class="form-header">
               <span><i class="fa fa-chevron-down"></i></span>
             </div>
             <div class="form-box">
               {{ render(path('blog_comment_new', {'article': Article.id})) }}
+            </div>
+          </div>
+
+          <!-- 블로그 삭제 댓글 폼 -->
+          <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title">해당 댓글을 삭제하시겠습니까?</h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label class="col-form-label">패스워드</label>
+                      <input type="password" name="password" class="form-control" />
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                  <button type="button" class="btn btn-primary btn-sm">확인</button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -97,12 +123,33 @@
                   <h4 class="comment-author">{{ ArticleComment.username ? ArticleComment.username : 'front.blog.article.comment.unknown'|trans }}</h4>
                   <p>{{ ArticleComment.content }}</p>
                   <span><small>{{ ArticleComment.createdAt|date("Y.m.d h:i:s") }}</small></span>
-                  {% if ArticleComment.user and app.user and 
-                        ArticleComment.user.id == app.user.id %}
+                  <!-- 멤버가 읽는 자기 자신의 댓글 -->
+                  {% if app.user.id is defined and ArticleComment.user is not null and
+                        app.user.id == ArticleComment.user.id %}
+                    <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                     <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
                     <a href="{{ path('blog_comment_delete', {'id': ArticleComment.id }) }}"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+                  
+                  <!-- 멤버가 읽는 멤버의 댓글 -->
+                  {% elseif app.user.id is defined and ArticleComment.user is not null and 
+                            app.user.id != ArticleComment.user.id %}
+                    <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                  
+                  <!-- 멤버가 읽는 익명의 댓글 -->
+                  {% elseif app.user.id is defined and ArticleComment.user is null %}
+                    <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                    <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+                    <a href="#" data-toggle="modal" data-target="#delete"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+                  
+                  <!-- 익명이 읽는 멤버의 댓글 -->
+                  {% elseif app.user.id is not defined and ArticleComment.user is not null %}
+                    <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+
+                  <!-- 익명이 읽는 익명의 댓글-->
                   {% else %}
                     <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                    <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+                    <a href="#" data-toggle="modal" data-target="#delete"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
                   {% endif %}
                 </div>
 
@@ -120,12 +167,34 @@
                     <h4 class="comment-author">{{ ArticleComment.username ? ArticleComment.username : 'front.blog.article.comment.unknown'|trans }}</h4>
                     <p>{{ Recomment.content}}</p>
                     <span><small>{{ Recomment.createdAt|date("Y.m.d h:i:s") }}</small></span>
-                    {% if ArticleComment.user and app.user and
-                          ArticleComment.user.id == app.user.id %}
+                    
+                    <!-- 멤버가 읽는 자기 자신의 댓글 -->
+                    {% if app.user.id is defined and Recomment.user is not null and
+                          app.user.id == Recomment.user.id %}
+                      <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                       <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
                       <a href="{{ path('blog_comment_delete', {'id': Recomment.id }) }}"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+                    
+                    <!-- 멤버가 읽는 멤버의 댓글 -->
+                    {% elseif app.user.id is defined and Recomment.user is not null and 
+                              app.user.id != Recomment.user.id %}
+                      <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                    
+                    <!-- 멤버가 읽는 익명의 댓글 -->
+                    {% elseif app.user.id is defined and Recomment.user is null %}
+                      <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                      <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+                      <a href="#" data-toggle="modal" data-target="#delete"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+
+                    <!-- 익명이 읽는 멤버의 댓글 -->
+                    {% elseif app.user.id is not defined and Recomment.user is not null %}
+                      <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+
+                    <!-- 익명이 읽는 익명의 댓글-->
                     {% else %}
                       <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                      <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+                      <a href="#" data-toggle="modal" data-target="#delete"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
                     {% endif %}
                   </div>
                 </li>

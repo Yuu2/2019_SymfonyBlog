@@ -42,19 +42,19 @@ security:
             
     access_control:
       # 로그인
-      - { path: /signin,              roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: /signin,               roles: IS_AUTHENTICATED_ANONYMOUSLY }
       # 가입하기
-      - { path: /signup/form,         roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: /signup/form,          roles: IS_AUTHENTICATED_ANONYMOUSLY }
       # 이메일 인증
-      - { path: /signup/verify_email, roles: IS_AUTHENTICATED_FULLY }
+      - { path: /signup/verify_email,  roles: IS_AUTHENTICATED_FULLY }
       # 로그아웃
-      - { path: /signout,             roles: IS_AUTHENTICATED_FULLY }
+      - { path: /signout,              roles: IS_AUTHENTICATED_FULLY }
       # 관리자
-      - { path: ^/admin,              roles: ROLE_ADMIN }
+      - { path: ^/admin,               roles: ROLE_ADMIN }
       # 블로그
-      - { path:  /blog/new,           roles: ROLE_ADMIN }
-      - { path: ^/blog/edit,          roles: ROLE_ADMIN }
-      - { path: ^/blog/delete,        roles: ROLE_ADMIN }
+      - { path: /blog/article/new,     roles: ROLE_ADMIN }
+      - { path: ^/blog/article/edit,   roles: ROLE_ADMIN }
+      - { path: ^/blog/article/delete, roles: ROLE_ADMIN }
       # elfinder
-      - { path: ^/efconnect,          roles: ROLE_ADMIN }
-      - { path: ^/elfinder,           roles: ROLE_ADMIN }
+      - { path: ^/efconnect,           roles: ROLE_ADMIN }
+      - { path: ^/elfinder,            roles: ROLE_ADMIN }

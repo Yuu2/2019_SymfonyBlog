@@ -235,7 +235,6 @@ class BlogService {
 
       return true;
     } catch (\Exception $e) {
-      dump($e);
       return false;
     }
   }

@@ -22,10 +22,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author yuu2dev
- * @todo 블로그 게시물 검색
- * updated 2020.08.01
+ * @todo 댓글 닉네임 세션처리
+ * updated 2020.08.04
  */
 class BlogController extends AbstractController {
+
+  /**
+   * @access public
+   */
+  public function __construct() {}
 
   /**
    * 블로그 게시물 일람
@@ -80,7 +85,6 @@ class BlogController extends AbstractController {
    * @todo CKEditor 이미지 업로드 기능
    * @Route("/blog/article/new", name="blog_article_new", methods={"GET", "POST"})
    * @Route("/blog/article/edit/{id}", name="blog_article_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
-   * @IsGranted("ROLE_ADMIN")
    * @Template("front/blog/form.twig")
    * @access public
    * @param Article $article
@@ -125,7 +129,6 @@ class BlogController extends AbstractController {
   /**
    * 블로그 게시물 삭제
    * @Route("/blog/article/delete/{id}", name="blog_article_delete", methods={"GET"}, requirements={"id":"\d+"})
-   * @IsGranted("ROLE_ADMIN")
    * @access public
    * @param Article $article
    * @param BlogService $blogService
@@ -191,8 +194,9 @@ class BlogController extends AbstractController {
   }
 
   /**
+   * @todo
    * 블로그 댓글 삭제
-   * @Route("/blog/comment/delete", name="blog_comment_delete", methods={"GET"})
+   * @Route("/blog/article/comment/delete/{id}", name="blog_comment_delete", methods={"GET", "DELETE"}, requirements={"id":"\d+"})
    * @access public
    * @param ArticleComment $comment
    * @param BlogService $blogService
@@ -200,8 +204,9 @@ class BlogController extends AbstractController {
    */
   public function comment_delete(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
     
-    $eventDispatcher->dispatch(RedirectEvent::REDIRECT_IF_NOT_AUTH, new RedirectEvent);
-    
-    dump($request->headers->get('referer'));
+
+    $redirect = $request->headers->get('referer');
+
+    $this->redirectToRoute($redirect);
   }
 }

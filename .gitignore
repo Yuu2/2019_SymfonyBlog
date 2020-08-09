@@ -1,11 +1,13 @@
 .env
 
 # Nginx
-nginx/logs/
+nginx/logs
 
 # db
+!db/data/.gitignore
 db/data/
 
 # Dummy
 .DS_Store
 /dummy
+

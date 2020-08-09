@@ -18,6 +18,7 @@ class RedirectEvent extends Event {
   public const REDIRECT_IF_NOT_ADMIN         = "redirect.if.not.role_admin";
   
   /**
+   * 이벤트에서 리다이렉트 될 경로
    * @var string
    */
   private $redirect_path = 'blog_article_index';

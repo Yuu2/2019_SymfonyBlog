@@ -94,7 +94,7 @@ class EmailVerifier {
   public function setVerifyEmail($to, $subject): TemplatedEmail {
 
     return (new TemplatedEmail())
-      ->from(new Address($_SERVER['APP_HOST_EMAIL'], $_SERVER['APP_HOST']))
+      ->from(new Address($_SERVER['OWNER_EMAIL'], $_SERVER['OWNER']))
       ->to($to)
       ->subject($subject)
       ->htmlTemplate('email/signup.twig');

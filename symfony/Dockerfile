@@ -1,9 +1,12 @@
 FROM php:fpm-stretch
 
-RUN apt-get update && apt-get install -y
+ARG APP
+ARG APP_VIRTUAL
+
+ENV APP ${APP}
+ENV APP_VIRTUAL ${APP_VIRTUAL}
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git \
         vim \
         libicu-dev \
         zlib1g-dev \
@@ -15,10 +18,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         mysqli \
         pdo pdo_mysql
 
-RUN  curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer
 
 EXPOSE 9000
 
-COPY docker-entrypoint.sh ${PROJECT_DIR}/
+WORKDIR ${APP_VIRTUAL}
 
-ENTRYPOINT [ "sh", "-c", "${PROJECT_DIR}/docker-entrypoint.sh" ]
+COPY ${APP}/docker-entrypoint.sh .
+
+ENTRYPOINT [ "sh", "-c", "./docker-entrypoint.sh" ]

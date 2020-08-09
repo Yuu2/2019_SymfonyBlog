@@ -1,26 +1,29 @@
-# 가상 호스트의 프로젝트 경로
-PROJECT_DIR=/var/www/html
+#  
+# @author yuu2dev updated 2020.08.06
+# @description 기본 전역변수는 프로젝트 소스의 경로 _VIRTUAL은 도커컨테이너 안의 경로를 뜻한다.
+#
 
-# 프로젝트 환경 플래그 [dev]|[prod]
+# 슈퍼 관리자 정보
+OWNER=yuu2dev
+OWNER_EMAIL=yuu2dev@gmail.com
+
+# 어플리케이션
+APP=/symfony
+APP_VIRTUAL=/var/www/html/portfolio-blog
 APP_ENV=dev
-
-APP_ADMIN_NAME=
-APP_ADMIN_EMAIL=
-
-# 프로젝트의 암호
-APP_SECRET=
-
-# Database
-DATABASE_NAME=
-DATABASE_PASSWORD=
-DATABASE_ROOT_PASSWORD=
-
-# Nginx
-SERVER_DOMAIN=
-SERVER_DOMAIN_WWW=
-
-MAILER_URL=
-MAILER_DSN=
+APP_SECRET=6411387e3657c6172126b2a08a742e26
 
 # Google Recaptcha
-RECAPTCHA_SECRET=
+RECAPTCHA_SECRET=6LeFy6gUAAAAABbhEtoEnMqwCxDVlDFHLaSplCMK
+
+# Database
+DATABASE_NAME=portfolioblog_db
+DATABASE_USER=yuu2dev
+DATABASE_PASSWORD=yuu2dev
+DATABASE_ROOT_PASSWORD=root
+
+# NGINX
+SERVER_DOMAIN=localhost
+
+MAILER_URL=gmail://yuu2dev@gmail.com:1089dkdlG@default
+MAILER_DSN=gmail://yuu2dev@gmail.com:1089dkdlG@default

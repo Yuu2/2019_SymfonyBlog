@@ -4,15 +4,11 @@
 ![](./screenshot/homepage.png) <br>
 
 ## Installation
-<small>1. env 파일의 전역변수 값 입력 </small><br>
+```sh
+# 존재하지 않는 폴더 생성하기
+mkdir 프로젝트 경로 /db/data
+mkdir 
 
-<small> 2. docker-compose up</small>
-
-## Test Accounts
 ```
-ID: admin@yuu2dev.me
-PW: admin
 
-ID: user@yuu2dev.me
-PW: user
-```
+
