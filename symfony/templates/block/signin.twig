@@ -1,3 +1,7 @@
+{% if is_granted('ROLE_ADMIN') %}
+  <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('admin_home') }}" style="color: #f9320c;">{{ 'front.admin.home.alias'|trans }}</a></li>
+{% endif %}
+
 {% if app.user %}
   <li class="nav-item"><a class="nav-link js-scroll" href="#"><small>{{ app.user.email }}</small></a></li>
   <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('user_signout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>

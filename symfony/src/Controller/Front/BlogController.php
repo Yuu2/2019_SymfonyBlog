@@ -113,9 +113,9 @@ class BlogController extends AbstractController {
         $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS);
         return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
 
-      } else {
-        $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_FAIL);
-      }
+        } else {
+            $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_FAIL);
+        }
     }
 
     return [

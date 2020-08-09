@@ -23,7 +23,7 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bi
 EXPOSE 9000
 
 WORKDIR ${APP_VIRTUAL}
-
-COPY ${APP}/docker-entrypoint.sh .
+COPY docker-entrypoint.sh ./
+COPY composer.* ./
 
 ENTRYPOINT [ "sh", "-c", "./docker-entrypoint.sh" ]

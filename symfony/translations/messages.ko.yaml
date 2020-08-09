@@ -6,10 +6,10 @@ admin.github: https://github.com/yuu2dev/portfolio-blog
 # 공통
 common.data.null: 데이터가 존재하지 않습니다.
 
+front: 포트폴리오 블로그
+
 # 홈
-front.home: 포트폴리오 블로그
-front.home.alias: 메인
-front.home.blog: 블로그
+front.home: 홈
 front.home.intro: 포트폴리오 블로그에 오신 것을 환영합니다.
 front.home.about: 소개
 front.home.about.skill: 경험한 스킬
@@ -20,6 +20,8 @@ front.home.work.join_years: 경력
 front.home.work.join_projects: 참여 프로젝트
 front.home.portfolio: 포트폴리오
 front.home.contact: 질문하기
+
+front.admin.home.alias: 관리자
 
 # 블로그
 front.blog: 포트폴리오 블로그
@@ -58,6 +60,10 @@ front.blog.article.comment.write.fail: 서버 오류로 인한 댓글 작성 실
 front.blog.article.flash.write.fail: 서버 오류로 인한 게시글 작성 실패
 front.blog.article.flash.write.success: 게시글이 등록 되었습니다.
 front.blog.article.flash.invisible: 해당 게시글은 열람 할 수 없습니다.
+front.blog.article.tooltip.btn_new_article: 게시글 작성
+front.blog.article.tooltip.btn_edit_article: 게시글 수정
+front.blog.article.tooltip.btn_del_article: 게시글 삭제
+
 # 유저
 front.user.signin: 로그인
 front.user.signin.email: 이메일
@@ -83,8 +89,11 @@ front.user.signup.password.confirm.help: 한번 더 패스워드를 입력 합�
 front.user.signup.password.invalid: 패스워드가 일치하지 않습니다. 다시 입력 해주세요.
 front.user.signup.submit: 가입하기
 front.user.signup.sender: 포트폴리오 블로그 가입 인증 메일입니다.
-
 front.user.signup.flash.recaptcha.fail: G-recaptcha 인증 실패 입니다.
 front.user.signup.flash.email.invalid: 이메일 인증 기한이 만료되었거나 유효하지 않은 접근 입니다.
 front.user.signup.flash.email.verified: 이메일이 인증 되었습니다.
 front.user.signup.flash.email.confirm: 인증 메일을 발신 했습니다. 이메일에 첨부된 링크를 클릭하면 등록이 완료 됩니다.
+
+# 시큐리티 (프레임워크 종속 문자열)
+"Invalid credentials.": 로그인 실패
+"Bad credentials": 비정상적인 접근

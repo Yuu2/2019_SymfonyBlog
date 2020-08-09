@@ -54,6 +54,7 @@ class ArticleRepository extends ServiceEntityRepository {
         $query
           ->innerJoin('a.category', 'c')
           ->andWhere('c.id = :category_id')
+          ->andWhere('a.visible = :visible')
           ->andWhere('c.visible = :visible')
           ->setParameter('category_id', $category)
           ->setParameter('visible', true);
@@ -95,10 +96,11 @@ class ArticleRepository extends ServiceEntityRepository {
    * @return
    */
   public function findArticleById(int $id) {
+    
     return $this->createQueryBuilder('a')
       ->select('a')
       ->innerJoin('a.category', 'ct')
-      ->innerJoin('a.comments', 'cm')
+      ->leftJoin('a.comments', 'cm')
       ->andWhere('a.id = :id')
       ->andWhere('a.visible  = :visible')
       ->andWhere('ct.visible = :visible')

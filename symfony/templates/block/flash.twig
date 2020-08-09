@@ -1,5 +1,5 @@
 {% block flashbag %}
-<div id="flashbox">
+<div id="flashbox" style="margin: 5px;">
   {% for type, messages in app.session.flashbag.all() %}
       {% for message in messages %}
           <div class="alert alert-{{ type|default('danger') }} alert-dismissible" role="alert">
