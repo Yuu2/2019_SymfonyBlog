@@ -1,0 +1,62 @@
+<div class="form-comments" id="new">
+  <div class="form-header">
+    <span><i class="fa fa-chevron-down"></i></span>
+  </div>
+  <div class="form-box">
+
+    {{ form_start(form, {'attr': {'id': 'form-new-comment', 'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form._token) }}
+    {{ form_widget(form.article, {'value': app.request.get('article')}) }}
+
+      <div class="top-layer">
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <!-- 유저명 -->
+          <div class="input-box flex">
+            {% if app.user.thumbnail %}
+              <img class="thumb "src="{{ app.user.thumbnail }}" alt="#" />
+            {% else %}
+              <img class="thumb "src="{{ asset('style/img/user_thumb.png') }}" alt="#" />
+            {% endif %}
+            <span>{{ app.user.username }}</span>
+          </div>
+          
+        {% else %}
+          <!-- 유저명 -->
+          <div class="input-box">
+            {{ form_widget(form.username) }}
+            <small>{{ form_help(form.username)}}</small>
+            <small>{{ form_errors(form.username)}}</small>
+          </div>
+          <!-- 패스워드 -->
+          <div class="input-box">
+            {{ form_widget(form.password) }}
+            <small>{{ form_help(form.password)}}</small>
+            <small>{{ form_errors(form.password)}}</small>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="bottom-layer">
+        <!-- 내용 -->
+        <div class="input-box">
+          {{ form_widget(form.content) }}
+          <small>{{ form_help(form.content)}}</small>
+          <small>{{ form_errors(form.content)}}</small>
+        </div>
+        <!-- 공개여부 -->
+        <div class="input-box">
+          {{ form_widget(form.visible) }}
+          <small>{{ form_help(form.visible)}}</small>
+          <small>{{ form_errors(form.visible)}}</small>
+        </div>
+
+        <!-- 작성 -->
+        <div class="input-box">
+          <button type="submit" class="btn btn-primary">{{ 'front.blog.article.comment.submit'|trans }}</button>
+        </div>
+      </div>
+
+    {{ form_end(form, {'render_rest': false}) }}
+  </div>
+</div>

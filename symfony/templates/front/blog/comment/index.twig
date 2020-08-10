@@ -1,0 +1,97 @@
+<div id="comment" class="box-comments">
+  <ul class="list-comments">
+    {% for ArticleComment in Article.comments %}
+    <li class="comment-parent">
+      
+      <div class="comment-avatar">
+        {% if ArticleComment.user and
+              ArticleComment.user.thumbnail %}
+          <img class="thumb "src="{{ ArticleComment.user.thumbnail }}" alt="#" />
+        {% else %}
+          <img class="thumb "src="{{ asset('style/img/user_thumb.png') }}" alt="#" />
+        {% endif %}
+      </div>
+      <div class="comment-details">
+        <h4 class="comment-author">{{ ArticleComment.username ? ArticleComment.username : 'front.blog.article.comment.unknown'|trans }}</h4>
+        <p>{{ ArticleComment.content }}</p>
+        <span><small>{{ ArticleComment.createdAt|date("Y.m.d h:i:s") }}</small></span>
+        <!-- 멤버가 읽는 자기 자신의 댓글 -->
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and ArticleComment.user is not null and
+              app.user.id == ArticleComment.user.id %}
+          <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+          <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+          <a href="{{ path('blog_comment_delete', {'id': ArticleComment.id }) }}"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+        
+        <!-- 멤버가 읽는 멤버의 댓글 -->
+        {% elseif is_granted('IS_AUTHENTICATED_FULLY') and ArticleComment.user is not null and 
+                  app.user.id != ArticleComment.user.id %}
+          <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+        
+        <!-- 멤버가 읽는 익명의 댓글 -->
+        {% elseif is_granted('IS_AUTHENTICATED_FULLY') and ArticleComment.user is null %}
+          <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+          <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+          <a href="#" data-toggle="modal" data-target="#delete"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+        
+        <!-- 익명이 읽는 멤버의 댓글 -->
+        {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUS') and ArticleComment.user is not null %}
+          <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+
+        <!-- 익명이 읽는 익명의 댓글-->
+        {% else %}
+          <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+          <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+          <a class="modal-del-comment" href="#" data-action="{{ path('blog_comment_del', { id: ArticleComment.id })}}" data-comment="{{ ArticleComment.id }}" data-toggle="modal" data-target="#modal-del-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+        {% endif %}
+      </div>
+
+      {% for Recomment in ArticleComment.Recomment %}
+      <li class="comment-children">
+        <div class="comment-avatar">
+          {% if Recomment.user and
+                Recomment.user.thumbnail %}
+            <img class="thumb "src="{{ Recomment.user.thumbnail }}" alt="#" />
+          {% else %}
+            <img class="thumb "src="{{ asset('style/img/user_thumb.png') }}" alt="#" />
+          {% endif %}
+        </div>
+        <div class="comment-details">
+          <h4 class="comment-author">{{ ArticleComment.username ? ArticleComment.username : 'front.blog.article.comment.unknown'|trans }}</h4>
+          <p>{{ Recomment.content}}</p>
+          <span><small>{{ Recomment.createdAt|date("Y.m.d h:i:s") }}</small></span>
+          
+          <!-- 멤버가 읽는 자기 자신의 댓글 -->
+          {% if app.user.id is defined and Recomment.user is not null and
+                app.user.id == Recomment.user.id %}
+            <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+            <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+            <a href="{{ path('blog_comment_delete', {'id': Recomment.id }) }}"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+          
+          <!-- 멤버가 읽는 멤버의 댓글 -->
+          {% elseif app.user.id is defined and Recomment.user is not null and 
+                    app.user.id != Recomment.user.id %}
+            <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+          
+          <!-- 멤버가 읽는 익명의 댓글 -->
+          {% elseif app.user.id is defined and Recomment.user is null %}
+            <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+            <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+            <a href="#" data-toggle="modal" data-target="#delete"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+
+          <!-- 익명이 읽는 멤버의 댓글 -->
+          {% elseif app.user.id is not defined and Recomment.user is not null %}
+            <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+
+          <!-- 익명이 읽는 익명의 댓글-->
+          {% else %}
+            <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+            <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+            <a class="modal-del-comment" href="#" data-action="{{ path('blog_comment_del', { id: Recomment.id })}}" data-toggle="modal" data-target="#modal-del-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>

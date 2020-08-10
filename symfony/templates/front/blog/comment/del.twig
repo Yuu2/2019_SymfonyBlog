@@ -1,0 +1,29 @@
+<div class="modal fade" id="modal-del-comment" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">{{ 'front.blog.article.comment.del.modal.title'|trans }}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form id="form-del-comment" method="post" novalidate>
+        <input type="hidden" name="_method" value="delete"/>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('article') }}" />
+        
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-form-label">{{ 'front.blog.article.comment.del.modal.form.password'|trans }}</label>
+            <input type="password" name="password" class="form-control" />
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">{{ 'front.blog.article.comment.del.modal.form.cacnel'|trans }}</button>
+          <button type="submit" class="btn btn-danger btn-sm">{{ 'front.blog.article.comment.del.modal.form.submit'|trans }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -22,8 +22,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author yuu2dev
- * @todo 댓글 닉네임 세션처리
- * updated 2020.08.04
+ * @todo 댓글 삭제
+ * updated 2020.08.11
  */
 class BlogController extends AbstractController {
 
@@ -108,14 +108,9 @@ class BlogController extends AbstractController {
       /** @var Article */
       $article = $form->getData();
           
-      if ($blogService->writeArticle($article, $hashtagForm)) {
-        
-        $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS);
-        return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
-
-        } else {
-            $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_FAIL);
-        }
+      $blogService->writeArticle($article, $hashtagForm) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_FAIL);
+      
+      return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
     }
 
     return [
@@ -128,7 +123,7 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 게시물 삭제
-   * @Route("/blog/article/delete/{id}", name="blog_article_delete", methods={"GET"}, requirements={"id":"\d+"})
+   * @Route("/blog/article/delete/{id}", name="blog_article_del", methods={"GET"}, requirements={"id":"\d+"})
    * @access public
    * @param Article $article
    * @param BlogService $blogService
@@ -136,7 +131,7 @@ class BlogController extends AbstractController {
    * @param Request $request
    * @return object
    */
-  public function article_delete(Article $article, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request): object {
+  public function article_del(Article $article, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request): object {
     
     $blogService->removeArticle($article);
 
@@ -146,13 +141,13 @@ class BlogController extends AbstractController {
   /**
    * 블로그 댓글 작성
    * @Route("/blog/comment/new", name="blog_comment_new", methods={"GET", "POST"})
-   * @Template("front/blog/comment.twig")
+   * @Template("front/blog/comment/new.twig")
    * @access public
    * @param int $article_id
    * @param BlogService $blogService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
-   * @return array|Response
+   * @return array|object
    */
   public function comment_new(BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
     
@@ -162,20 +157,16 @@ class BlogController extends AbstractController {
     
     if ($form->isSubmitted() && $form->isValid()) {
 
-      $response = new Response;
-
       $comment = $form->getData();
       $article = $form->get('article')->getData();
       $article = $blogService->findArticle($article);
       
-      if ($article) {
-        $comment->setArticle($article);
-        $blogService->writeComment($comment) ? $response->setStatusCode(Response::HTTP_OK) : $response->setStatusCode(Response::HTTP_FORBIDDEN);
-      } else {
-        $response->setStatusCode(Response::HTTP_NOT_FOUND);
-      } 
-      
-      return $response;
+      /**
+       * @todo 세션 플래시 메시지
+       */
+      $blogService->writeComment($comment->setArticle($article));
+
+      return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
     }
 
     return [
@@ -190,23 +181,26 @@ class BlogController extends AbstractController {
    */
   public function comment_edit(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
     $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('blog_comment_new'), 'method' => 'PUT']);
-    
   }
 
   /**
-   * @todo
    * 블로그 댓글 삭제
-   * @Route("/blog/article/comment/delete/{id}", name="blog_comment_delete", methods={"GET", "DELETE"}, requirements={"id":"\d+"})
+   * @Route("/blog/article/comment/delete/{id}", name="blog_comment_del", methods={"DELETE"}, requirements={"id":"\d+"})
    * @access public
    * @param ArticleComment $comment
    * @param BlogService $blogService
    * @param Request $request
    */
-  public function comment_delete(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
+  public function comment_del(?ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
     
-
-    $redirect = $request->headers->get('referer');
-
-    $this->redirectToRoute($redirect);
+   
+    /**
+     * @todo
+     * 댓글 삭제기능이나 실제 삭제는 하지 않고 삭제 일자만 수정하도록 해야한다.
+     * deleted_at 컬럼 추가하고 deleted_at 존재 할 경우 비공개 처리
+     * 만약 하위 댓글이 존재 할 경우 삭제된 댓글 입니다 이후 하위 댓글은 렌더링 할 것
+     */
+    dump($request);
+    exit;
   }
 }
