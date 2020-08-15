@@ -108,7 +108,7 @@ class BlogController extends AbstractController {
       /** @var Article */
       $article = $form->getData();
           
-      $blogService->writeArticle($article, $hashtagForm) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_FAIL);
+      $blogService->writeArticle($article, $hashtagForm) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_WRITE_FAILED);
       
       return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
     }
@@ -164,7 +164,7 @@ class BlogController extends AbstractController {
       /**
        * @todo 세션 플래시 메시지
        */
-      $blogService->writeComment($comment->setArticle($article));
+      $blogService->writeComment($comment->setArticle($article)) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED);
 
       return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
     }
@@ -175,12 +175,13 @@ class BlogController extends AbstractController {
   }
 
   /**
+   * @todo
    * 블로그 댓글 수정
    * @Route("/blog/comment/edit/{id}", name="blog_comment_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
    * @Template("front/blog/comment.twig")
    */
   public function comment_edit(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
-    $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('blog_comment_new'), 'method' => 'PUT']);
+    // $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('blog_comment_new'), 'method' => 'PUT']);
   }
 
   /**
@@ -189,18 +190,15 @@ class BlogController extends AbstractController {
    * @access public
    * @param ArticleComment $comment
    * @param BlogService $blogService
+   * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
    */
   public function comment_del(?ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
     
-   
-    /**
-     * @todo
-     * 댓글 삭제기능이나 실제 삭제는 하지 않고 삭제 일자만 수정하도록 해야한다.
-     * deleted_at 컬럼 추가하고 deleted_at 존재 할 경우 비공개 처리
-     * 만약 하위 댓글이 존재 할 경우 삭제된 댓글 입니다 이후 하위 댓글은 렌더링 할 것
-     */
-    dump($request);
-    exit;
+    $referer = $request->headers->get('referer');
+    
+    $blogService->removeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED);
+    
+    $this->redirect($referer);
   }
 }

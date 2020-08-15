@@ -80,6 +80,11 @@ class ArticleComment
      */
     private $updated_at;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deleted_at;
+
     public function __construct()
     {
         $this->recomment = new ArrayCollection();
@@ -248,6 +253,18 @@ class ArticleComment
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deleted_at;
+    }
+
+    public function setDeletedAt(?\DateTimeInterface $deleted_at): self
+    {
+        $this->deleted_at = $deleted_at;
 
         return $this;
     }

@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 /**
  * @author yuu2dev
- * updated 2020.08.01
+ * updated 2020.08.15
  */
 class BlogService {
   
@@ -249,6 +249,26 @@ class BlogService {
 
     $this->entityManager->remove($article);
     $this->entityManager->flush();
+  }
+
+  /**
+   * 블로그 댓글 삭제
+   * @access public
+   * @param ArticleComment $comment
+   * @return bool
+   */
+  public function removeComment(ArticleComment $comment): bool {
+
+    try {
+      
+      $comment->setDeletedAt(new \DateTime);
+      
+      $this->entityManager->persist($comment);
+      $this->entityManager->flush();
+      return true;
+    } catch (\Exception $e) {
+      return false;
+    }
   }
 
   /**
