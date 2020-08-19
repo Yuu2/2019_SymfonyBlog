@@ -1,0 +1,58 @@
+<!--
+
+  @author yuu2dev
+  updated 2020.08.17
+  댓글 작성 폼 블록. 재사용하기 위해서는 폼타입 필요
+
+-->
+
+<div class="form-comments">
+  <div class="form-header">
+    <span><i class="fa fa-chevron-down"></i></span>
+  </div>
+  <div class="form-box">
+    {{ form_start(CommentForm, {'attr': {'id': 'form-new-comment', 'novalidate': 'novalidate'}}) }}
+    
+    {{ form_widget(CommentForm._token) }}
+
+    <div class="top-layer">
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="input-box flex">
+          {% if app.user.thumbnail %}
+            <img class="thumb "src="{{ app.user.thumbnail }}" alt="#" />
+          {% else %}
+            <img class="thumb "src="{{ asset('style/img/user_thumb.png') }}" alt="#" />
+          {% endif %}
+          <span>{{ app.user.username }}</span>
+        </div>
+      {% else %}
+        <div class="input-box">
+          {{ form_widget(CommentForm.username) }}
+          <small>{{ form_help(CommentForm.username)}}</small>
+          <small>{{ form_errors(CommentForm.username)}}</small>
+        </div>
+        <div class="input-box">
+          {{ form_widget(CommentForm.password) }}
+          <small>{{ form_help(CommentForm.password)}}</small>
+          <small>{{ form_errors(CommentForm.password)}}</small>
+        </div>
+      {% endif %}
+    </div>
+    <div class="bottom-layer">
+      <div class="input-box">
+        {{ form_widget(CommentForm.content) }}
+        <small>{{ form_help(CommentForm.content)}}</small>
+        <small>{{ form_errors(CommentForm.content)}}</small>
+      </div>
+      <div class="input-box">
+        {{ form_widget(CommentForm.visible) }}
+        <small>{{ form_help(CommentForm.visible)}}</small>
+        <small>{{ form_errors(CommentForm.visible)}}</small>
+      </div>
+      <div class="input-box">
+        <button type="submit" class="btn btn-primary">{{ 'front.blog.article.comment.submit'|trans }}</button>
+      </div>
+    </div>
+    {{ form_end(CommentForm, {'render_rest': false}) }}
+  </div>
+</div>

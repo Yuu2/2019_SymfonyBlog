@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 /**
  * @author yuu2dev
- * updated 2020.08.15
+ * updated 2020.08.17
  */
 class BlogService {
   
@@ -67,6 +67,7 @@ class BlogService {
     $this->tagRepository = $tagRepository;
     $this->tokenStorage = $tokenStorage;
   }
+
   /**
    * 블로그 게시글 가져오기
    * @access public
@@ -252,26 +253,6 @@ class BlogService {
   }
 
   /**
-   * 블로그 댓글 삭제
-   * @access public
-   * @param ArticleComment $comment
-   * @return bool
-   */
-  public function removeComment(ArticleComment $comment): bool {
-
-    try {
-      
-      $comment->setDeletedAt(new \DateTime);
-      
-      $this->entityManager->persist($comment);
-      $this->entityManager->flush();
-      return true;
-    } catch (\Exception $e) {
-      return false;
-    }
-  }
-
-  /**
    * 블로그 태그 삭제
    * @access public
    * @param Tag $tag
@@ -281,6 +262,29 @@ class BlogService {
 
     $this->entityManager->remove($tag);
     $this->entityManager->flush();
+  }
+
+  /**
+   * 블로그 댓글 삭제
+   * @access public
+   * @param ArticleComment $comment
+   * @return bool
+   */
+  public function removeComment(ArticleComment $comment): bool {
+
+    try {
+      
+      // 답글이 없을 경우 비공개처리  
+      is_null($comment->getRecomment()) ? $comment->setVisible(false) : null;
+        
+      $comment->setDeletedAt(new \DateTime);
+  
+      $this->entityManager->persist($comment);
+      $this->entityManager->flush();
+      return true;
+    } catch (\Exception $e) {
+      return false;
+    }
   }
 
   /**

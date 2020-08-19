@@ -17,15 +17,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @author yuu2dev
- * updated 2020.08.01
+ * updated 2020.08.19
  */
-class CommentType extends AbstractType {
+class ArticleCommentVerifyType extends AbstractType {
   
   /**
-   * @var ParameterBagInterface $params
+   * @var ParameterBagInterface
    */
   private $params;
 
@@ -35,13 +36,20 @@ class CommentType extends AbstractType {
   private $translator;
 
   /**
+   * @var Security
+   */
+  private $security;
+
+  /**
    * @access public
    * @param ParameterBagInterface $params
    * @param TranslatorInterface $translator
+   * @param Security $security
    */
-  public function __construct(ParameterBagInterface $params, TranslatorInterface $translator) {
+  public function __construct(ParameterBagInterface $params, TranslatorInterface $translator, Security $security) {
     $this->params = $params;
     $this->translator = $translator;
+    $this->security = $security;
   }
 
   /**
@@ -56,59 +64,27 @@ class CommentType extends AbstractType {
     $translator = $this->translator;
 
     $builder
-      ->add('article', HiddenType::class, [
-        'constraints' => $this->getArticleConstraints(),
-        'required' => true,
-        'mapped' => false,
-      ]) 
-      // 유저명
-      ->add('username', TextType::class, [
-        'constraints' => $this->getUsernameConstraints(),
-        'required' => false,
-        'attr' => [
-          'placeholder' => $translator->trans('front.blog.article.comment.username'),
-        ]
-      ])
-      // 비밀번호
-      ->add('password', PasswordType::class, [
-        'constraints' => $this->getPasswordConstraints(),
-        'required' => true,
-        'attr' => [
-          'placeholder' => $translator->trans('front.blog.article.comment.password'),
-        ]
-      ])
-      // 공개여부
-      ->add('visible', ChoiceType::class, [
-        'choices' => [
-          $translator->trans('front.blog.article.comment.visible.true')  => true,
-          $translator->trans('front.blog.article.comment.visible.false') => false
-        ],
-        'constraints' => $this->getVisibleConstraints(),
-        'required' => true
-      ])
-      // 내용
-      ->add('content', TextareaType::class, [ 
-        'label' => $translator->trans('front.blog.article.comment.content'),
-        'constraints' => $this->getContentConstraints(),
-        'required' => true
-      ])
+    // 패스워드
+    ->add('password', PasswordType::class, [
+      'constraints' => $this->getPasswordConstraints(),
+      'required' => true,
+      'attr' => [
+        'placeholder' => $translator->trans('front.blog.article.comment.password'),
+      ]
+    ])
+    // 전송
+    ->add('submit', SubmitType::class, [
+      'label' => $translator->trans('front.blog.article.comment.verify.submit'),
+    ])
     ;
   }
+
   
-  private function getArticleConstraints() {
-    return;
-  }
-  private function getUsernameConstraints() {
-    return;
-  }
+  /**
+   * @access private
+   */
   private function getPasswordConstraints() {
-    return;
-  }
-  private function getVisibleConstraints() {
-    return;
-  }
-  private function getContentConstraints() {
-    return;
+    return null;
   }
 
   /**

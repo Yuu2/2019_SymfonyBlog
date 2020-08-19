@@ -1274,6 +1274,28 @@ footer .site a {
   }
 }
 
+/**
+ * 로딩 
+ */
+#loading {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #0078ff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+/** */
+
 .input-box {
   margin: 10px;
 }
@@ -1316,12 +1338,4 @@ footer .site a {
 .three {
   right: 15px;
   bottom: 180px;
-}
-
-/** 
- * 블로그 게시글 이미지 종횡비
- */
-.article-content input {
-  width: 100% !important;
-  height: 100% !important;
 }

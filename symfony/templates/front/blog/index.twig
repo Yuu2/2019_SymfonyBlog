@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
   <link rel="stylesheet" href="{{ asset('bundles/fosckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css') }}">
+  <link rel="stylesheet" href="{{ asset('style/css/blog/index.css') }}">
 {% endblock %}
 
 {% block nav %}
@@ -67,6 +68,7 @@
                 </div>
               </div>
             {% endfor %}
+
             {{ knp_pagination_render(Articles) }}
 
           {% endif %}
@@ -78,7 +80,7 @@
         {% include 'block/category.twig' %}
 
         <!-- 최근 작성한 게시물 -->
-        {% include 'block/recent_articles.twig'%}  
+        {% include 'block/recent_articles.twig' %}  
 
         <!-- 최근 추가된 태그 -->
         {% include 'block/recent_tags.twig'%}
@@ -90,7 +92,7 @@
 {% block rightside %}
   
   {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('blog_article_new') }}" class="btn-shortcut one" data-toggle="tooltip" data-placement="left" title="{{ 'front.blog.article.tooltip.btn_new_article'|trans }}"><i class="fa fa-edit" style="padding: 10px 0 0 4px;"></i></a>
+    <a href="{{ path('blog_article_new') }}" class="btn-shortcut one" data-toggle="tooltip" data-placement="left" title="{{ 'flash.front.blog.article.tooltip.btn.article.new'|trans }}"><i class="fa fa-edit" style="padding: 10px 0 0 4px;"></i></a>
   {% endif %}
 
 {% endblock %}

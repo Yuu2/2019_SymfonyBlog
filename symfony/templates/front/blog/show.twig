@@ -38,7 +38,7 @@
               {{ Article.content|raw }}
             </div>
 
-            <!-- 기타 (댓글 수, 태그 등) -->
+            <!-- 기타 -->
             <div class="post-meta">
               <ul>
                 <li>
@@ -46,12 +46,12 @@
                   <a href="#comment">{{ Comment_cnt }}</a>
                 </li>
                 {% if Article.tag is not empty %}
-                <li>
-                  <span class="ion-pricetag"></span>
-                  {% for Tag in Article.Tag %}
-                    <li><a href="{{ url('blog_article_index', { 'tag': Tag.name })}}">{{ Tag.name }}</a></li>
-                  {% endfor %}
-                </li>
+                  <li>
+                    <span class="ion-pricetag"></span>
+                    {% for Tag in Article.Tag %}
+                      <li><a href="{{ url('blog_article_index', { 'tag': Tag.name })}}">{{ Tag.name }}</a></li>
+                    {% endfor %}
+                  </li>
                 {% endif %}
                 <li>
                   <span class="ion-calendar"></span>
@@ -60,17 +60,15 @@
               </ul>
             </div>
           </div>
-          
-          <!-- 블로그 작성 댓글 폼 -->
-          {{ render(path('blog_comment_new', {'article': Article.id})) }}
-
-          <!-- 블로그 삭제 댓글 폼 -->
-          {% include 'front/blog/comment/del.twig' %}
+                    
+          <!-- 블로그 댓글 작성 폼 -->
+          {% include 'front/blog/comment/form_new.twig' %}
 
           <!-- 블로그 댓글 -->
           {% include 'front/blog/comment/index.twig' %}
-
+          
         </div>
+        
         <!-- 검색 -->
         {% include 'block/search.twig' %}
 
@@ -90,8 +88,8 @@
 {% block rightside %}
   
   {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('blog_article_del', { 'id': Article.id }) }}" class="btn-shortcut two" data-toggle="tooltip" data-placement="left" title="{{ 'front.blog.article.tooltip.btn_del_article'|trans }}"><i class="fa fa-trash"></i></a>
-    <a href="{{ path('blog_article_edit'  , { 'id': Article.id }) }}" class="btn-shortcut one" data-toggle="tooltip" data-placement="left" title="{{ 'front.blog.article.tooltip.btn_edit_article'|trans }}"><i class="fa fa-edit" style="padding: 10px 0 0 4px"></i></a>
+    <a href="{{ path('blog_article_del', { 'id': Article.id }) }}" class="btn-shortcut two" data-toggle="tooltip" data-placement="left" title="{{ 'flash.front.blog.article.tooltip.btn.article.del'|trans }}"><i class="fa fa-trash"></i></a>
+    <a href="{{ path('blog_article_edit'  , { 'id': Article.id }) }}" class="btn-shortcut one" data-toggle="tooltip" data-placement="left" title="{{ 'flash.front.blog.article.tooltip.btn.article.edit'|trans }}"><i class="fa fa-edit" style="padding: 10px 0 0 4px"></i></a>
   {% endif %}
 
 {% endblock %}

@@ -1,0 +1,9 @@
+
+{{ form_start(form, {'attr': {'display: flex;'}}) }}
+
+{{ form_widget(form.password, {'attr': {'margin: 2px;'}}) }}
+{{ form_errors(form.password) }}
+
+{{ form_row(form.submit, {'attr': {'margin: 2px;'}}) }}
+
+{{ form_end(form) }}

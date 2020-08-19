@@ -46,17 +46,18 @@ class FlashEventSubscriber implements EventSubscriberInterface {
     
     return array(
       
-      FlashEvent::SIGNUP_EMAIL_CONFIRM               => 'onSignUpConfirmEmail',
-      FlashEvent::SIGNUP_EMAIL_INVALID               => 'onSignUpInvalidEmail',
-      FlashEvent::SIGNUP_EMAIL_VERIFIED              => 'onSignUpVerifiedEmail',
-      FlashEvent::SIGNUP_RECAPTCHAR_FAILED           => 'onSignUpRecaptchaFailed',
-      FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS         => 'onBlogArticleWriteSuccess',
-      FlashEvent::BLOG_ARTICLE_WRITE_FAILED          => 'onBlogArticleWriteFailed',
-      FlashEvent::BLOG_ARTICLE_INVISIBLE             => 'onBlogArticleInvisible',
+      FlashEvent::SIGNUP_EMAIL_CONFIRM => 'onSignUpConfirmEmail',
+      FlashEvent::SIGNUP_EMAIL_INVALID => 'onSignUpInvalidEmail',
+      FlashEvent::SIGNUP_EMAIL_VERIFIED => 'onSignUpVerifiedEmail',
+      FlashEvent::SIGNUP_RECAPTCHAR_FAILED => 'onSignUpRecaptchaFailed',
+      FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS => 'onBlogArticleWriteSuccess',
+      FlashEvent::BLOG_ARTICLE_WRITE_FAILED => 'onBlogArticleWriteFailed',
+      FlashEvent::BLOG_ARTICLE_INVISIBLE => 'onBlogArticleInvisible',
       FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS => 'onBlogArticleCommentWriteSuccess',
-      FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED  => 'onBlogArticleCommentWriteFailed',
-      FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS   => 'onBlogArticleCommentDelSuccess',
-      FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED    => 'onBlogArticleCommentDelFailed',
+      FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED => 'onBlogArticleCommentWriteFailed',
+      FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS => 'onBlogArticleCommentDelSuccess',
+      FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED => 'onBlogArticleCommentDelFailed',
+      FlashEvent::BLOG_ARTICLE_COMMENT_DEL_PASSWORD_INVALID => 'onBlogArticleCommentDelPasswordInvalid',
     );
   }
 
@@ -144,7 +145,7 @@ class FlashEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onBlogArticleCommentDelSuccess(): void {  
-    $this->flashBag->add('success', $this->translator->trans(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED)); 
+    $this->flashBag->add('success', $this->translator->trans(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS)); 
   }
 
   /**
@@ -153,6 +154,15 @@ class FlashEventSubscriber implements EventSubscriberInterface {
    * @return void
    */
   public function onBlogArticleCommentDelFailed(): void {  
-    $this->flashBag->add('danger', $this->translator->trans(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS)); 
+    $this->flashBag->add('danger', $this->translator->trans(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED)); 
+  }
+
+  /**
+   * 게시글 댓글 부정확한 암호
+   * @access public
+   * @return void
+   */
+  public function onBlogArticleCommentDelPasswordInvalid(): void {  
+    $this->flashBag->add('danger', $this->translator->trans(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_PASSWORD_INVALID)); 
   }
 }

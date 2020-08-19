@@ -55,18 +55,24 @@ front.blog.article.comment.visible: 공개여부
 front.blog.article.comment.visible.true: 공개
 front.blog.article.comment.visible.false: 비공개
 front.blog.article.comment.submit: 작성
-front.blog.article.comment.del.modal.title: 해당 댓글을 삭제하시겠습니까?
-front.blog.article.comment.del.modal.form.password: 암호
-front.blog.article.comment.del.modal.form.cacnel: 취소
-front.blog.article.comment.del.modal.form.submit: 삭제
+front.blog.article.comment.verify.submit: 확인
+front.blog.article.comment.deleted: 삭제된 댓글 입니다.
+front.blog.article.comment.verify.modal.title.del: 해당 댓글을 삭제하시겠습니까?
+front.blog.article.comment.verify.modal.title.edit: 해당 댓글을 수정하시겠습니까?
+front.blog.article.comment.verify.modal.form.password: 패스워드
+front.blog.article.comment.verify.modal.form.cacnel: 취소
+front.blog.article.comment.verify.modal.form.submit: 확인
+
 flash.front.blog.article.write.success: 게시글이 등록 되었습니다.
 flash.front.blog.article.write.failed: 서버 오류로 인한 게시글 작성 실패
 flash.front.blog.article.comment.write.success: 댓글이 정상적으로 등록되었습니다.
 flash.front.blog.article.comment.write.failed: 서버 오류로 인한 댓글 작성 실패
+flash.front.blog.article.comment.del.success: 댓글이 정상적으로 삭제되었습니다.
+flash.front.blog.article.comment.del.failed: 서버 오류로 인한 댓글 삭제 실패
 flash.front.blog.article.invisible: 해당 게시글은 열람 할 수 없습니다.
-flash.front.blog.article.tooltip.btn_new_article: 게시글 작성
-flash.front.blog.article.tooltip.btn_edit_article: 게시글 수정
-flash.front.blog.article.tooltip.btn_del_article: 게시글 삭제
+flash.front.blog.article.tooltip.btn.article.new: 게시글 작성
+flash.front.blog.article.tooltip.btn.article.edit: 게시글 수정
+flash.front.blog.article.tooltip.btn.article.del: 게시글 삭제
 
 # 유저
 front.user.signin: 로그인

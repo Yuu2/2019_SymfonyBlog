@@ -5,12 +5,23 @@ $('.form-header').on('click', function(event) {
       formbox.css('display') === 'none' ? $(".form-box").slideDown() : $(".form-box").slideUp();
 });
 
-// 댓글 삭제 버튼 클릭시 모달 데이터 값 세팅
-$('.modal-del-comment').on('click', function(event) {
+// 삭제, 수정 버튼 클릭시 검증 폼 호출
+$('.modal-verify-comment').on('click', function(event) {
+  
+  $('#loading').show();
+
   var modal = $(this);
 
-  $('#form-del-comment').attr('action', modal.data('action'));
+  $.get(modal.data('action'))
+  .done(function(response) {
+    $('#form-verify-comment').append(response);
+  })
+  .fail(function(err) {
+    console.log(err);
+  })
+  .always(function() {
+    $('#loading').hide();
+  })
+  ;
 });
-
-
 

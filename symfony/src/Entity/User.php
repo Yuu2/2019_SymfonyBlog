@@ -27,7 +27,7 @@ class User implements UserInterface {
     /**
      * @Assert\Email(message="assert.user.email.incorrent")
      * @Assert\Length(max=255, maxMessage="assert.user.email.length.max")
-     * @Assert\NotBlank(message="assert.user.email.empty")
+     * @Assert\NotBlank(message="assert.user.email.blank")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
@@ -38,7 +38,7 @@ class User implements UserInterface {
     private $roles = [];
 
     /**
-     * @Assert\NotBlank(message="assert.user.password.empty")
+     * @Assert\NotBlank(message="assert.user.password.blank")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
@@ -46,7 +46,7 @@ class User implements UserInterface {
     /** 
      * @Assert\Regex(pattern="/^[\w]$/", match=false, message="assert.user.username.regex")
      * @Assert\Length(max=20, maxMessage="assert.user.username.length.max")
-     * @Assert\NotBlank(message="assert.user.username.empty")
+     * @Assert\NotBlank(message="assert.user.username.blank")
      * @ORM\Column(type = "string") 
      */
     private $username;
