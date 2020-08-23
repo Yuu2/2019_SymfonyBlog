@@ -67,7 +67,7 @@ class BlogController extends AbstractController {
    * @return array
    */
   public function article_show(?Article $article, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
-    
+
     if (!$article) {
       $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_INVISIBLE);
       $eventDispatcher->dispatch(RedirectEvent::REDIRECT, new RedirectEvent);
@@ -84,7 +84,7 @@ class BlogController extends AbstractController {
       $blogService->writeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED);
       return $this->redirect($request->getUri());
     }
-
+   
     return [
       'Article' => $article,
       'Articles_cnt' => $blogService->countArticles(),
@@ -163,57 +163,85 @@ class BlogController extends AbstractController {
 
   /**
    * 블로그 댓글 삭제
-   * @Route("/blog/article/comment/del/{id}", name="blog_comment_del", methods={"GET", "DELETE"}, requirements={"id":"\d+"})
+   * @Route("/blog/article/comment/del/{id}", name="blog_comment_del", methods={"DELETE"}, requirements={"id":"\d+"})
    * @access public
    * @param ArticleComment $comment
    * @param BlogService $blogService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
+   * @return JsonResposnse
    */
-  public function comment_del(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
+  public function comment_del(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request): JsonResponse {
       
-    $response = new Response;
+    $response = new JsonResponse;
+    $session = $request->getSession();
+    $isAnony = $session->get('comment') == $comment->getId();
+    $isMember = $this->getUser() == $comment->getUser();
 
-    /**
-     * @todo 익명 세션 검증
-     */
-    if ($this->getUser() == $comment->getUser()) {
-    
+    if ($isAnony || $isMember) {
+     
       $blogService->removeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED);
     }
 
-    return $this->redirectToRoute('blog_article_show', ['id' => $comment->getArticle()->getId()]);
+    $session->clear();
+    
+    return $response;
   }
 
   /**
-   * @todo
+   * @todo 세션 유효기한 / 커스텀 패스워드 유효성검사
    * 블로그 댓글 검증
    * @Route("/blog/article/comment/verify/{id}", name="blog_comment_verify", methods={"GET","POST"}, requirements={"id":"\d+"})
    * @param ArticleComment $comment
    * @param BlogService $blogService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
+   * @return JsonResponse
    */
   public function comment_verify(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
 
-    $response = new Response;
+    $branch = $request->query->get('branch');
+    
+    $response = new JsonResponse;
 
-    $form = $this->createForm(ArticleCommentVerifyType::class, new ArticleComment, ['method' => 'post']);
+    $form = $this->createForm(ArticleCommentVerifyType::class, $comment, ['method' => 'post', 'action' => $this->generateUrl('blog_comment_verify', ['id' => $comment->getId()]) . '?branch=' . $branch ]);
     $form->handleRequest($request);
-    
+  
     if ($form->isSubmitted() && $form->isValid()) {
-      $password = $request->request->get('password');
       
-      /**
-       * @todo 세션등록
-       */
-      // password_verify($password, $comment->getPassword()) ? $respose->setStatusCode(Response::HTTP_OK) : $response->setStatusCode(Response::HTTP_FORBIDDEN);
-    }
-    
-    $response->setContent(
-      $this->render('front/blog/comment/form_verify.twig', ['form' => $form->createView()])->getContent()
-    );
+      switch(mb_strtoupper($branch)) {
+        // 삭제
+        case 'DEL':
 
-    return $response;
+          $session = new Session;
+          $session->set('comment', $comment->getId());
+          
+          $data = [
+            'url' => $this->generateUrl('blog_comment_del', ['id' => $comment->getId()]),
+            'branch' => 'DEL'
+          ];
+          
+          $response->setStatusCode(Response::HTTP_FOUND);
+        break;
+        // 수정
+        case 'EDIT':
+          $session = new Session;
+          $session->set('comment', $comment->getId());
+          
+          $data = [
+            'url' => $this->generateUrl('blog_comment_edit', ['id' => $comment->getId()]),
+            'branch' => 'EDIT'
+          ];
+
+          $response->setStatusCode(Response::HTTP_FOUND);
+        break;
+        default:
+          $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+      }
+    } 
+
+    $data['form'] = $this->render('front/blog/comment/form_verify.twig', ['form' => $form->createView()])->getContent(); 
+
+    return $response->setData($data);
   }
 }

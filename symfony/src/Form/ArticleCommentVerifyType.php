@@ -66,11 +66,13 @@ class ArticleCommentVerifyType extends AbstractType {
     $builder
     // 패스워드
     ->add('password', PasswordType::class, [
-      'constraints' => $this->getPasswordConstraints(),
-      'required' => true,
       'attr' => [
         'placeholder' => $translator->trans('front.blog.article.comment.password'),
-      ]
+      ],
+      'constraints' => $this->getPasswordConstraints(),
+      'empty_data' => '',
+      'required' => true,
+      'mapped' => false
     ])
     // 전송
     ->add('submit', SubmitType::class, [
@@ -82,9 +84,14 @@ class ArticleCommentVerifyType extends AbstractType {
   
   /**
    * @access private
+   * @return array
    */
-  private function getPasswordConstraints() {
-    return null;
+  private function getPasswordConstraints(): array {
+    return [
+      new Assert\NotBlank([
+        'message' => 'assert.blog.article.comment.password.blank'
+      ]),
+    ];
   }
 
   /**

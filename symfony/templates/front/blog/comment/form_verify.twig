@@ -1,9 +1,10 @@
 
-{{ form_start(form, {'attr': {'display: flex;'}}) }}
-
-{{ form_widget(form.password, {'attr': {'margin: 2px;'}}) }}
-{{ form_errors(form.password) }}
-
-{{ form_row(form.submit, {'attr': {'margin: 2px;'}}) }}
-
+{{ form_start(form, {'attr': {'id': 'form-verify-comment', 'novalidate': 'novalidate', 'style': 'display: flex; justify-content: center; width: 100%;'}}) }}
+<div style="margin: 2px; width: 100%">
+  {{ form_widget(form.password) }}
+  {{ form_errors(form.password) }}
+</div>
+<div style="margin: 2px;">
+  {{ form_row(form.submit) }}
+</div>
 {{ form_end(form) }}

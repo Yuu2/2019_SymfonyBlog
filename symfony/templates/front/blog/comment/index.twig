@@ -1,7 +1,7 @@
 <div id="comment" class="box-comments">
   <ul class="list-comments">
     <!-- 댓글 -->
-    {% for ArticleComment in Article.comments %}     
+    {% for ArticleComment in Article.comments %}
       {% if ArticleComment.parent is null %} 
         <li class="comment-parent"> 
           <div class="comment-avatar">
@@ -31,7 +31,7 @@
               {% elseif is_granted('IS_AUTHENTICATED_FULLY') == true and ArticleComment.user is null %}
                 <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                 <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                <a href="#" class="modal-verify-comment" data-toggle="modal" data-action="{{ path('blog_comment_verify', { id: ArticleComment.id })}}" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+                <a href="#" class="link--verify-comment" data-toggle="modal" data-url="{{ path('blog_comment_verify', { id: ArticleComment.id })}}?branch=DEL" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
               <!-- 익명이 읽는 멤버의 댓글 -->
               {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and ArticleComment.user %}
                 <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
@@ -39,7 +39,7 @@
               {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and ArticleComment.user is null %}
                 <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                 <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                <a href="#" class="modal-verify-comment" data-toggle="modal" data-action="{{ path('blog_comment_verify', { id: ArticleComment.id })}}" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+                <a href="#" class="link-verify-comment" data-toggle="modal" data-url="{{ path('blog_comment_verify', { id: ArticleComment.id })}}?branch=DEL" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
               {% endif %}
             {% endif %}
           </div>
@@ -75,7 +75,7 @@
                   {% elseif is_granted('IS_AUTHENTICATED_FULLY') == true and Recomment.user is null %}
                     <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                     <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                    <a href="#" class="modal-verify-comment" data-toggle="modal" data-action="{{ path('blog_comment_verify', { id: Recomment.id })}}" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+                    <a href="#" class="link-verify-comment" data-toggle="modal" data-url="{{ path('blog_comment_verify', { id: Recomment.id })}}?branch=DEL" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
                   <!-- 익명이 읽는 멤버의 댓글 -->
                   {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and Recomment.user %}
                     <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
@@ -83,7 +83,7 @@
                   {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and Recomment.user is null %}
                     <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                     <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                    <a href="#" class="modal-verify-comment" data-toggle="modal" data-action="{{ path('blog_comment_verify', { id: Recomment.id })}}" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
+                    <a href="#" class="link-verify-comment" data-toggle="modal" data-url="{{ path('blog_comment_verify', { id: Recomment.id })}}?branch=DEL" data-target="#modal-verify-comment"><small>{{ 'front.blog.article.comment.delete'|trans }}</small></a>
                   {% endif %}
                 {% endif %}
               </div>
@@ -101,7 +101,7 @@
           <h6 class="modal-title">{{ 'front.blog.article.comment.verify.modal.title.del'|trans }}</h6>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
-        <div class="modal-body" id="form-verify-comment">
+        <div id="box-verify-comment" class="modal-body">
           <div id="loading"></div>
         </div>
       </div>

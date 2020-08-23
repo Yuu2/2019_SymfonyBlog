@@ -109,6 +109,7 @@ class ArticleType extends AbstractType {
 
   /**
    * @access private
+   * @return array
    */
   private function getTitleConstraints(): array {
     return [

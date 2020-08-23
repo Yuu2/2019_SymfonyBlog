@@ -50,7 +50,7 @@ class Article
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=ArticleComment::class, mappedBy="article", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ArticleComment::class, mappedBy="article", orphanRemoval=true, fetch="EXTRA_LAZY")
      */
     private $comments;
 
@@ -180,7 +180,7 @@ class Article
 
     public function getCategory(): ?Category
     {
-        return $this->category;
+      return $this->category->filter(function(Category $category) { return $category->getVisible() == true; });
     }
 
     public function setCategory(?Category $category): self
@@ -191,11 +191,12 @@ class Article
     }
 
     /**
+     * 비공개 게시글 제외
      * @return Collection|ArticleComment[]
      */
     public function getComments(): Collection
     {
-        return $this->comments;
+        return $this->comments->filter(function(ArticleComment $comment) { return $comment->getVisible() == true; });
     }
 
     public function addComment(ArticleComment $comment): self

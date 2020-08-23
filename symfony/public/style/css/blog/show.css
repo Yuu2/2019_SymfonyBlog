@@ -1,3 +1,11 @@
+/** 
+ * 블로그 게시글 이미지 종횡비
+ */
+ .article-content input {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .form-comments {
   padding: 0 !important; 
 }
@@ -30,4 +38,7 @@
   border-radius: 50%;
   width: 25px;
   margin: 0 5px 0 0;
+}
+.modal-body {
+  text-align: center;
 }

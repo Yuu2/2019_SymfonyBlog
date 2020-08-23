@@ -22,3 +22,5 @@ assert.blog.article.content.blank: 내용을 입력해 주세요.
 assert.blog.article.visible.blank: 공개여부가 설정되지 않았습니다.
 assert.blog.article.visible.type: 반드시 '{{ type }}'타입 이여야합니다.
 assert.blog.article.category.blank: 카테고리가 설정되지 않았습니다.
+assert.blog.article.comment.password.blank: 패스워드를 입력해 주세요.
+assert.blog.article.comment.password.invalid: 패스워드가 일치하지 않습니다.

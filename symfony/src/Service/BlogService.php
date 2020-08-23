@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 /**
  * @author yuu2dev
- * updated 2020.08.17
+ * updated 2020.08.21
  */
 class BlogService {
   
@@ -273,10 +273,10 @@ class BlogService {
   public function removeComment(ArticleComment $comment): bool {
 
     try {
-      
+
       // 답글이 없을 경우 비공개처리  
-      is_null($comment->getRecomment()) ? $comment->setVisible(false) : null;
-        
+      $comment->getRecomment()->isEmpty() ? $comment->setVisible(false) : null;
+      
       $comment->setDeletedAt(new \DateTime);
   
       $this->entityManager->persist($comment);

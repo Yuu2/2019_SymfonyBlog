@@ -99,12 +99,9 @@ class ArticleRepository extends ServiceEntityRepository {
     
     return $this->createQueryBuilder('a')
       ->select('a')
-      ->innerJoin('a.category', 'ct')
-      ->innerJoin('a.comments', 'cm')
-      ->andWhere('a.id = :a_id')
+      ->where('a.id = :id')
       ->andWhere('a.visible  = :visible')
-      ->andWhere('ct.visible = :visible')
-      ->setParameter('a_id', $id)
+      ->setParameter('id', $id)
       ->setParameter('visible', true)
       ->getQuery()
       ->getOneOrNullResult();

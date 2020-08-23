@@ -5,10 +5,10 @@
 
 ## Installation
 ```sh
-# 존재하지 않는 폴더 생성하기
-mkdir 프로젝트 경로 /db/data
-mkdir 
+mkdir 프로젝트/db/data
+mkdir 프로젝트/nginx/logs
 
+docker-compose up --build
 ```
 
 
