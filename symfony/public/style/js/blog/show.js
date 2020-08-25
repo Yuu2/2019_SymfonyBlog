@@ -81,6 +81,7 @@ $(document).on('submit', '#form-verify-comment', function(event) {
       modalReset();
     });
   }
+  
   // 댓글 삭제
   function commentDel(_url) {
     $.ajax({

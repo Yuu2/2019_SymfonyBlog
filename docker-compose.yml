@@ -24,6 +24,8 @@ services:
             - 443:443
         volumes:
             - ${CURRENT}${APP}:${APP_VIRTUAL}:cached
+            - ${CURRENT}${APP}/var
+            - ${CURRENT}${APP}/vendor
             - ${CURRENT}/nginx/sites/:/etc/nginx/sites-available
             - ${CURRENT}/nginx/logs:/var/log/nginx
         networks:
@@ -52,6 +54,8 @@ services:
 
         volumes:
             - ${CURRENT}${APP}:${APP_VIRTUAL}:cached
+            - ${CURRENT}${APP}/var
+            - ${CURRENT}${APP}/vendor
             - ${CURRENT}${APP}/php.ini:/usr/local/etc/php/php.ini
         networks:
             - web

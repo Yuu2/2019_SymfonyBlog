@@ -82,7 +82,8 @@ class BlogController extends AbstractController {
       $comment->setArticle($article);
       
       $blogService->writeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED);
-      return $this->redirect($request->getUri());
+      
+      return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
     }
    
     return [
@@ -154,16 +155,29 @@ class BlogController extends AbstractController {
   }
 
   /**
+   * @todo
+   * 블로그 댓글 작성
+   * @Route("/blog/comment/new", name="blog_comment_new", methods={"GET", "POST"})
+   * @access public
+   * @param BlogService $blogService
+   * @param EventDispatcherInterface $eventDispatcher
+   * @param Request $request
+   */
+  public function comment_new(BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {}
+
+  /**
    * 블로그 댓글 수정
    * @Route("/blog/comment/edit/{id}", name="blog_comment_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
+   * @access public
+   * @param BlogService $blogService
+   * @param EventDispatcherInterface $eventDispatcher
+   * @param Request $request
    */
-  public function comment_edit(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
-    // $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('blog_comment_new'), 'method' => 'PUT']);
-  }
+  public function comment_edit(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {}
 
   /**
    * 블로그 댓글 삭제
-   * @Route("/blog/article/comment/del/{id}", name="blog_comment_del", methods={"DELETE"}, requirements={"id":"\d+"})
+   * @Route("/blog/comment/del/{id}", name="blog_comment_del", methods={"GET","DELETE"}, requirements={"id":"\d+"})
    * @access public
    * @param ArticleComment $comment
    * @param BlogService $blogService
@@ -172,9 +186,10 @@ class BlogController extends AbstractController {
    * @return JsonResposnse
    */
   public function comment_del(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request): JsonResponse {
-      
+    
     $response = new JsonResponse;
     $session = $request->getSession();
+    
     $isAnony = $session->get('comment') == $comment->getId();
     $isMember = $this->getUser() == $comment->getUser();
 
@@ -183,9 +198,7 @@ class BlogController extends AbstractController {
       $blogService->removeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED);
     }
 
-    $session->clear();
-    
-    return $response;
+    return $request->isXmlHttpRequest() ? $response : $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
   }
 
   /**
@@ -203,18 +216,24 @@ class BlogController extends AbstractController {
     $branch = $request->query->get('branch');
     
     $response = new JsonResponse;
+    
+    $form = $this->createForm(ArticleCommentVerifyType::class, new ArticleComment, [
+      'method'  => 'post', 
+      'action'  => $this->generateUrl('blog_comment_verify', ['id' => $comment->getId()]) . '?branch=' . $branch,
+      'comment' => $comment      
+    ]);
 
-    $form = $this->createForm(ArticleCommentVerifyType::class, $comment, ['method' => 'post', 'action' => $this->generateUrl('blog_comment_verify', ['id' => $comment->getId()]) . '?branch=' . $branch ]);
     $form->handleRequest($request);
-  
+    
+    $session = $request->getSession();
+
     if ($form->isSubmitted() && $form->isValid()) {
       
       switch(mb_strtoupper($branch)) {
         // 삭제
         case 'DEL':
 
-          $session = new Session;
-          $session->set('comment', $comment->getId());
+          $session->set('comment_del', $comment->getId());
           
           $data = [
             'url' => $this->generateUrl('blog_comment_del', ['id' => $comment->getId()]),
@@ -225,8 +244,8 @@ class BlogController extends AbstractController {
         break;
         // 수정
         case 'EDIT':
-          $session = new Session;
-          $session->set('comment', $comment->getId());
+
+          $session->set('comment_edit', $comment->getId());
           
           $data = [
             'url' => $this->generateUrl('blog_comment_edit', ['id' => $comment->getId()]),
@@ -238,7 +257,9 @@ class BlogController extends AbstractController {
         default:
           $response->setStatusCode(Response::HTTP_BAD_REQUEST);
       }
-    } 
+    } else {
+      $session->clear();
+    }
 
     $data['form'] = $this->render('front/blog/comment/form_verify.twig', ['form' => $form->createView()])->getContent(); 
 

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ArticleComment;
+use App\Validator\Constraints\CommentPassword;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -63,13 +64,16 @@ class ArticleCommentVerifyType extends AbstractType {
     
     $translator = $this->translator;
 
+    /** @var ArticleComment */
+    $comment = $options['comment'];
+    
     $builder
     // 패스워드
     ->add('password', PasswordType::class, [
       'attr' => [
         'placeholder' => $translator->trans('front.blog.article.comment.password'),
       ],
-      'constraints' => $this->getPasswordConstraints(),
+      'constraints' => $this->getCommentPasswordConstraints($comment),
       'empty_data' => '',
       'required' => true,
       'mapped' => false
@@ -84,12 +88,17 @@ class ArticleCommentVerifyType extends AbstractType {
   
   /**
    * @access private
+   * @param ArticleComment $comment
    * @return array
    */
-  private function getPasswordConstraints(): array {
+  private function getCommentPasswordConstraints(ArticleComment $comment): array {
     return [
+      new CommentPassword([
+        'message' => $this->translator->trans('assert.blog.article.comment.password.invalid'),
+        'comment' => $comment
+      ]),
       new Assert\NotBlank([
-        'message' => 'assert.blog.article.comment.password.blank'
+        'message' => $this->translator->trans('assert.blog.article.comment.password.blank')
       ]),
     ];
   }
@@ -103,6 +112,7 @@ class ArticleCommentVerifyType extends AbstractType {
     $resolver->setDefaults([
       'csrf_protection' => true,
       'data_class' => ArticleComment::class,
+      'comment' => null
     ]);
   }
 }

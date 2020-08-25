@@ -12,6 +12,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -45,6 +46,7 @@ class BlogService {
    */
   private $tokenStorage;
 
+  
 
   /**
    * @access public
@@ -286,6 +288,18 @@ class BlogService {
       return false;
     }
   }
+
+  /**
+   * @todo 블로그 댓글 익명 검증
+   * @access public
+   */
+  public function verifyCommentAnonymous() {}
+
+  /**
+   * @todo 블로그 댓글 멤버 검증
+   * @access public
+   */
+  public function verfiyCommentMember() {}
 
   /**
    * 해시태그 문자열을 배열로

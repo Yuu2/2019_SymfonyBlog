@@ -180,7 +180,7 @@ class Article
 
     public function getCategory(): ?Category
     {
-      return $this->category->filter(function(Category $category) { return $category->getVisible() == true; });
+        return $this->category;
     }
 
     public function setCategory(?Category $category): self

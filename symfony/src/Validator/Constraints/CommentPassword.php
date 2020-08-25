@@ -2,8 +2,8 @@
 
 namespace App\Validator\Constraints;
 
+use App\Validator\Constraints\CommentPassword;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Annotation
@@ -11,26 +11,23 @@ use Symfony\Component\Translation\TranslatorInterface;
 class CommentPassword extends Constraint {
 
   /**
-   * @var Transtatlor
-   */
-  private $translator;
-
-  /**
    * @var string
    */
   public $message;
 
-  
+  /**
+   * @var ArticleComment
+   */
+  public $comment;
 
   /**
    * @access public
-   * @param TranslatorInterface $translator
+   * @param array
    */
-  public function __construct(TranslatorInterface $translator) {
-    $this->translator = $translator;
-    $this->message = $this->translator->trans('assert.blog.article.comment.password.invalid');
+  public function __construct(array $argument) {
+    parent::__construct();
+
+    $this->message = isset($argument['message']) ? $argument['message'] : null;
+    $this->comment = isset($argument['comment']) ? $argument['comment'] : null;
   }
-
-
-
 }
