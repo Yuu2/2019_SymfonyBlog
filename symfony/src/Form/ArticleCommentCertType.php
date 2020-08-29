@@ -22,9 +22,9 @@ use Symfony\Component\Security\Core\Security;
 
 /**
  * @author yuu2dev
- * updated 2020.08.19
+ * updated 2020.08.28
  */
-class ArticleCommentVerifyType extends AbstractType {
+class ArticleCommentCertType extends AbstractType {
   
   /**
    * @var ParameterBagInterface
@@ -61,9 +61,7 @@ class ArticleCommentVerifyType extends AbstractType {
    * @return void
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    
-    $translator = $this->translator;
-
+  
     /** @var ArticleComment */
     $comment = $options['comment'];
     
@@ -71,7 +69,7 @@ class ArticleCommentVerifyType extends AbstractType {
     // 패스워드
     ->add('password', PasswordType::class, [
       'attr' => [
-        'placeholder' => $translator->trans('front.blog.article.comment.password'),
+        'placeholder' => $this->translator->trans('front.blog.article.comment.password'),
       ],
       'constraints' => $this->getCommentPasswordConstraints($comment),
       'empty_data' => '',
@@ -80,9 +78,8 @@ class ArticleCommentVerifyType extends AbstractType {
     ])
     // 전송
     ->add('submit', SubmitType::class, [
-      'label' => $translator->trans('front.blog.article.comment.verify.submit'),
-    ])
-    ;
+      'label' => $this->translator->trans('front.blog.article.comment.verify.submit'),
+    ]);
   }
 
   
@@ -93,12 +90,12 @@ class ArticleCommentVerifyType extends AbstractType {
    */
   private function getCommentPasswordConstraints(ArticleComment $comment): array {
     return [
+      new Assert\NotBlank([
+        'message' => $this->translator->trans('assert.blog.article.comment.password.blank')
+      ]),
       new CommentPassword([
         'message' => $this->translator->trans('assert.blog.article.comment.password.invalid'),
         'comment' => $comment
-      ]),
-      new Assert\NotBlank([
-        'message' => $this->translator->trans('assert.blog.article.comment.password.blank')
       ]),
     ];
   }

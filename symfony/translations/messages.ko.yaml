@@ -50,18 +50,17 @@ front.blog.article.comment.content: 내용
 front.blog.article.comment.write: 댓글쓰기
 front.blog.article.comment.reply: 답글
 front.blog.article.comment.edit: 수정
-front.blog.article.comment.delete: 삭제
+front.blog.article.comment.del: 삭제
 front.blog.article.comment.visible: 공개여부
 front.blog.article.comment.visible.true: 공개
 front.blog.article.comment.visible.false: 비공개
-front.blog.article.comment.submit: 작성
-front.blog.article.comment.verify.submit: 확인
+front.blog.article.comment.new.submit: 작성
+front.blog.article.comment.edit.submit: 수정
+front.blog.article.comment.cert.submit: 확인
 front.blog.article.comment.deleted: 삭제된 댓글 입니다.
-front.blog.article.comment.verify.modal.title.del: 해당 댓글을 삭제하시겠습니까?
-front.blog.article.comment.verify.modal.title.edit: 해당 댓글을 수정하시겠습니까?
-front.blog.article.comment.verify.modal.form.password: 패스워드
-front.blog.article.comment.verify.modal.form.cacnel: 취소
-front.blog.article.comment.verify.modal.form.submit: 확인
+
+modal.front.blog.article.comment.del: 해당 댓글을 삭제하시겠습니까?
+modal.front.blog.article.comment.edit: 해당 댓글을 수정하시겠습니까?
 
 flash.front.blog.article.write.success: 게시글이 등록 되었습니다.
 flash.front.blog.article.write.failed: 서버 오류로 인한 게시글 작성 실패

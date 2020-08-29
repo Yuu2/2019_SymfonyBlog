@@ -36,13 +36,13 @@ class CommentPasswordValidator extends ConstraintValidator {
    */
   public function validate($value, Constraint $constraint): void {
 
+    if (!$constraint instanceof CommentPassword) {
+      throw new UnexpectedTypeException($constraint, CommentPassword::class);
+    }
+    
     // 비어있을 경우 리턴
     if (empty(trim($value))) {
       return;
-    }
-
-    if (!$constraint instanceof CommentPassword) {
-      throw new UnexpectedTypeException($constraint, CommentPassword::class);
     }
 
     // 패스워드 불일치 시 유효성 검증 실패

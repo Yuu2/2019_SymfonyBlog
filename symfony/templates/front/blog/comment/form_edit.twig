@@ -1,0 +1,14 @@
+{{ form_start(form, {'attr': {'id': 'modal-form', 'novalidate': 'novalidate', 'style': 'width: 100%;'}}) }}
+<div>
+  {{ form_row(form.visible) }}
+</div>
+
+<div>
+  {{ form_row(form.content) }}
+</div>
+
+<div>
+  {{ form_row(form.submit) }}
+</div>
+
+{{ form_end(form) }}

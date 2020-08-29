@@ -1274,10 +1274,8 @@ footer .site a {
   }
 }
 
-/**
- * 로딩 
- */
-#loading {
+/** 로딩 */
+#modal-loading {
   display: inline-block;
   width: 50px;
   height: 50px;

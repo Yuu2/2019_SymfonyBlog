@@ -1,72 +1,63 @@
-var modal = $('#modal-verify-comment');
-var box   = $('#box-verify-comment');
-var load  = $('#loading');
+var modal    = $('#modal');
+var formbox  = $('#modal-formbox');
 
-// 버튼 클릭시 댓글 입력창 슬라이드 
+// 폼 호출
+$('.link-modal').on('click', function(event) {
+  resetModal();
+
+  $.get($(this).data('url'))
+  .done(function(response) {
+    resetModal(response.form);
+  })
+  .fail(function(err) {
+    closeModal();
+  });
+});
+
+/* 버튼 클릭시 댓글 입력창 슬라이드 
 $('.form-header').on('click', function(event) {
 
   var formbox = $('.form-box');
       formbox.css('display') === 'none' ? $(".form-box").slideDown() : $(".form-box").slideUp();
 });
+*/
 
-// 검증 폼 호출
-$('.link-verify-comment').on('click', function(event) {
+// 폼 전송
+$(document).on('submit', '#modal-form', function(event) {
   
-  load.show();
-  
-  $url = $(this).data('url');
-
-  $.get($url)
-  .done(function(response) {
-    box.append(response.form);
-  })
-  .fail(function(err) {
-    modalReset();
-  })
-  .always(function() {
-    load.hide();
-  });
-});
-
-// 검증 폼 전송
-$(document).on('submit', '#form-verify-comment', function(event) {
   event.preventDefault();
 
-  // 동적으로 생성된 폼
-  var form = $('#form-verify-comment');
-      form.hide();
-
-  $('#loading').show();
+  resetModal(null, false);
   
+  // 동적으로 생성된 폼
+  var form = $('#modal-form');
+
   $.ajax({
     url: form.attr('action'), 
     type: form.attr('method'),
     data: form.serialize(),
     statusCode: {
       302: function(response) {
-        /**
-         * @refactoring responseJSON에 데이터가 있음... 
-         */
+        
         var data = response.responseJSON;
+
         switch(data.branch) {
-          case 'DEL': commentDel(data.url); break;
+          case 'DEL' : commentDel(data.url);  break;
           case 'EDIT': commentEdit(data.url); break;
-          default: modalReset();
+          default: closeModal();
         }
       },
-      400: function(response) {modal.hide()}
+      400: function(response) {
+        closeModal();
+      }
     }
   })
   .done(function(response) {
-    form.remove(); // 기존 폼 제거
-    box.append(response.form);
+    resetModal(response.form);
   })
   .fail(function(err) { 
-    modalReset();
+    closeModal();
   })
-  .always(function() {
-    load.hide();
-  });
 
   // 댓글 수정
   function commentEdit(_url) {
@@ -78,7 +69,7 @@ $(document).on('submit', '#form-verify-comment', function(event) {
       location.reload();
     })
     .fail(function(err) {
-      modalReset();
+      closeModal();
     });
   }
   
@@ -92,14 +83,25 @@ $(document).on('submit', '#form-verify-comment', function(event) {
       location.reload();
     })
     .fail(function(err) {
-      modalReset();
+      closeModal();
     });
   }
-  // 모달 리셋
-  function modalReset() {
-    load.show();
-    form.remove();
-    modal.modal('hide');
-  }
 });
+
+function resetModal(html = null, clearFormbox = true) {
+  
+  if (clearFormbox) formbox.empty();
+
+  (html != null) ? formbox.append(html) : formbox.append("<div id='modal-loading'></div>");
+
+  return;
+}
+
+function closeModal() {
+  formbox.empty();
+  modal.hide();
+  return;
+}
+
+
 

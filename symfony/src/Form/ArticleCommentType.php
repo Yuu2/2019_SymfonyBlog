@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Security;
 
 /**
  * @author yuu2dev
- * updated 2020.08.19
+ * updated 2020.08.29
  */
 class ArticleCommentType extends AbstractType {
   
@@ -61,44 +61,81 @@ class ArticleCommentType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     
-    $translator = $this->translator;
+    if (isset($options['branch'])) {
+      $branch = $options['branch'];
+    }
     
+    switch ($branch) {
+      case 'NEW'  : $this->getNewFormTemplate($builder); break;
+      case 'EDIT' : $this->getEditFormTemplate($builder); break;
+    }
+
+  }
+  /**
+   * @access private
+   * @param FormBuilderInterface $builder
+   * @return void
+   */
+  private function getNewFormTemplate(FormBuilderInterface $builder) : void {
     $builder
     // 유저명
     ->add('username', TextType::class, [
       'constraints' => $this->getUsernameConstraints(),
       'attr' => [
-        'placeholder' => $translator->trans('front.blog.article.comment.username'),
+        'placeholder' => $this->translator->trans('front.blog.article.comment.username'),
       ],
     ])
-
     // 공개여부
     ->add('visible', ChoiceType::class, [
       'choices' => [
-        $translator->trans('front.blog.article.comment.visible.true')  => true,
-        $translator->trans('front.blog.article.comment.visible.false') => false
+        $this->translator->trans('front.blog.article.comment.visible.true')  => true,
+        $this->translator->trans('front.blog.article.comment.visible.false') => false
       ],
       'constraints' => $this->getVisibleConstraints(),
     ])
     // 내용
     ->add('content', TextareaType::class, [ 
-      'label' => $translator->trans('front.blog.article.comment.content'),
+      'label' => $this->translator->trans('front.blog.article.comment.content'),
       'constraints' => $this->getContentConstraints(),
-    ])
-    ;
+    ]);
     
     if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
-
       $builder
       // 패스워드
       ->add('password', PasswordType::class, [
         'constraints' => $this->getPasswordConstraints(),
         'required' => true,
         'attr' => [
-          'placeholder' => $translator->trans('front.blog.article.comment.password'),
+          'placeholder' => $this->translator->trans('front.blog.article.comment.password'),
         ]
       ]);
     }
+  }
+
+  /**
+   * @access private
+   * @param FormBuilderInterface $builder
+   * @return void
+   */
+  private function getEditFormTemplate(FormBuilderInterface $builder) : void{
+    $builder
+    // 내용
+    ->add('content', TextareaType::class, [ 
+      'label' => $this->translator->trans('front.blog.article.comment.content'),
+      'constraints' => $this->getContentConstraints(),
+    ])
+    // 공개여부
+    ->add('visible', ChoiceType::class, [
+      'choices' => [
+        $this->translator->trans('front.blog.article.comment.visible.true')  => true,
+        $this->translator->trans('front.blog.article.comment.visible.false') => false
+      ],
+      'constraints' => $this->getVisibleConstraints(),
+    ])
+    // 전송
+    ->add('submit', SubmitType::class, [
+      'label' => $this->translator->trans('front.blog.article.comment.edit.submit'),
+    ]);
   }
   
   private function getArticleConstraints() {
@@ -126,6 +163,7 @@ class ArticleCommentType extends AbstractType {
     $resolver->setDefaults([
       'csrf_protection' => true,
       'data_class' => ArticleComment::class,
+      'branch' => null,
     ]);
   }
 }

@@ -4,7 +4,7 @@ namespace App\Controller\Front;
 
 use App\Form\ArticleType;
 use App\Form\ArticleCommentType;
-use App\Form\ArticleCommentVerifyType;
+use App\Form\ArticleCommentCertType;
 use App\Entity\Article;
 use App\Entity\ArticleComment;
 use App\Event\FlashEvent;
@@ -73,7 +73,7 @@ class BlogController extends AbstractController {
       $eventDispatcher->dispatch(RedirectEvent::REDIRECT, new RedirectEvent);
     }
     
-    $form = $this->createForm(ArticleCommentType::class, new ArticleComment, ['method' => 'post']);
+    $form = $this->createForm(ArticleCommentType::class, new ArticleComment, ['method' => 'post', 'branch' => 'NEW']);
     $form->handleRequest($request);
     
     if ($form->isSubmitted() && $form->isValid()) {
@@ -172,8 +172,23 @@ class BlogController extends AbstractController {
    * @param BlogService $blogService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
+   * @return JsonResponse
    */
-  public function comment_edit(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {}
+  public function comment_edit(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
+    
+    $response = new JsonResponse;
+
+    $form = $this->createForm(ArticleCommentType::class, $comment, ['method' => 'post', 'branch' => 'EDIT']);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      /** @todo */
+    }
+
+    $data['form'] = $this->render('front/blog/comment/form_edit.twig', ['form' => $form->createView()])->getContent(); 
+
+    return $response->setData($data);
+  }
 
   /**
    * 블로그 댓글 삭제
@@ -190,6 +205,7 @@ class BlogController extends AbstractController {
     $response = new JsonResponse;
     $session = $request->getSession();
     
+    /** @todo 리팩토링 */
     $isAnony = $session->get('comment') == $comment->getId();
     $isMember = $this->getUser() == $comment->getUser();
 
@@ -202,22 +218,21 @@ class BlogController extends AbstractController {
   }
 
   /**
-   * @todo 세션 유효기한 / 커스텀 패스워드 유효성검사
    * 블로그 댓글 검증
-   * @Route("/blog/article/comment/verify/{id}", name="blog_comment_verify", methods={"GET","POST"}, requirements={"id":"\d+"})
+   * @Route("/blog/article/comment/cert/{id}", name="blog_comment_verify", methods={"GET","POST"}, requirements={"id":"\d+"})
    * @param ArticleComment $comment
    * @param BlogService $blogService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
    * @return JsonResponse
    */
-  public function comment_verify(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
+  public function comment_cert(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
 
     $branch = $request->query->get('branch');
     
     $response = new JsonResponse;
     
-    $form = $this->createForm(ArticleCommentVerifyType::class, new ArticleComment, [
+    $form = $this->createForm(ArticleCommentCertType::class, new ArticleComment, [
       'method'  => 'post', 
       'action'  => $this->generateUrl('blog_comment_verify', ['id' => $comment->getId()]) . '?branch=' . $branch,
       'comment' => $comment      
@@ -258,10 +273,11 @@ class BlogController extends AbstractController {
           $response->setStatusCode(Response::HTTP_BAD_REQUEST);
       }
     } else {
+      /** @todo 다른 세션까지 지워버리는거 아니야? */
       $session->clear();
     }
 
-    $data['form'] = $this->render('front/blog/comment/form_verify.twig', ['form' => $form->createView()])->getContent(); 
+    $data['form'] = $this->render('front/blog/comment/form_cert.twig', ['form' => $form->createView()])->getContent(); 
 
     return $response->setData($data);
   }
