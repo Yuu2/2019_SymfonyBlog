@@ -21,10 +21,30 @@ use Symfony\Component\Security\Core\Security;
 
 /**
  * @author yuu2dev
- * updated 2020.08.29
+ * updated 2020.09.01
  */
 class ArticleCommentType extends AbstractType {
   
+  /**
+   * @access public
+   */
+  public const BRANCH_NEW  = 'NEW';
+  
+  /**
+   * @access public
+   */
+  public const BRANCH_EDIT = 'EDIT';
+  
+  /**
+   * @access public
+   */
+  public const BRANCH_DEL = 'DEL';
+
+  /**
+   * @access public
+   */
+  public const BRANCH_ANSWER = 'ANSWER';
+
   /**
    * @var ParameterBagInterface
    */
@@ -61,22 +81,24 @@ class ArticleCommentType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     
-    if (isset($options['branch'])) {
-      $branch = $options['branch'];
-    }
+    /** @var string */
+    $branch = $options['branch'];
     
     switch ($branch) {
-      case 'NEW'  : $this->getNewFormTemplate($builder); break;
-      case 'EDIT' : $this->getEditFormTemplate($builder); break;
+      case 'NEW'   : 
+        $this->buildNewForm($builder); 
+      break;
+      case 'EDIT'  : 
+        $this->buildEditForm($builder); 
+      break;
     }
-
   }
   /**
    * @access private
    * @param FormBuilderInterface $builder
    * @return void
    */
-  private function getNewFormTemplate(FormBuilderInterface $builder) : void {
+  private function buildNewForm(FormBuilderInterface $builder) : void {
     $builder
     // 유저명
     ->add('username', TextType::class, [
@@ -98,18 +120,22 @@ class ArticleCommentType extends AbstractType {
       'label' => $this->translator->trans('front.blog.article.comment.content'),
       'constraints' => $this->getContentConstraints(),
     ]);
-    
+    // 패스워드
     if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
       $builder
-      // 패스워드
       ->add('password', PasswordType::class, [
         'constraints' => $this->getPasswordConstraints(),
         'required' => true,
+        'empty_data' => '',
         'attr' => [
           'placeholder' => $this->translator->trans('front.blog.article.comment.password'),
         ]
       ]);
     }
+    // 전송
+    $builder->add('submit', SubmitType::class, [
+      'label' => $this->translator->trans('front.blog.article.comment.new.submit'),
+    ]);
   }
 
   /**
@@ -117,7 +143,7 @@ class ArticleCommentType extends AbstractType {
    * @param FormBuilderInterface $builder
    * @return void
    */
-  private function getEditFormTemplate(FormBuilderInterface $builder) : void{
+  private function buildEditForm(FormBuilderInterface $builder) : void{
     $builder
     // 내용
     ->add('content', TextareaType::class, [ 
@@ -131,13 +157,17 @@ class ArticleCommentType extends AbstractType {
         $this->translator->trans('front.blog.article.comment.visible.false') => false
       ],
       'constraints' => $this->getVisibleConstraints(),
-    ])
+      'label' => $this->translator->trans('front.blog.article.comment.visible'),
+    ]);
     // 전송
-    ->add('submit', SubmitType::class, [
+    $builder->add('submit', SubmitType::class, [
       'label' => $this->translator->trans('front.blog.article.comment.edit.submit'),
     ]);
   }
   
+  private function getIdConstraints() {
+    return;
+  }
   private function getArticleConstraints() {
     return;
   }
@@ -164,6 +194,7 @@ class ArticleCommentType extends AbstractType {
       'csrf_protection' => true,
       'data_class' => ArticleComment::class,
       'branch' => null,
+      'parent' => null
     ]);
   }
 }

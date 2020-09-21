@@ -31,15 +31,15 @@
               {% elseif is_granted('IS_AUTHENTICATED_FULLY') == true and ArticleComment.user is null %}
                 <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                 <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                <a href="#" class="link-modal" data-toggle="modal" data-url="{{ path('blog_comment_verify', { id: ArticleComment.id })}}?branch=DEL" data-target="#modal"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
+                <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_cert', { id: ArticleComment.id, branch: 'del' })}}" data-title="{{ 'modal.front.blog.article.comment.del'|trans }}"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
               <!-- 익명이 읽는 멤버의 댓글 -->
               {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and ArticleComment.user %}
-                <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                 <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_new',  { id: ArticleComment.id, branch: 'new'  })}}" data-title="{{ 'modal.front.blog.article.comment.reply'|trans }}"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
               <!-- 익명이 읽는 익명의 댓글-->
               {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and ArticleComment.user is null %}
-                <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
-                <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_edit', { id: ArticleComment.id })}}"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_verify', { id: ArticleComment.id })}}?branch=DEL"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
+                <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_new',  { id: ArticleComment.id })}}" data-title="{{ 'modal.front.blog.article.comment.reply'|trans }}"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
+                <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_cert', { id: ArticleComment.id, branch: 'edit' })}}" data-title="{{ 'modal.front.blog.article.comment.edit'|trans }}"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+                <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_cert', { id: ArticleComment.id ,branch: 'del'  })}}" data-title="{{ 'modal.front.blog.article.comment.del'|trans }}"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
               {% endif %}
             {% endif %}
           </div>
@@ -74,16 +74,16 @@
                   <!-- 멤버가 읽는 익명의 댓글 -->
                   {% elseif is_granted('IS_AUTHENTICATED_FULLY') == true and Recomment.user is null %}
                     <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
-                    <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                    <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_verify', { id: Recomment.id })}}?branch=DEL"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
+                    <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_cert', { id: Recomment.id , branch: 'edit' })}}" data-title="{{ 'modal.front.blog.article.comment.edit'|trans }}"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+                    <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_cert', { id: Recomment.id , branch: 'del' })}}" data-title="{{ 'modal.front.blog.article.comment.del'|trans }}"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
                   <!-- 익명이 읽는 멤버의 댓글 -->
                   {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and Recomment.user %}
                     <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
                   <!-- 익명이 읽는 익명의 댓글-->
                   {% elseif is_granted('IS_AUTHENTICATED_FULLY') == false and Recomment.user is null %}
                     <a href="#"><small>{{ 'front.blog.article.comment.reply'|trans }}</small></a>
-                    <a href="#"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
-                    <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_verify', { id: Recomment.id })}}?branch=DEL"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
+                    <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_cert', { id: Recomment.id , branch: 'edit' })}}" data-title="{{ 'modal.front.blog.article.comment.edit'|trans }}"><small>{{ 'front.blog.article.comment.edit'|trans }}</small></a>
+                    <a href="#" class="link-modal" data-toggle="modal" data-target="#modal" data-url="{{ path('blog_comment_cert', { id: Recomment.id , branch: 'del' })}}" data-title="{{ 'modal.front.blog.article.comment.del'|trans }}"><small>{{ 'front.blog.article.comment.del'|trans }}</small></a>
                   {% endif %}
                 {% endif %}
               </div>
@@ -93,12 +93,13 @@
       {% endif %}
     {% endfor %}
   </ul>
+
   <!-- 모달 폼 -->
   <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h6 class="modal-title">{{ 'modal.front.blog.article.comment.del'|trans }}</h6>
+          <h6 class="modal-title"></h6>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div id="modal-formbox" class="modal-body">

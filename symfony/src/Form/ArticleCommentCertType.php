@@ -78,7 +78,7 @@ class ArticleCommentCertType extends AbstractType {
     ])
     // 전송
     ->add('submit', SubmitType::class, [
-      'label' => $this->translator->trans('front.blog.article.comment.verify.submit'),
+      'label' => $this->translator->trans('front.blog.article.comment.cert.submit'),
     ]);
   }
 

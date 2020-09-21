@@ -14,6 +14,29 @@ $('.link-modal').on('click', function(event) {
   });
 });
 
+// 폼 전송
+$(document).on('submit', '#modal-form', function(event) {
+  
+  event.preventDefault();
+  
+  // 동적으로 생성된 폼
+  var form = $('#modal-form');
+
+  resetModal();
+
+  $.ajax({
+    url: form.attr('action'), 
+    type: form.attr('method'),
+    data: form.serialize(),
+  })
+  .done(function(response) {
+    response.form != undefined ? resetModal(response.form) : reload();
+  })
+  .fail(function(err) {
+    closeModal();
+  })
+});
+
 /* 버튼 클릭시 댓글 입력창 슬라이드 
 $('.form-header').on('click', function(event) {
 
@@ -22,75 +45,9 @@ $('.form-header').on('click', function(event) {
 });
 */
 
-// 폼 전송
-$(document).on('submit', '#modal-form', function(event) {
+function resetModal(html = null) {
   
-  event.preventDefault();
-
-  resetModal(null, false);
-  
-  // 동적으로 생성된 폼
-  var form = $('#modal-form');
-
-  $.ajax({
-    url: form.attr('action'), 
-    type: form.attr('method'),
-    data: form.serialize(),
-    statusCode: {
-      302: function(response) {
-        
-        var data = response.responseJSON;
-
-        switch(data.branch) {
-          case 'DEL' : commentDel(data.url);  break;
-          case 'EDIT': commentEdit(data.url); break;
-          default: closeModal();
-        }
-      },
-      400: function(response) {
-        closeModal();
-      }
-    }
-  })
-  .done(function(response) {
-    resetModal(response.form);
-  })
-  .fail(function(err) { 
-    closeModal();
-  })
-
-  // 댓글 수정
-  function commentEdit(_url) {
-    $.ajax({
-      url: _url,
-      method: 'PUT'
-    })
-    .done(function (response) {
-      location.reload();
-    })
-    .fail(function(err) {
-      closeModal();
-    });
-  }
-  
-  // 댓글 삭제
-  function commentDel(_url) {
-    $.ajax({
-      url: _url,
-      method: 'DELETE'
-    })
-    .done(function (response) {
-      location.reload();
-    })
-    .fail(function(err) {
-      closeModal();
-    });
-  }
-});
-
-function resetModal(html = null, clearFormbox = true) {
-  
-  if (clearFormbox) formbox.empty();
+  formbox.empty();
 
   (html != null) ? formbox.append(html) : formbox.append("<div id='modal-loading'></div>");
 
@@ -99,8 +56,12 @@ function resetModal(html = null, clearFormbox = true) {
 
 function closeModal() {
   formbox.empty();
-  modal.hide();
+  modal.modal('hide');
   return;
+}
+
+function reload() {
+  window.location.reload();
 }
 
 

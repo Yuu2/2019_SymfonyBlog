@@ -40,7 +40,7 @@ http {
         
         server_name ${SERVER_DOMAIN};
 
-        return 301 https://${S}host${S}request_uri;
+        return 301 https://${S}server_name${S}request_uri;
     }
   
     server {

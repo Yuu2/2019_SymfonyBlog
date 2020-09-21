@@ -219,14 +219,20 @@ class BlogService {
   public function writeComment(ArticleComment $comment): bool {
     
     try {
-      
       $user = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
-      
+
+      /** [1] 멤버유저 */
       if ($user instanceof User) {
         $comment->setUser($user);
         $comment->setUsername($user->getUsername());
+      
+        /** [2] 익명유저 */
       } else {
-        $comment->setPassword(password_hash($comment->getPassword(), PASSWORD_BCRYPT, ['cost' => 8]));
+
+        // 패스워드가 존재하지 않을 경우 세팅
+        if (!$comment->getId()) {
+             $comment->setPassword(password_hash($comment->getPassword(), PASSWORD_BCRYPT, ['cost' => 8]));
+        }
       }
 
       $comment->setIp($_SERVER['REMOTE_ADDR'] .':'.$_SERVER['SERVER_PORT']);
@@ -241,7 +247,7 @@ class BlogService {
       return false;
     }
   }
-
+  
   /**
    * 블로그 게시글 삭제
    * @access public

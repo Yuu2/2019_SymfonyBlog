@@ -29,6 +29,15 @@ class Kernel extends BaseKernel
     {
         return \dirname(__DIR__);
     }
+    public function getCacheDir()
+    {
+        // for docker performance
+        if ($this->getEnvironment() === 'test' || $this->getEnvironment() === 'dev') {
+            return '/tmp/'.$this->environment;
+        } else {
+            return $this->getProjectDir().'/var/cache/'.$this->environment;
+        }
+    }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {

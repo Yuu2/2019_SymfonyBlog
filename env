@@ -3,27 +3,37 @@
 # @description 기본 전역변수는 프로젝트 소스의 경로 _VIRTUAL은 도커컨테이너 안의 경로를 뜻한다.
 #
 
+SSL=/.ssh
+CURRENT=.
+
 # 슈퍼 관리자 정보
-OWNER=yuu2dev
-OWNER_EMAIL=yuu2dev@gmail.com
+OWNER=
+OWNER_EMAIL=
 
 # 어플리케이션
 APP=/symfony
 APP_VIRTUAL=/var/www/html/portfolio-blog
-APP_ENV=dev
-APP_SECRET=6411387e3657c6172126b2a08a742e26
+APP_ENV=prod
+APP_SECRET=
 
 # Google Recaptcha
-RECAPTCHA_SECRET=6LeFy6gUAAAAABbhEtoEnMqwCxDVlDFHLaSplCMK
+RECAPTCHA_SECRET=
 
 # Database
-DATABASE_NAME=portfolioblog_db
-DATABASE_USER=yuu2dev
-DATABASE_PASSWORD=yuu2dev
-DATABASE_ROOT_PASSWORD=root
+DATABASE=/db
+DATABASE_DATA=/db/data
+DATABASE_DATA_VIRTUAL=/var/lib/mysql
+DATABASE_NAME=portfolio_blog_db
+DATABASE_USER=
+DATABASE_PASSWORD=
+DATABASE_ROOT_PASSWORD=
 
 # NGINX
+NGINX=/nginx
+NGINX_CONF_TEMPLATE=/nginx/nginx.conf.template
+NGINX_CONF_TEMPLATE_VIRTUAL=/etc/nginx/nginx.conf.template
+
 SERVER_DOMAIN=localhost
 
-MAILER_URL=gmail://yuu2dev@gmail.com:1089dkdlG@default
-MAILER_DSN=gmail://yuu2dev@gmail.com:1089dkdlG@default
+MAILER_URL=
+MAILER_DSN=
