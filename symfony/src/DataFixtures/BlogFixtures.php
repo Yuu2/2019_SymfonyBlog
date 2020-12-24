@@ -29,11 +29,6 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
    */
   public function load(ObjectManager $objectManager): void {
     
-    $this->objectManager = $objectManager;
-
-    $this->createCategories(['일기']);
-
-    $this->objectManager->flush();
   }
 
   /**

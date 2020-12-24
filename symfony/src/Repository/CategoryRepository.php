@@ -29,13 +29,30 @@ class CategoryRepository extends ServiceEntityRepository {
    * @access public
    * @return array
    */
-  public function visibleCategories(): ?array {
+  public function findAll(): ?array {
 
     return $this->createQueryBuilder('c')
       ->select()
       ->andWhere('c.visible = :visible')
       ->setParameter('visible', true)
       ->orderBy('c.sort_no', 'ASC')
+      ->getQuery()
+      ->getResult()
+    ;
+  }
+
+  /**
+   * 가장 마지막 카테고리 
+   * @access public
+   */
+  public function getLastSortedCategory() {
+    $category = $this->createQueryBuilder('c')
+      ->select()
+      ->where('c.visible = :visible')
+      ->setParameter('visible', true)
+      ->orderBy('c.sort_no', 'ASC')
+      ->addOrderBy('c.id', 'ASC')
+      ->setMaxResults(1)
       ->getQuery()
       ->getResult()
     ;
