@@ -147,15 +147,6 @@ class BlogService {
   public function recentTags(int $count = 30): ?array {
     return $this->tagRepository->countTags($count);
   }
-  
-  /**
-   * 공개 카테고리 목록
-   * @access public
-   * @return array
-   */
-  public function findCategories(): ?array {
-    return $this->categoryRepository->visibleCategories();
-  }
 
   /**
    * 블로그 게시글 작성

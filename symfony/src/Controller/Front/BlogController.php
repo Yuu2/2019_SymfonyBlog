@@ -7,9 +7,11 @@ use App\Form\ArticleCommentType;
 use App\Form\ArticleCommentCertType;
 use App\Entity\Article;
 use App\Entity\ArticleComment;
+use App\Entity\Category;
 use App\Event\FlashEvent;
 use App\Event\RedirectEvent;
 use App\Service\BlogService;
+use App\Service\CategoryService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -24,8 +26,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author yuu2dev
- * @todo 댓글 검증 삭제 수정
- * updated 2020.09.01
+ * updated 2020.12.24
  */
 class BlogController extends AbstractController {
 
@@ -41,14 +42,15 @@ class BlogController extends AbstractController {
    * @access public
    * @param Request $request
    * @param BlogService $blogService
+   * @param CategorySerivce $categoryService
    * @return array
    */
-  public function article_index(Request $request, BlogService $blogService): array {
-    
+  public function article_index(Request $request, BlogService $blogService, CategoryService $categoryService): array {
+
     return array(
       'Articles' => $blogService->pagingArticles($request),
       'Articles_cnt' => $blogService->countArticles(),
-      'Categories' => $blogService->findCategories(),
+      'Categories' => $categoryService->allCategories(),
       'RecentArticles' => $blogService->recentArticles(10),
       'RecentTags' => $blogService->recentTags(30)
     );
@@ -62,11 +64,12 @@ class BlogController extends AbstractController {
    * @access public
    * @param Article $article
    * @param BlogService $blogService
+   * @param CategorySerivce $categoryService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
    * @return array
    */
-  public function article_show(?Article $article, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
+  public function article_show(?Article $article, BlogService $blogService, CategoryService $categoryService, EventDispatcherInterface $eventDispatcher, Request $request) {
 
     if (!$article) {
       $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_INVISIBLE);
@@ -94,7 +97,7 @@ class BlogController extends AbstractController {
       'Article' => $article,
       'Articles_cnt' => $blogService->countArticles(),
       'Comment_cnt' => $blogService->countCommentsByEntity($article),
-      'Categories' => $blogService->findCategories(),
+      'Categories' => $categoryService->allCategories(),
       'RecentArticles' => $blogService->recentArticles(10),
       'RecentTags' => $blogService->recentTags(30),
       'form' => $form->createView(),
@@ -109,12 +112,13 @@ class BlogController extends AbstractController {
    * @access public
    * @param Article $article
    * @param BlogService $blogService
+   * @param CategoryService $categoryService
    * @param EventDispatcherInterface $eventDispatcher
    * @param Request $request
    * @param TranslatorInterface $translator
    * @return array|object
    */
-  public function article_form(?Article $article, Request $request, BlogService $blogService, EventDispatcherInterface $eventDispatcher, TranslatorInterface $translator) {
+  public function article_form(?Article $article, Request $request, BlogService $blogService, CategoryService $categoryService, EventDispatcherInterface $eventDispatcher, TranslatorInterface $translator) {
     
     $form = $article ? $this->createForm(ArticleType::class, $article, ['method' => 'put']) : $this->createForm(ArticleType::class, new Article);
     $form->handleRequest($request);
@@ -135,7 +139,7 @@ class BlogController extends AbstractController {
 
     return [
       'form' => $form->createView(),
-      'Categories' => $blogService->findCategories(),
+      'Categories' => $categoryService->allCategories(),
       'RecentArticles' => $blogService->recentArticles(10),
       'RecentTags' => $blogService->recentTags(30)
     ];
