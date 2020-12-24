@@ -3,11 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
-use App\Entity\Category;
 use App\Entity\Portfolio;
 use App\Entity\Skill;
 use App\Entity\Tag;
-use App\Entity\User;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -20,7 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * updated 2020.06.30
  */
 abstract class AbstractFixtures extends Fixture {
-  
+
   /**
    * @var UserPasswordEncoderInterface
    */
@@ -32,32 +30,6 @@ abstract class AbstractFixtures extends Fixture {
    */
   public function __construct(UserPasswordEncoderInterface $userPasswordEncoder) {
     $this->userPasswordEncoder = $userPasswordEncoder;
-  }
-
-  /**
-   * @access protected
-   * @param ObjectManager $manager
-   * @param string $email
-   * @param string $password
-   * @param string $alias
-   * @param string $thumbnail
-   * @param bool $admin
-   * @return User
-   */
-  protected function createMember(Object $manager, string $email, string $password, string $alias, bool $admin, ?string $thumbnail = null): ?User {
-
-    $user = new User();
-    $user->setEmail($email);
-    $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
-    $admin ? $user->setRoles(['ROLE_ADMIN']) : $user->setRoles(['ROLE_USER']);
-    $user->setCreatedAt(new \DateTime);
-    $user->setAlias($alias);
-    $user->setThumbnail($thumbnail);
-    $user->setIsVerified(true);
-
-    $manager->persist($user);
-
-    return $user;
   }
 
   /**
@@ -144,23 +116,6 @@ abstract class AbstractFixtures extends Fixture {
     $manager->persist($tag);
 
     return $tag;
-  }
-
-  /**
-   * @access protected
-   * @param ObjectManager $manager
-   * @param string $title
-   * @param int $parent_id
-   * @return Category
-   */
-  protected function createCategory(ObjectManager $manager, string $title, int $parent_id = null): ?Category {
-    
-    $category = new Category();
-    $category->setTitle($title);
-    $category->setParent($parent_id);
-    $manager->persist($category);
-
-    return $category;
   }
 }
 

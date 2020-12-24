@@ -25,11 +25,18 @@ class CategoryService {
 
   /**
    * @access public
-   * @param int $count
    * @return array
    */
-  public function findCategories(int $count = 10): ?array {
-    
+  public function findAll() : ?array { 
     return $this->categoryRepository->findAll();
+  }
+
+  /**
+   * 가장 최근에 정렬된 카테고리 
+   * @access public
+   * @param array $categories
+   */
+  public function getLastSortedCategory(array $categories = []) {
+    
   }
 }

@@ -8,6 +8,7 @@
 
 {% block main %}
   <section id="about" class="about-mf sect-pt4 route">
+    <!--
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
@@ -54,110 +55,112 @@
         </div>
       </div>
     </div>
+    -->
   </section>
 
   {% if Work is not empty %}
-  <div class="section-counter paralax-mf bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
-    <div class="overlay-mf" style="opacity: 0.73"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box counter-box pt-4 pt-md-0">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-ios-calendar-outline"></i></span>
-            </div>
-            <div class="counter-num">
-              <p class="counter">{{ Work.joinYears }}</p>
-              <span class="counter-text">{{ 'front.home.work.join_years'|trans }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box pt-4 pt-md-0">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-checkmark-round"></i></span>
-            </div>
-            <div class="counter-num">
-              <p class="counter">{{ Work.joinProjects }}</p>
-              <span class="counter-text">{{ 'front.home.work.join_projects'|trans }}</span>
+    <!--
+    <div class="section-counter paralax-mf bg-image" style="background-image: url({{ asset('style/img/intro.jpeg') }})">
+      <div class="overlay-mf" style="opacity: 0.73"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3 col-lg-3">
+            <div class="counter-box counter-box pt-4 pt-md-0">
+              <div class="counter-ico">
+                <span class="ico-circle"><i class="ion-ios-calendar-outline"></i></span>
+              </div>
+              <div class="counter-num">
+                <p class="counter">{{ Work.joinYears }}</p>
+                <span class="counter-text">{{ 'front.home.work.join_years'|trans }}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box pt-4 pt-md-0">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-ios-people"></i></span>
-            </div>
-            <div class="counter-num">
-              <p class="counter">0</p>
-              <span class="counter-text"></span>
+          <div class="col-sm-3 col-lg-3">
+            <div class="counter-box pt-4 pt-md-0">
+              <div class="counter-ico">
+                <span class="ico-circle"><i class="ion-checkmark-round"></i></span>
+              </div>
+              <div class="counter-num">
+                <p class="counter">{{ Work.joinProjects }}</p>
+                <span class="counter-text">{{ 'front.home.work.join_projects'|trans }}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box pt-4 pt-md-0">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-ribbon-a"></i></span>
+          <div class="col-sm-3 col-lg-3">
+            <div class="counter-box pt-4 pt-md-0">
+              <div class="counter-ico">
+                <span class="ico-circle"><i class="ion-ios-people"></i></span>
+              </div>
+              <div class="counter-num">
+                <p class="counter">0</p>
+                <span class="counter-text"></span>
+              </div>
             </div>
-            <div class="counter-num">
-              <p class="counter">0</p>
-              <span class="counter-text"></span>
+          </div>
+          <div class="col-sm-3 col-lg-3">
+            <div class="counter-box pt-4 pt-md-0">
+              <div class="counter-ico">
+                <span class="ico-circle"><i class="ion-ribbon-a"></i></span>
+              </div>
+              <div class="counter-num">
+                <p class="counter">0</p>
+                <span class="counter-text"></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+    -->
   {% endif %}
 
   {% if Portfolios is not empty %}
-  <!-- PORTFOLIO -->
-  <section id="portfolio" class="portfolio-mf sect-pt4 route">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title-box text-center">
-            <h3 class="title-a">{{ 'front.home.portfolio'|trans }}</h3>
-            <div class="line-mf"></div>
+    <section id="portfolio" class="portfolio-mf sect-pt4 route">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="title-box text-center">
+              <h3 class="title-a">{{ 'front.home.portfolio'|trans }}</h3>
+              <div class="line-mf"></div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="work-box">
-            {% for Portfolio in Portfolios %}
-            <a href="{{ Portfolio.url }}" target="_blank">
-              <div class="work-img">
-                <!-- @todo -->
-                <img src="{{ asset('style/img/placeholder_thumb.png') }}" alt="" class="img-fluid">
-              </div>
-              <div class="work-content">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h2 class="w-title">{{ Portfolio.title }}</h2>
-                    <p>{{ Portfolio.subtitle }}</p>
-                    <div class="w-more">
-                      <span class="w-ctegory">
-                      {% for PortfolioSkill in Portfolio.PortfolioSkill %}
-                      {{ PortfolioSkill.Skill.name }}
-                      {% endfor %}
-                      </span>/
-                      <span class="w-date">{{ Portfolio.createdAt|date("Y.m.d.l") }}</span>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="work-box">
+              {% for Portfolio in Portfolios %}
+              <a href="{{ Portfolio.url }}" target="_blank">
+                <div class="work-img">
+                  <!-- @todo -->
+                  <img src="{{ asset('style/img/placeholder_thumb.png') }}" alt="" class="img-fluid">
+                </div>
+                <div class="work-content">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h2 class="w-title">{{ Portfolio.title }}</h2>
+                      <p>{{ Portfolio.subtitle }}</p>
+                      <div class="w-more">
+                        <span class="w-ctegory">
+                        {% for PortfolioSkill in Portfolio.PortfolioSkill %}
+                        {{ PortfolioSkill.Skill.name }}
+                        {% endfor %}
+                        </span>/
+                        <span class="w-date">{{ Portfolio.createdAt|date("Y.m.d.l") }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="w-like">
-                      <span class="ion-ios-plus-outline"></span>
+                    <div class="col-sm-4">
+                      <div class="w-like">
+                        <span class="ion-ios-plus-outline"></span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </a>
-            {% endfor %}
+              </a>
+              {% endfor %}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   {% endif %}
 {% endblock %}

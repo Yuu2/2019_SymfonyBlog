@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Article;
 use App\Entity\Tag;
 use App\Entity\ArticleTag;
+use App\Entity\Category;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -15,17 +16,50 @@ use Doctrine\Common\Persistence\ObjectManager;
  * updated 2020.01.19
  */
 class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface {
+  
+  /**
+   * @var ObjectManager
+   */
+  private $objectManager;
 
   /**
    * @access public
-   * @param ObjectManager $manager
+   * @param ObjectManager $objectManager
    * @return void
    */
-  public function load(ObjectManager $manager): void {
+  public function load(ObjectManager $objectManager): void {
     
-    // $this->createCategories($manager, 10);
+    $this->objectManager = $objectManager;
 
-    // $manager->flush();
+    $this->createCategories(['일기']);
+
+    $this->objectManager->flush();
+  }
+
+  /**
+   * @access protected
+   * @param int $count
+   * @return void
+   */
+  protected function createCategories(array $categories) {
+    foreach ($categories as $category) {
+      $this->createCategory($category);
+    }
+  }
+  
+  /**
+   * @access protected
+   * @param string $title
+   * @return Category
+   */
+  protected function createCategory(string $title): ?Category {
+    
+    $category = new Category();
+    $category->setTitle($title);
+
+    $this->objectManager->persist($category);
+
+    return $category;
   }
 
   /**
@@ -33,20 +67,8 @@ class BlogFixtures extends AbstractFixtures implements DependentFixtureInterface
    * @return array
    */
   public function getDependencies(): array {
-      return array(
-        UserFixtures::class
-      );
-  }
-
-  /**
-   * @access protected
-   * @param ObjectManager $manager
-   * @param int $count
-   * @return void
-   */
-  protected function createCategories(ObjectManager $manager, int $count) {
-    for ($i = 1; $i <= $count; $i++) {
-      $this->createCategory($manager, $i);
-    }
+    return [
+      UserFixtures::class
+    ];
   }
 }
