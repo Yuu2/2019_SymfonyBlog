@@ -1,0 +1,13 @@
+<div id="left-nav">
+  <ul>
+    <li class="content"><a href="{{ path('admin_home') }}">카테고리 관리</a></li>
+  </ul>
+</div>
+
+<div class="btn-shortcut one" data-toggle="tooltip" data-placement="left" title="{{ 'tooltip.block.leftnav'|trans }}" style="cursor: pointer;"><i class="fa fa-cog"></i></div>
+
+<script>
+    $('#middle .btn-shortcut.one').on('click', function(e) {
+      $('#left-nav').animate({width:'toggle'}, 400);
+    })
+</script>

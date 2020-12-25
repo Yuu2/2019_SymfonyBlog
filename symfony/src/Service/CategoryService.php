@@ -47,6 +47,7 @@ class CategoryService {
   /**
    * @access public 
    * @param Category $category
+   * @return void
    */
   public function addCategory(Category $category) {
     $this->entityManager->persist($category);
@@ -60,8 +61,10 @@ class CategoryService {
   } 
 
   /**
+   * 카테고리 제거
    * @access public
    * @param Category $category
+   * @return void
    */
   public function removeCategory(Category $category) {
     $this->entityManager->remove($category);
@@ -70,6 +73,7 @@ class CategoryService {
   }
 
   /**
+   * 카테고리 전체 정렬
    * @access protected
    */
   protected function sorting() {

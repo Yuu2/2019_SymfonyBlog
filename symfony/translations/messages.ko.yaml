@@ -18,10 +18,10 @@ front.home.about.cert: #
 front.home.about.description: #
 front.home.work.join_years: 경력
 front.home.work.join_projects: 참여 프로젝트
-front.home.portfolio: 포트폴리오
+front.home.project: 프로젝트
 front.home.contact: 질문하기
 
-front.admin.home.alias: 관리자
+front.admin.home: 관리자
 
 # 블로그
 front.blog: 포트폴리오 블로그
@@ -62,17 +62,6 @@ front.blog.article.comment.deleted: 삭제된 댓글 입니다.
 modal.front.blog.article.comment.del: 해당 댓글을 삭제하시겠습니까?
 modal.front.blog.article.comment.edit: 해당 댓글을 수정하시겠습니까?
 
-flash.front.blog.article.write.success: 게시글이 등록 되었습니다.
-flash.front.blog.article.write.failed: 서버 오류로 인한 게시글 작성 실패
-flash.front.blog.article.comment.write.success: 댓글이 정상적으로 등록되었습니다.
-flash.front.blog.article.comment.write.failed: 서버 오류로 인한 댓글 작성 실패
-flash.front.blog.article.comment.del.success: 댓글이 정상적으로 삭제되었습니다.
-flash.front.blog.article.comment.del.failed: 서버 오류로 인한 댓글 삭제 실패
-flash.front.blog.article.invisible: 해당 게시글은 열람 할 수 없습니다.
-flash.front.blog.article.tooltip.btn.article.new: 게시글 작성
-flash.front.blog.article.tooltip.btn.article.edit: 게시글 수정
-flash.front.blog.article.tooltip.btn.article.del: 게시글 삭제
-
 # 유저
 front.user.signin: 로그인
 front.user.signin.email: 이메일
@@ -98,10 +87,25 @@ front.user.signup.password.confirm.help: 한번 더 패스워드를 입력 합�
 front.user.signup.password.invalid: 패스워드가 일치하지 않습니다. 다시 입력 해주세요.
 front.user.signup.submit: 가입하기
 front.user.signup.sender: 포트폴리오 블로그 가입 인증 메일입니다.
+
+# 플래시 메시지
+flash.front.blog.article.write.success: 게시글이 등록 되었습니다.
+flash.front.blog.article.write.failed: 서버 오류로 인한 게시글 작성 실패
+flash.front.blog.article.comment.write.success: 댓글이 정상적으로 등록되었습니다.
+flash.front.blog.article.comment.write.failed: 서버 오류로 인한 댓글 작성 실패
+flash.front.blog.article.comment.del.success: 댓글이 정상적으로 삭제되었습니다.
+flash.front.blog.article.comment.del.failed: 서버 오류로 인한 댓글 삭제 실패
+flash.front.blog.article.invisible: 해당 게시글은 열람 할 수 없습니다.
 flash.front.user.signup.recaptcha.failed: G-recaptcha 인증 실패 입니다.
 flash.front.user.signup.email.invalid: 이메일 인증 기한이 만료되었거나 유효하지 않은 접근 입니다.
 flash.front.user.signup.email.verified: 이메일이 인증 되었습니다.
 flash.front.user.signup.email.confirm: 인증 메일을 발신 했습니다. 이메일에 첨부된 링크를 클릭하면 등록이 완료 됩니다.
+
+# 툴팁
+tooltip.front.blog.article.article.new: 게시글 작성
+tooltip.front.blog.article.article.edit: 게시글 수정
+tooltip.front.blog.article.article.del: 게시글 삭제
+tooltip.block.leftnav: 좌측 네비
 
 # 시큐리티 (프레임워크 종속 문자열)
 "Invalid credentials.": 로그인 실패

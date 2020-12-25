@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    
+    <!-- Keyword -->
+    {% block keyword %}
+    <!-- <meta name="keywords" content=""> -->
+    {% endblock %}
+        
+    <title>{{ 'front'|trans }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('style/img/icon/favicon.png') }}" /> 
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <link rel="icon" href="{{ asset('style/img/favicon.png') }}" /> 
+
+    <link rel="stylesheet" href="{{ asset('style/lib/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/animate/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/lightbox/css/lightbox.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('style/css/style.css') }}">
+
+    {% block stylesheets %}
+    {% endblock %}
+    
+    <script src="{{ asset('style/lib/jquery/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('style/lib/popper/js/popper.min.js') }}"></script>
+    <script src="{{ asset('style/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('style/lib/easing/js/easing.min.js') }}"></script>
+    <script src="{{ asset('style/lib/counterup/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('style/lib/counterup/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('style/lib/owlcarousel/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('style/lib/lightbox/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('style/lib/typed/js/typed.min.js') }}"></script>
+  </head>
+  <body id="page-top">
+
+    <!-- 헤더 -->
+    {% block header %}
+    {% endblock %}
+
+    <!-- 네비 -->
+    <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll" href="{{ path('blog_article_index') }}">{{ 'front.blog'|trans }}</a>
+        <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
+          <ul class="navbar-nav">
+          
+          {% block nav %}
+          {% endblock %}
+          
+          {% include 'block/signin.twig' %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 인트로 이미지 -->
+    {% block intro %}
+      {% include 'block/intro.twig' %}
+    {% endblock %}
+    
+    {% include 'block/flash.twig' %}
+
+    <div id="middle">
+      <!-- 좌측 사이드바 -->
+      {% block left_side %}
+      {% include 'block/left_nav.twig' %}
+      {% endblock %}
+    
+      <!-- 본문 -->
+      <div id="main">
+        {% block main %}
+        {% endblock %}
+      </div>
+    </div>
+
+    <!-- 하단 -->  
+    {% block footer %}
+    <section class="paralax-mf footer-paralax bg-image route">
+      <div class="overlay-mf" style="opacity: 0.95"></div>
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="copyright-box">
+                <p class="copyright">&copy; Copyright <strong>{{ 'admin.id'|trans }}</strong>. All Rights Reserved</p>
+              </div>
+              <div class="site-box">
+                <p class="site"><a href="{{'admin.github'|trans}}"><i class="fa fa-github fa-2x"></i></a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
+    {% endblock %}
+
+    <div id="preloader"></div>
+    
+    <script src="{{ asset('style/js/main.js') }}"></script>
+
+    {% block javascripts %}
+    {% endblock %}
+  
+  </body>
+</html>
