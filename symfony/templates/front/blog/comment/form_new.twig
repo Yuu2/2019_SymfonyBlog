@@ -5,7 +5,9 @@
   댓글 작성 폼 블록. 재사용하기 위해서는 폼타입 필요
 
 -->
-
+<div class="form-comments">
+  <div class="form-header"><span><i class="fa fa-chevron-down"></i></span></div>
+  
   <div class="form-box">
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(form._token) }}
@@ -20,22 +22,23 @@
         <span>{{ app.user.username }}</span>
       {% else %}
       
-      {{ form_widget(form.username, {'attr': {'style': 'margin: 5px;'}}) }}
+      {{ form_widget(form.username, {'attr': {'style': 'margin: 8px 0;'}}) }}
       {{ form_errors(form.username) }}
  
-      {{ form_widget(form.password, {'attr': {'style': 'margin: 5px;'}}) }}
+      {{ form_widget(form.password, {'attr': {'style': 'margin: 8px 0;'}}) }}
       {{ form_errors(form.password) }}
 
       {% endif %}
     </div>
     <div>
-      {{ form_widget(form.content) }}
+      {{ form_widget(form.content, {'attr': {'style': 'margin: 8px 0;'}}) }}
       {{ form_errors(form.content) }}
 
-      {{ form_widget(form.visible) }}
+      {{ form_widget(form.visible, {'attr': {'style': 'margin: 8px 0;'}}) }}
       {{ form_errors(form.visible) }}
 
-      {{ form_row(form.submit)}}
+      {{ form_widget(form.submit,  {'attr': {'style': 'float: right;'}}) }}
     </div>
     {{ form_end(form, {'render_rest': false}) }}
   </div>
+</div>

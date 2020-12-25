@@ -40,9 +40,6 @@
                 <a href="{{ path('blog_article_show', {'id': Article.id}) }}">
                   <h1 class="article-title">{{ Article.title }}</h1>
                 </a>
-                <div class="article-content">
-                  {{ Article.content|length < 200 ? Article.content|striptags|slice(0, 200)|raw ~ '...' : Article.content|raw }} 
-                </div>
                 <div class="post-meta">
                   <ul>
                     <li>
@@ -91,7 +88,7 @@
 {% block rightside %}
   
   {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('blog_article_new') }}" class="btn-shortcut one" data-toggle="tooltip" data-placement="left" title="{{ 'tooltip.front.blog.article.article.new'|trans }}"><i class="fa fa-edit" style="padding: 10px 0 0 4px;"></i></a>
+    <a href="{{ path('blog_article_new') }}" class="btn-shortcut one" data-toggle="tooltip" data-placement="left" title="{{ 'tooltip.front.blog.article.article.new'|trans }}"><i class="fas fa-feather"></i></a>
   {% endif %}
 
 {% endblock %}

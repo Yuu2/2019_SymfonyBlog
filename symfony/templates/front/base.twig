@@ -19,7 +19,7 @@
     <link rel="icon" href="{{ asset('style/img/favicon.png') }}" /> 
 
     <link rel="stylesheet" href="{{ asset('style/lib/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('style/lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/lib/animate/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/lib/ionicons/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/lib/lightbox/css/lightbox.min.css') }}">
@@ -62,33 +62,18 @@
     <!-- 본문 -->
     {% block main %}
     {% endblock %}
-
-    <!-- 하단 -->  
-    {% block footer %}
-    <section class="paralax-mf footer-paralax bg-image route">
-      <div class="overlay-mf" style="opacity: 0.95"></div>
-      <footer>
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="copyright-box">
-                <p class="copyright">&copy; Copyright <strong>{{ 'admin.id'|trans }}</strong>. All Rights Reserved</p>
-              </div>
-              <div class="site-box">
-                <p class="site"><a href="{{'admin.github'|trans}}"><i class="fa fa-github fa-2x"></i></a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </section>
-    {% endblock %}
     
-    <div id="rightside">
+    <!-- 우측 숏컷 버튼 -->
+    <div id="right_nav">
       <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
       {% block rightside %}
       {% endblock %}
     </div>
+
+    <!-- 하단 -->  
+    {% block footer %}
+      {% include 'block/footer.twig' %}
+    {% endblock %}
 
     <div id="preloader"></div>
 

@@ -37,13 +37,12 @@ $(document).on('submit', '#modal-form', function(event) {
   })
 });
 
-/* 버튼 클릭시 댓글 입력창 슬라이드 
-$('.form-header').on('click', function(event) {
-
-  var formbox = $('.form-box');
-      formbox.css('display') === 'none' ? $(".form-box").slideDown() : $(".form-box").slideUp();
+// 댓글 작성 폼 헤더 클릭시 슬라이드 
+$('.form-comments .form-header').on('click', function(event) {
+  var formbox = $('.form-comments .form-box');
+      formbox.css('display') === 'none' ? $(".form-box").slideDown(200) : $(".form-box").slideUp(200);
 });
-*/
+
 
 function resetModal(html = null) {
   

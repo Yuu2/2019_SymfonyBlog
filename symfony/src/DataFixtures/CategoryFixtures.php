@@ -15,12 +15,19 @@ use Doctrine\Common\Persistence\ObjectManager;
 class CategoryFixtures extends AbstractFixtures implements DependentFixtureInterface {
 
   /**
+   * @var ObjectManager
+   */
+  private $objectManager;
+
+  /**
    * @access public
    * @param ObjectManager $objectManager
    * @return void
    */
   public function load(ObjectManager $objectManager): void {
     
+    $this->objectManager = $objectManager;
+
     // 일기 카테고리 추가
     $category = new Category;
     $category->setTitle('일기');
@@ -44,8 +51,8 @@ class CategoryFixtures extends AbstractFixtures implements DependentFixtureInter
    * @return void;
    */
   protected function addCategory(Category $category, $flagFlush = true) {
-    $this->entityManager->persist($category);
-    $flagFlush ? $this->entityManage->flush() : null;
+    $this->objectManager->persist($category);
+    $flagFlush ? $this->objectManager->flush() : null;
   }
 
   /**
