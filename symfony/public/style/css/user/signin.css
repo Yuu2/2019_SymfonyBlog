@@ -68,7 +68,7 @@ input:checked + .form-switch-slider:before {
 
 /* form */
 .form-user.signin.card {
-  margin: 30px auto;
+  margin: 50px auto;
   min-width: 300px;
   width: 30%;
 }

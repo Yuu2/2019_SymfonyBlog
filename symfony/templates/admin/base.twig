@@ -19,7 +19,7 @@
     <link rel="icon" href="{{ asset('style/img/favicon.png') }}" /> 
 
     <link rel="stylesheet" href="{{ asset('style/lib/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('style/lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/lib/fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/lib/animate/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/lib/ionicons/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/lib/lightbox/css/lightbox.min.css') }}">
@@ -28,7 +28,7 @@
 
     {% block stylesheets %}
     {% endblock %}
-    
+
     <script src="{{ asset('style/lib/jquery/js/jquery.min.js') }}"></script>
     <script src="{{ asset('style/lib/popper/js/popper.min.js') }}"></script>
     <script src="{{ asset('style/lib/bootstrap/js/bootstrap.min.js') }}"></script>
@@ -38,6 +38,7 @@
     <script src="{{ asset('style/lib/owlcarousel/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('style/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('style/lib/typed/js/typed.min.js') }}"></script>
+    
   </head>
   <body id="page-top">
 
@@ -71,7 +72,7 @@
     <div id="middle">
       <!-- 좌측 사이드바 -->
       {% block left_side %}
-      {% include 'block/left_nav.twig' %}
+       {% include 'block/left_nav.twig' %}
       {% endblock %}
     
       <!-- 본문 -->
@@ -80,30 +81,21 @@
         {% endblock %}
       </div>
     </div>
+    
+    <!-- 우측 숏컷 버튼 -->
+    <div id="right_nav">
+      <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+      {% block rightside %}
+      {% endblock %}
+    </div>
 
     <!-- 하단 -->  
     {% block footer %}
-    <section class="paralax-mf footer-paralax bg-image route">
-      <div class="overlay-mf" style="opacity: 0.95"></div>
-      <footer>
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="copyright-box">
-                <p class="copyright">&copy; Copyright <strong>{{ 'admin.id'|trans }}</strong>. All Rights Reserved</p>
-              </div>
-              <div class="site-box">
-                <p class="site"><a href="{{'admin.github'|trans}}"><i class="fa fa-github fa-2x"></i></a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </section>
+      {% include 'block/footer.twig' %}
     {% endblock %}
 
     <div id="preloader"></div>
-    
+
     <script src="{{ asset('style/js/main.js') }}"></script>
 
     {% block javascripts %}

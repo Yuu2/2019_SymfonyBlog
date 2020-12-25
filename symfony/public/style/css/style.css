@@ -1302,7 +1302,7 @@ footer .site a {
   display: flex;
 }
 
-/* rightside 단축 버튼 */
+/* 단축 버튼 */
 .btn-shortcut {
   position: fixed;
   display: inline;
@@ -1316,6 +1316,10 @@ footer .site a {
   border-radius: 50%;
   transition: background 0.5s;
   z-index: 11;
+}
+
+.red {
+  background: #CD5C5C;
 }
 
 .btn-shortcut i {
