@@ -122,10 +122,10 @@ a:hover {
 }
 
 /*--/ Sections /--*/
-
 .sect-4 {
   padding: 4rem 0;
 }
+
 
 .sect-pt4 {
   padding-top: 4rem;
@@ -603,7 +603,7 @@ a:hover {
 ======================================*/
 
 .intro {
-  height: 100vh;
+  height: 50vh;
   position: relative;
   color: #fff;
 }
@@ -1336,4 +1336,38 @@ footer .site a {
 .three {
   right: 15px;
   bottom: 180px;
+}
+
+/* 본문 */
+#middle {
+  min-height: 400px;
+  display: flex;
+}
+
+/* 메인 컨테이너 */
+#main {
+  margin: 0 auto;
+}
+
+/* 좌측 사이드바 */
+#left-nav {
+  padding: 3px;
+  height: 400px;
+  width: 200px;
+  margin-bottom: 5px;
+  float: left;
+  border-radius: 10px;
+  background: #000;
+  opacity: 0.85;
+}
+
+#left-nav li {
+  padding-left: 0px;
+  list-style: none;
+}
+
+#left-nav a {
+  color: #fff;
+  font-weight: bold;
+  white-space: nowrap;
 }

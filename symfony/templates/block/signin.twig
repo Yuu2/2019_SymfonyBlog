@@ -1,5 +1,7 @@
 {% if is_granted('ROLE_ADMIN') %}
-  <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('admin_home') }}" style="color: #f9320c;">{{ 'front.admin.home.alias'|trans }}</a></li>
+  <li class="nav-item">
+    <a class="nav-link js-scroll" href="{{ path('admin_home') }}">{{ 'front.admin.home'|trans }}</a>
+  </li>
 {% endif %}
 
 {% if app.user %}

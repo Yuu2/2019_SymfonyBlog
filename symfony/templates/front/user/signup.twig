@@ -1,11 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/base.twig' %}
 
 {% block stylesheets %}
   <link rel="stylesheet" href="{{ asset('style/css/user/signup.css') }}">
 {% endblock %}
 
 {% block nav %}
-  <li class="nav-item"><a class="nav-link js-scroll" href="{{ path('home') }}">{{ 'front.home'|trans }}</a></li>
 {% endblock %}
 
 {% block main %}
