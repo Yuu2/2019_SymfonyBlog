@@ -1,7 +1,7 @@
-## Introduce
+## 소개
 ![](./screenshot/homepage.png) <br>
 
-## Installation
+## 시작하기
 ```sh
 mkdir 프로젝트/db/data
 mkdir 프로젝트/nginx/logs
