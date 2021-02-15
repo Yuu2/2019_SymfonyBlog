@@ -2,10 +2,11 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
-
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 /**
  * @author yuu2dev
@@ -28,18 +29,18 @@ class UserFixtures extends AbstractFixtures {
 
   /**
    * @access public
-   * @param ObjectManager $manager
+   * @param ObjectManager $objectManager
    * @return void
    */
-  public function load(ObjectManager $manager): void {
+  public function load(ObjectManager $objectManager): void {
 
-    $this->createUser($manager, 'admin@yuu2dev.me','admin', 'admin', true);
+    $this->createUser($objectManager, 'admin@yuu2dev.me','admin', 'admin', true);
 
-    $manager->flush();
+    $objectManager->flush();
   }
   /**
    * @access protected
-   * @param ObjectManager $manager
+   * @param ObjectManager $objectManager
    * @param string $email
    * @param string $password
    * @param string $username
@@ -47,7 +48,7 @@ class UserFixtures extends AbstractFixtures {
    * @param bool $admin
    * @return User
    */
-  protected function createUser(ObjectManager $manager, string $email, string $password, string $username, bool $admin, ?string $thumbnail = null): ?User {
+  protected function createUser(ObjectManager $objectManager, string $email, string $password, string $username, bool $admin, ?string $thumbnail = null): ?User {
 
     $user = new User();
     $user->setEmail($email);
@@ -58,7 +59,7 @@ class UserFixtures extends AbstractFixtures {
     $user->setThumbnail($thumbnail);
     $user->setIsVerified(true);
 
-    $manager->persist($user);
+    $objectManager->persist($user);
 
     return $user;
   }

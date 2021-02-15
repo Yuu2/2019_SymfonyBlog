@@ -16,7 +16,7 @@ services:
             - APP_VIRTUAL=${APP_VIRTUAL}
             - NGINX_CONF_TEMPLATE=${NGINX_CONF_TEMPLATE}
             - NGINX_CONF_TEMPLATE_VIRTUAL=${NGINX_CONF_TEMPLATE_VIRTUAL}
-            - SERVER_DOMAIN=${SERVER_DOMAIN}
+            - SERVER_NAME=${SERVER_NAME}
             - SSL=${SSL}
         restart: always
         ports:
@@ -24,7 +24,6 @@ services:
             - 443:443
         volumes:
             - ${CURRENT}${APP}:${APP_VIRTUAL}:delegated
-            - ${CURRENT}${APP}/vendor
             - ${CURRENT}/nginx/sites/:/etc/nginx/sites-available
             - ${CURRENT}/nginx/logs:/var/log/nginx
         networks:

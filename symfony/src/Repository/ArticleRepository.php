@@ -6,7 +6,7 @@ use App\Entity\Article;
 use App\Util\CustomValidator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @author yuu2dev
@@ -33,9 +33,10 @@ class ArticleRepository extends ServiceEntityRepository {
    * 게시글 일람 쿼리
    * @access public
    * @param array $query
+   * @param int $count 페이지당 게시글 수
    * @return Object
    */
-  public function paging(array $params): ?Object {
+  public function paging(array $params, int $count = 10): ?Object {
     
     $category = $params['category'];
     $page     = $params['page'];
@@ -85,7 +86,7 @@ class ArticleRepository extends ServiceEntityRepository {
       ->getQuery()
     ;
   
-    return $this->paginator->paginate($query, $page, 3);
+    return $this->paginator->paginate($query, $page, $count);
   }
 
   /**

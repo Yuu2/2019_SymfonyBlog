@@ -33,7 +33,7 @@ NGINX=/nginx
 NGINX_CONF_TEMPLATE=/nginx/nginx.conf.template
 NGINX_CONF_TEMPLATE_VIRTUAL=/etc/nginx/nginx.conf.template
 
-SERVER_DOMAIN=localhost
+SERVER_NAME=
 
 MAILER_URL=
 MAILER_DSN=
