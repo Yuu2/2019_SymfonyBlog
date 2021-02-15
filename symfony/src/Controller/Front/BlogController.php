@@ -46,7 +46,7 @@ class BlogController extends AbstractController {
    * @return array
    */
   public function article_index(Request $request, BlogService $blogService, CategoryService $categoryService): array {
-
+    
     return array(
       'Articles' => $blogService->pagingArticles($request),
       'Articles_cnt' => $blogService->countArticles(),

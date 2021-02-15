@@ -3,8 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -12,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  * @author yuu2dev
  * updated 2020.12.26
  */
-class CategoryFixtures extends AbstractFixtures implements DependentFixtureInterface {
+class CategoryFixtures extends Fixture implements DependentFixtureInterface {
 
   /**
    * @var ObjectManager
@@ -24,17 +22,23 @@ class CategoryFixtures extends AbstractFixtures implements DependentFixtureInter
    * @param ObjectManager $objectManager
    * @return void
    */
-  public function load(ObjectManager $objectManager): void {
+  public function load(ObjectManager $objectManager) {
     
     $this->objectManager = $objectManager;
 
-    // 일기 카테고리 추가
-    $category = new Category;
-    $category->setTitle('일기');
-    $category->setCreatedAt(new \DateTime);
-    $category->setSortNo(1);
+    $this->addCategory(
+      (new Category)
+        ->setTitle('일기')
+        ->setCreatedAt(new \DateTime)
+        ->setSortNo(1)
+    );
 
-    $this->addCategory($category);
+    $this->addCategory(
+      (new Category)
+        ->setTitle('공부')
+        ->setCreatedAt(new \DateTime)
+        ->setSortNo(2)
+    );
   }
 
   /**

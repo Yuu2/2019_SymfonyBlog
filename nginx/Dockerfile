@@ -38,7 +38,7 @@ RUN if [ "${APP_ENV}" == "dev"  ]; then \
             -out ${SSL}/portfolio-blog.crt \
         && \
         openssl dhparam -out ${SSL}/ssl-dhparam.pem 2048 ; \
-        fi
+    fi
 
 EXPOSE 80 443
 

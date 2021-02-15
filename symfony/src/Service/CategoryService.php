@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.12.24
+ * updated 2020.12.26
  */
 class CategoryService {
 
@@ -41,7 +41,7 @@ class CategoryService {
    * @return array
    */
   public function allCategories() : ?array { 
-    return $this->categoryRepository->findAll();
+    return $this->categoryRepository->findAll(true);
   }
 
   /**

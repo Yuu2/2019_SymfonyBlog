@@ -5,7 +5,7 @@
     <ul class="list-sidebar">
       {% if Categories is not empty %}
         {% for Category in Categories %}
-          <li><a href="{{ path('blog_article_index', { 'category': Category.id })}}">{{ Category.title }}</a></li>
+          <li><a href="{{ path('blog_article_index', { 'category': Category.row.id })}}">{{ Category.row.title }} ({{ Category.total }})</a></li>
         {% endfor %}
       {% endif %}
     </ul>

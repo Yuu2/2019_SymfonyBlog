@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @author yuu2dev
@@ -27,18 +27,34 @@ class CategoryRepository extends ServiceEntityRepository {
   /**
    * 카테고리 목록
    * @access public
+   * @param bool $hasTotal
    * @return array
    */
-  public function findAll(): ?array {
+  public function findAll(bool $hasTotal = false): ?array {
 
-    return $this->createQueryBuilder('c')
-      ->select()
-      ->andWhere('c.visible = :visible')
-      ->setParameter('visible', true)
+    $builder = $this->createQueryBuilder('c');
+    
+    if ($hasTotal) {
+      $builder
+        ->select('c as row, count(a.id) as total')
+        ->leftJoin('c.article', 'a')
+        ->groupby('a.id');
+    } else {
+      $builder->select('c as row');
+    }
+
+    $builder
+      ->where('c.visible = :visible')
+      ->setParameter('visible', true);
+
+    /** @var array */
+    $categories = $builder
       ->orderBy('c.sort_no', 'ASC')
       ->getQuery()
       ->getResult()
     ;
+    
+    return $categories;
   }
 
   /**
