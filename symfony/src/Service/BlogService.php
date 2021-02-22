@@ -14,10 +14,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @author yuu2dev
- * updated 2020.08.21
+ * updated 2021.02.16
  */
 class BlogService {
   
@@ -55,19 +56,22 @@ class BlogService {
    * @param CategoryRepository $categoryRepository
    * @param TagRepository $tagRepository
    * @param TokenStorageInterface $tokenStorage
+   * @param PaginatorInterface $paginatorInterface
    */
   public function __construct(
     ArticleRepository $articleRepository,
     EntityManagerInterface $entityManager, 
     CategoryRepository $categoryRepository,
     TagRepository $tagRepository,
-    TokenStorageInterface $tokenStorage
+    TokenStorageInterface $tokenStorage,
+    PaginatorInterface $paginator
   ) {
     $this->entityManager = $entityManager;
     $this->articleRepository = $articleRepository;
     $this->categoryRepository = $categoryRepository;
     $this->tagRepository = $tagRepository;
     $this->tokenStorage = $tokenStorage;
+    $this->paginator = $paginator;
   }
 
   /**
@@ -86,17 +90,22 @@ class BlogService {
    * @param Request $request
    * @return Object
    */
-  public function pagingArticles(Request $request): Object {
+  public function pagingArticles(Request $request, $limit = 3): Object {
 
-    $params = array(
-      'category' => $request->query->get('category'),
-      'page' => $request->query->get('page'),
-      'search' => $request->query->get('search'),
-      'tag' => $request->query->get('tag'),
-    );
+        $params = [
+        'category' => $request->query->get('category'),
+        'search' => $request->query->get('search'),
+        'tag' => $request->query->get('tag'),
+        ];
+        
+        $query = $this->articleRepository->paging($params);
+        $page  = $request->query->getInt('page', 1);
 
-    return $this->articleRepository->paging($params);
-  }
+        $pagination = $this->paginator->paginate($query, $page, $limit);
+
+        return $pagination;
+    }
+
 
   /**
    * 최근 블로그 게시글

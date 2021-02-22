@@ -18,14 +18,14 @@ services:
             - NGINX_CONF_TEMPLATE_VIRTUAL=${NGINX_CONF_TEMPLATE_VIRTUAL}
             - SERVER_NAME=${SERVER_NAME}
             - SSL=${SSL}
-        restart: always
         ports:
             - 80:80
             - 443:443
         volumes:
-            - ${CURRENT}${APP}:${APP_VIRTUAL}:delegated
             - ${CURRENT}/nginx/sites/:/etc/nginx/sites-available
             - ${CURRENT}/nginx/logs:/var/log/nginx
+        volumes_from:
+            - php-fpm
         networks:
             - web
 
@@ -49,7 +49,8 @@ services:
             - MAILER_URL=${MAILER_URL}
             - MAILER_DSN=${MAILER_DSN}
             - RECAPTCHA_SECRET=${RECAPTCHA_SECRET}
-
+        ports:
+            - 9000:9000
         volumes:
             - ${CURRENT}${APP}:${APP_VIRTUAL}:delegated
             - ${CURRENT}${APP}/vendor
@@ -70,12 +71,11 @@ services:
             - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
         ports:
             - 3306:3306
-        restart: always
-        networks:
-            - web
         volumes:
 #           - ${CURRENT}${DATABASE}/init.sql:/docker-entrypoint-initdb.d/
             - ${CURRENT}${DATABASE_DATA}:${DATABASE_DATA_VIRTUAL}
+        networks:
+            - web
 
 networks:
     web:

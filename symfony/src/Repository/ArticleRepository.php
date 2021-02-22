@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Article;
 use App\Util\CustomValidator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,30 +21,26 @@ class ArticleRepository extends ServiceEntityRepository {
   /**
    * @access public
    * @param ManagerRegistry $registry
-   * @param PaginatorInterface $paginatorInterface
    */
-  public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator) {
+  public function __construct(ManagerRegistry $registry) {
     parent::__construct($registry, Article::class);
-    $this->paginator = $paginator;
   }
 
   /**
+   * @todo 데이터만 취득하게금 하며, 페이징은 서비스 클래스 로 이동
    * 게시글 일람 쿼리
    * @access public
    * @param array $query
    * @param int $count 페이지당 게시글 수
    * @return Object
    */
-  public function paging(array $params, int $count = 10): ?Object {
+  public function paging(array $params): ?Object {
     
     $category = $params['category'];
-    $page     = $params['page'];
     $tag      = $params['tag'];
+    $search   = $params['search'];
 
     $category = is_numeric($category) ? $category : NULL;
-    $page     = is_numeric($page)     ? $page     : 1;
-
-    $search = $params['search'];
 
     $query = $this->createQueryBuilder('a');
     
@@ -86,7 +81,7 @@ class ArticleRepository extends ServiceEntityRepository {
       ->getQuery()
     ;
   
-    return $this->paginator->paginate($query, $page, $count);
+    return $query;
   }
 
   /**

@@ -36,9 +36,9 @@ class CategoryRepository extends ServiceEntityRepository {
     
     if ($hasTotal) {
       $builder
-        ->select('c as row, count(a.id) as total')
-        ->leftJoin('c.article', 'a')
-        ->groupby('a.id');
+        ->select('c as row, count(c.id) as total')
+        ->join('c.article', 'a')
+        ->groupby('c.id');
     } else {
       $builder->select('c as row');
     }
