@@ -9,7 +9,7 @@ use App\Form\UserType;
 use App\Security\Authenticator;
 use App\Security\EmailVerifier;
 use App\Service\UserService;
-use App\Util\RecaptchaUtils;
+use App\Utils\RecaptchaUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

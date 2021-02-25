@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -90,7 +91,7 @@ class BlogService {
    * @param Request $request
    * @return Object
    */
-  public function pagingArticles(Request $request, $limit = 3): Object {
+  public function pagingArticles(Request $request, $limit = 5): Object {
 
         $params = [
         'category' => $request->query->get('category'),

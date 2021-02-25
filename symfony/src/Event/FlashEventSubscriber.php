@@ -50,11 +50,7 @@ class FlashEventSubscriber implements EventSubscriberInterface {
       FlashEvent::SIGNUP_EMAIL_INVALID => 'onSignUpInvalidEmail',
       FlashEvent::SIGNUP_EMAIL_VERIFIED => 'onSignUpVerifiedEmail',
       FlashEvent::SIGNUP_RECAPTCHAR_FAILED => 'onSignUpRecaptchaFailed',
-      FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS => 'onBlogArticleWriteSuccess',
-      FlashEvent::BLOG_ARTICLE_WRITE_FAILED => 'onBlogArticleWriteFailed',
-      FlashEvent::BLOG_ARTICLE_INVISIBLE => 'onBlogArticleInvisible',
-      FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS => 'onBlogArticleCommentWriteSuccess',
-      FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED => 'onBlogArticleCommentWriteFailed',
+
       FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS => 'onBlogArticleCommentDelSuccess',
       FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED => 'onBlogArticleCommentDelFailed',
       FlashEvent::BLOG_ARTICLE_COMMENT_DEL_PASSWORD_INVALID => 'onBlogArticleCommentDelPasswordInvalid',
@@ -92,51 +88,6 @@ class FlashEventSubscriber implements EventSubscriberInterface {
    */
   public function onSignUpFailedRecaptcha(): void {  
     $this->flashBag->add('danger', $this->translator->trans(FlashEvent::SIGNUP_RECAPTCHAR_FAILED)); 
-  }
-  
-  /**
-   * 게시글 작성 성공
-   * @access public
-   * @return void
-   */
-  public function onBlogArticleWriteSuccess(): void {  
-    $this->flashBag->add('success', $this->translator->trans(FlashEvent::BLOG_ARTICLE_WRITE_SUCCESS)); 
-  }
-
-  /**
-   * 게시글 작성 실패
-   * @access public
-   * @return void
-   */
-  public function onBlogArticleWriteFailed(): void {  
-    $this->flashBag->add('danger', $this->translator->trans(FlashEvent::BLOG_ARTICLE_WRITE_FAILED)); 
-  }
-
-  /**
-   * 게시글 비공개 안내
-   * @access public
-   * @return void
-   */
-  public function onBlogArticleInvisible(): void {  
-    $this->flashBag->add('danger', $this->translator->trans(FlashEvent::BLOG_ARTICLE_INVISIBLE)); 
-  }
-  
-  /**
-   * 게시글 댓글 작성 성공
-   * @access public
-   * @return void
-   */
-  public function onBlogArticleCommentWriteSuccess(): void {  
-    $this->flashBag->add('success', $this->translator->trans(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS));  
-  }
-
-  /**
-   * 게시글 댓글 작성 성공
-   * @access public
-   * @return void
-   */
-  public function onBlogArticleCommentWriteFailed(): void {  
-    $this->flashBag->add('danger', $this->translator->trans(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED));
   }
 
   /**
