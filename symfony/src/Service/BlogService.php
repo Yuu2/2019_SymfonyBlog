@@ -257,8 +257,8 @@ class BlogService {
    */
   public function removeArticle(Article $article): void {
 
-    $this->entityManager->remove($article);
-    $this->entityManager->flush();
+    // $this->entityManager->remove($article);
+    // $this->entityManager->flush();
   }
 
   /**

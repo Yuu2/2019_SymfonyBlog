@@ -8,8 +8,6 @@ use App\Form\ArticleCommentCertType;
 use App\Entity\Article;
 use App\Entity\ArticleComment;
 use App\Entity\Category;
-use App\Event\FlashEvent;
-use App\Event\RedirectEvent;
 use App\Service\BlogService;
 use App\Service\CategoryService;
 use App\Utils\FlashUtils;
@@ -18,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,11 +43,11 @@ class BlogController extends AbstractController {
     public function article_index(Request $request, BlogService $blogService, CategoryService $categoryService): array {
     
         return array(
-        'Articles' => $blogService->pagingArticles($request),
-        'Articles_cnt' => $blogService->countArticles(),
-        'Categories' => $categoryService->allCategories(),
-        'RecentArticles' => $blogService->recentArticles(10),
-        'RecentTags' => $blogService->recentTags(30)
+            'Articles' => $blogService->pagingArticles($request),
+            'Articles_cnt' => $blogService->countArticles(),
+            'Categories' => $categoryService->allCategories(),
+            'RecentArticles' => $blogService->recentArticles(10),
+            'RecentTags' => $blogService->recentTags(30)
         );
     }
 
@@ -70,7 +67,7 @@ class BlogController extends AbstractController {
     public function article_show(?Article $article, BlogService $blogService, CategoryService $categoryService, FlashUtils $flash, Request $request) {
  
         if (!$article) {
-            $flash->msg('flash.front.blog.article.invisible', 'danger');
+            $flash->danger('flash.front.blog.article.invisible');
             return $this->redirectToRoute('blog_article_index');
         }
         
@@ -89,8 +86,8 @@ class BlogController extends AbstractController {
             $comment->setArticle($article);
             
             $isWrited = $blogService->writeComment($comment);
-            $isWrited ? $flash->msg('flash.front.blog.article.comment.write.success') : $flash->msg('flash.front.blog.article.comment.write.failed', 'danger');
-            
+            $flash->whether($isWrited, 'flash.front.blog.article.comment.write');
+
             return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
         }
    
@@ -114,11 +111,11 @@ class BlogController extends AbstractController {
      * @param Article $article
      * @param BlogService $blogService
      * @param CategoryService $categoryService
-     * @param FlashUtils $flashUtils
+     * @param FlashUtils $flash
      * @param Request $request
      * @return array|object
      */
-    public function article_form(?Article $article, Request $request, BlogService $blogService, CategoryService $categoryService, FlashUtils $flashUtils) {
+    public function article_form(?Article $article, Request $request, BlogService $blogService, CategoryService $categoryService, FlashUtils $flash) {
     
         $form = $article ? $this->createForm(ArticleType::class, $article, ['method' => 'put']) : $this->createForm(ArticleType::class, new Article);
         $form->handleRequest($request);
@@ -133,7 +130,7 @@ class BlogController extends AbstractController {
             $article = $form->getData();
                 
             $isWrited = $blogService->writeArticle($article, $hashtagForm);
-            $isWrited ? $flash->msg('flash.front.blog.article.write.success') : $flash->msg('flash.front.blog.article.write.failed', 'danger');
+            $flash->whether($isWrited, 'flash.front.blog.article.write');
 
             return $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]);
         }
@@ -147,199 +144,207 @@ class BlogController extends AbstractController {
     }
 
     /**
-     * @todo 플래시 메시지
      * 블로그 게시물 삭제
      * @Route("/blog/article/del/{id}", name="blog_article_del", methods={"GET"}, requirements={"id":"\d+"})
      * @access public
      * @param Article $article
      * @param BlogService $blogService
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param FlashUtils $flash
      * @param Request $request
      * @return object
      */
-    public function article_del(Article $article, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request): object {
-        $blogService->removeArticle($article);
+    public function article_del(Article $article, BlogService $blogService, FlashUtils $flash, Request $request): object {
+
+        $isDeleted = $blogService->removeArticle($article);
+        
+        $flash->whether($isDeleted, 'flash.front.blog.article.comment.del');
+
         return $this->redirectToRoute('blog_article_index');
     }
 
-    /** ******** 리팩토링 */
-
-  /**
-   * 블로그 댓글 작성
-   * @Route("/blog/comment/new/{id}", name="blog_comment_new", methods={"GET", "POST"}, requirements={"id":"\d+"})
-   * @access public
-   * @param ArticleComment $parent
-   * @param BlogService $blogService
-   * @param EventDispatcherInterface $eventDispatcher
-   * @param Request $request
-   */
-  public function comment_new(?ArticleComment $parent, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
+    /**
+     * 블로그 댓글 작성
+     * @Route("/blog/comment/new/{id}", name="blog_comment_new", methods={"GET", "POST"}, requirements={"id":"\d+"})
+     * @access public
+     * @param ArticleComment $parent
+     * @param BlogService $blogService
+     * @param FlashUtils $flash
+     * @param Request $request
+     */
+    public function comment_new(?ArticleComment $parent, BlogService $blogService, FlashUtils $flash, Request $request) {
     
-    $formData = [
-      'method' => 'post',
-      'action' => $this->generateUrl('blog_comment_new', ['id' => 0]),
-      'branch' => ArticleCommentType::BRANCH_NEW,
-    ];
+        $formData = [
+            'method' => 'post',
+            'action' => $this->generateUrl('blog_comment_new', ['id' => 0]),
+            'branch' => ArticleCommentType::BRANCH_NEW,
+        ];
 
-    // 부모가 존재 하는 경우
-    if ($parent instanceof ArticleComment) {
-      $formData['action'] = $this->generateUrl('blog_comment_new', ['id' => $parent->getId()]);
-      $formData['attr']   = ['id' => 'modal-form'];
-    }
+        // 부모가 존재 하는 경우
+        if ($parent instanceof ArticleComment) {
+            $formData['action'] = $this->generateUrl('blog_comment_new', ['id' => $parent->getId()]);
+            $formData['attr']   = ['id' => 'modal-form'];
+        }
 
-    $form = $this->createForm(ArticleCommentType::class, new ArticleComment, $formData);
-    $form->handleRequest($request);
-    
-    $response = new JsonResponse;
-    $responseData = [];
-
-    if ($form->isSubmitted() && $form->isValid()) {
-
-      /** @var ArticleComment */
-      $comment = $form->getData();
-      dump($comment);
-
-      if ($parent instanceof ArticleComment) {
-        $comment->setParent($parent);
-      }
-   
-      $blogService->writeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED);
-    
-    } else {
-      $responseData['form'] = $this->render('front/blog/comment/form_new.twig', ['form' => $form->createView()])->getContent();
-    }
-
-    $response->setData($responseData);
-
-    return $this->getUser() ? $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]) : $response;
-  }
-  
-  /**
-   * 블로그 댓글 수정
-   * @Route("/blog/comment/edit/{id}", name="blog_comment_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
-   * @access public
-   * @param BlogService $blogService
-   * @param EventDispatcherInterface $eventDispatcher
-   * @param Request $request
-   * @return JsonResponse
-   */
-  public function comment_edit(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request) {
-    
-    $form = $this->createForm(ArticleCommentType::class, $comment, [
-      'method' => 'put', 
-      'action' => $this->generateUrl('blog_comment_edit', ['id' => $comment->getId()]),
-      'branch' => ArticleCommentType::BRANCH_EDIT,
-    ]);
-    $form->handleRequest($request);
-
-    $response = new JsonResponse;
-    $responseData = [];
-    
-    if ($form->isSubmitted() && $form->isValid()) {
-      $session = $request->getSession();
-      $comment_cert = $session->get('cert');
-      $comment_cert = isset($comment_cert['comment_edit']) ? $comment_cert['comment_edit'] : null;
-    
-      switch(true)  {
-        // 익명유저 : 세션 일치 확인
-        case $comment_cert != $comment->getId(): break;
-        // 멤버유저 : 작성자 확인
-        case $this->getUser() != $comment->getUser(): break;
-
-        default:
-        /** @var ArticleComment */
-        $comment = $form->getData();
-        $blogService->writeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_WRITE_FAILED);
-        /* -------------------- */
-        $session->remove('auth');
-      } 
-    } else {
-      $responseData['form'] = $this->render('front/blog/comment/form_edit.twig', ['form' => $form->createView()])->getContent();
-    }
-
-    $response->setData($responseData);
-    return $response;
-  }
-
-  /**
-   * 블로그 댓글 삭제
-   * @todo 검증 리팩토링
-   * @Route("/blog/comment/del/{id}", name="blog_comment_del", methods={"GET","DELETE"}, requirements={"id":"\d+"})
-   * @access public
-   * @param ArticleComment $comment
-   * @param BlogService $blogService
-   * @param EventDispatcherInterface $eventDispatcher
-   * @param Request $request
-   * @return JsonResposnse
-   */
-  public function comment_del(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request): JsonResponse {
-    
-    $session = $request->getSession();
-    $comment_cert = $session->get('cert');
-    $comment_cert = isset($comment_cert['comment_del']) ? $comment_cert['comment_del'] : null;
-
-    switch(true) {
-      // 익명유저 : 세션 일치 확인
-      case $comment_cert != $comment->getId(): break;
-      // 멤버유저 : 작성자 확인
-      case $this->getUser() != $comment->getUser(): break;
-
-      default:
-      $blogService->removeComment($comment) ? $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_SUCCESS) : $eventDispatcher->dispatch(FlashEvent::BLOG_ARTICLE_COMMENT_DEL_FAILED);
+        $form = $this->createForm(ArticleCommentType::class, new ArticleComment, $formData);
+        $form->handleRequest($request);
         
-      $session->remove('auth');
+        $response = new JsonResponse;
+        $responseData = [];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var ArticleComment */
+            $comment = $form->getData();
+            dump($comment);
+
+            if ($parent instanceof ArticleComment) {
+                $comment->setParent($parent);
+            }
+            
+            $isWrited = $blogService->writeComment($comment);
+            $flash->whether($isWrited, 'flash.front.blog.article.comment.write');
+            
+        } else {
+            $responseData['form'] = $this->render('front/blog/comment/form_new.twig', ['form' => $form->createView()])->getContent();
+        }
+
+        $response->setData($responseData);
+
+        return $this->getUser() ? $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]) : $response;
     }
+  
+    /**
+     * 블로그 댓글 수정
+     * @Route("/blog/comment/edit/{id}", name="blog_comment_edit", methods={"GET", "PUT"}, requirements={"id":"\d+"})
+     * @access public
+     * @param BlogService $blogService
+     * @param FlashUtils $flash
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function comment_edit(ArticleComment $comment, BlogService $blogService, FlashUtils $flash, Request $request) {
     
-    $response = new JsonResponse;
+        $form = $this->createForm(ArticleCommentType::class, $comment, [
+            'method' => 'put', 
+            'action' => $this->generateUrl('blog_comment_edit', ['id' => $comment->getId()]),
+            'branch' => ArticleCommentType::BRANCH_EDIT,
+        ]);
+        $form->handleRequest($request);
 
-    return $this->getUser() ? $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]) : $response;
-  }
-
-  /**
-   * 블로그 댓글 검증
-   * @Route("/blog/comment/cert/{branch}/{id}", name="blog_comment_cert", methods={"GET","POST"}, requirements={"id":"\d+", "branch":"edit|del"})
-   * @param ArticleComment $comment
-   * @param BlogService $blogService
-   * @param EventDispatcherInterface $eventDispatcher
-   * @param Request $request
-   * @param string $branch 
-   * @return JsonResponse
-   */
-  public function comment_cert(ArticleComment $comment, BlogService $blogService, EventDispatcherInterface $eventDispatcher, Request $request, string $branch = null) {
-
-    $form = $this->createForm(ArticleCommentCertType::class, new ArticleComment, [
-      'method'  => 'post', 
-      'action'  => $this->generateUrl('blog_comment_cert', ['id' => $comment->getId(), 'branch' => $branch]),
-      'comment' => $comment      
-    ]);
-    $form->handleRequest($request);
+        $response = new JsonResponse;
+        $responseData = [];
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $session = $request->getSession();
+            $comment_cert = $session->get('cert');
+            $comment_cert = isset($comment_cert['comment_edit']) ? $comment_cert['comment_edit'] : null;
     
-    $session = $request->getSession();
+            switch(true)  {
+                // 익명유저 : 세션 일치 확인
+                case $comment_cert != $comment->getId(): break;
+                // 멤버유저 : 작성자 확인
+                case $this->getUser() != $comment->getUser(): break;
 
-    $response = new JsonResponse;
-    $responseData = [];
-    
-    if ($form->isSubmitted() && $form->isValid()) {
-      
-      switch(strtoupper($branch)) {
-        // 삭제
-        case ArticleCommentType::BRANCH_DEL:
-          $session->set('cert', ['comment_del'  => $comment->getId()]);
-          return $this->redirect($this->generateUrl('blog_comment_del', ['id' => $comment->getId()])); 
-        // 수정
-        case ArticleCommentType::BRANCH_EDIT:
-          $session->set('cert', ['comment_edit' => $comment->getId()]);
-          return $this->redirect($this->generateUrl('blog_comment_edit', ['id' => $comment->getId()]));
-        // 유효하지 않은 브랜치
-        default: $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-      }
+                default:
+                
+                /** @var ArticleComment */
+                $comment = $form->getData();
+                $flash->whether($isWrited, 'flash.front.blog.article.comment.write');
+                $session->remove('auth');
+            }
 
-    } else {
-      $session->remove('auth');
-      $responseData['form'] =  $this->render('front/blog/comment/form_cert.twig', ['form' => $form->createView()])->getContent();
+        } else {
+            $responseData['form'] = $this->render('front/blog/comment/form_edit.twig', ['form' => $form->createView()])->getContent();
+        }
+
+        $response->setData($responseData);
+        return $response;
     }
+
+    /**
+     * 블로그 댓글 삭제
+     * @todo 검증 리팩토링
+     * @Route("/blog/comment/del/{id}", name="blog_comment_del", methods={"GET","DELETE"}, requirements={"id":"\d+"})
+     * @access public
+     * @param ArticleComment $comment
+     * @param BlogService $blogService
+     * @param FlashUtils $flash
+     * @param Request $request
+     * @return JsonResposnse
+     */
+    public function comment_del(ArticleComment $comment, BlogService $blogService, FlashUtils $flash, Request $request): JsonResponse {
     
-    $response->setData($responseData);
-    return $response;
-  }
+        $session = $request->getSession();
+        $comment_cert = $session->get('cert');
+        $comment_cert = isset($comment_cert['comment_del']) ? $comment_cert['comment_del'] : null;
+
+        switch(true) {
+            // 익명유저 : 세션 일치 확인
+            case $comment_cert != $comment->getId(): break;
+            // 멤버유저 : 작성자 확인
+            case $this->getUser() != $comment->getUser(): break;
+
+            default:
+                $isRemoved = $blogService->removeComment($comment);
+                $flash->whether($isRemoved, 'flash.front.blog.article.comment.del');
+                $session->remove('auth');
+        }
+        
+        $response = new JsonResponse;
+
+        return $this->getUser() ? $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]) : $response;
+    }
+
+    /**
+     * 블로그 댓글 검증
+     * @Route("/blog/comment/cert/{branch}/{id}", name="blog_comment_cert", methods={"GET","POST"}, requirements={"id":"\d+", "branch":"edit|del"})
+     * @param ArticleComment $comment
+     * @param BlogService $blogService
+     * @param FlashUtils $flash
+     * @param Request $request
+     * @param string $branch 
+     * @return JsonResponse
+     */
+    public function comment_cert(ArticleComment $comment, BlogService $blogService, FlashUtils $flash, Request $request, string $branch = null) {
+
+        $form = $this->createForm(ArticleCommentCertType::class, new ArticleComment, [
+            'method'  => 'post', 
+            'action'  => $this->generateUrl('blog_comment_cert', ['id' => $comment->getId(), 'branch' => $branch]),
+            'comment' => $comment      
+        ]);
+        $form->handleRequest($request);
+        
+        $response = new JsonResponse;
+        $responseData = [];
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            /**
+             * @todo
+             * 이거 댓글 프로세스 잘못짠거같다
+             * 검증단에서 이루어져야할 검증이
+             * 삭제, 수정에서 하고 있다.
+             */
+    
+            switch(strtoupper($branch)) {
+                // 삭제
+                case ArticleCommentType::BRANCH_DEL:
+                    $session->set('cert', ['comment_del'  => $comment->getId()]);
+                    return $this->redirect($this->generateUrl('blog_comment_del', ['id' => $comment->getId()])); 
+                // 수정
+                case ArticleCommentType::BRANCH_EDIT:
+                    $session->set('cert', ['comment_edit' => $comment->getId()]);
+                    return $this->redirect($this->generateUrl('blog_comment_edit', ['id' => $comment->getId()]));
+                // 유효하지 않은 브랜치
+                default: $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+            }
+
+        } else {
+            $session->remove('auth');
+            $responseData['form'] =  $this->render('front/blog/comment/form_cert.twig', ['form' => $form->createView()])->getContent();
+        }
+    
+        $response->setData($responseData);
+        return $response;
+    }
 }
