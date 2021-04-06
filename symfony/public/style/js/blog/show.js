@@ -3,38 +3,42 @@ var formbox  = $('#modal-formbox');
 
 // 폼 호출
 $('.link-modal').on('click', function(event) {
-  resetModal();
+    resetModal();
 
-  $.get($(this).data('url'))
-  .done(function(response) {
-    resetModal(response.form);
-  })
-  .fail(function(err) {
-    closeModal();
-  });
+    $.get($(this).data('url'))
+    .done(function(response) {
+        resetModal(response.form);
+    })
+    .fail(function(err) {
+        closeModal();
+    });
 });
 
 // 폼 전송
 $(document).on('submit', '#modal-form', function(event) {
   
-  event.preventDefault();
-  
-  // 동적으로 생성된 폼
-  var form = $('#modal-form');
+    event.preventDefault();
+    
+    // 동적으로 생성된 폼
+    var form = $('#modal-form');
 
-  resetModal();
+    resetModal();
 
-  $.ajax({
-    url: form.attr('action'), 
-    type: form.attr('method'),
-    data: form.serialize(),
-  })
-  .done(function(response) {
-    response.form != undefined ? resetModal(response.form) : reload();
-  })
-  .fail(function(err) {
-    closeModal();
-  })
+    $.ajax({
+        url: form.attr('action'), 
+        type: form.attr('method'),
+        data: form.serialize(),
+    })
+    .done(function(response) {
+        if (response.form) {
+            resetModal(response.form);
+        } else {
+            reload();
+        }
+    })
+    .fail(function(err) {
+        closeModal();
+    })
 });
 
 // 댓글 작성 폼 헤더 클릭시 슬라이드 

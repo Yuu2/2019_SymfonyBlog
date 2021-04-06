@@ -262,42 +262,8 @@ class BlogController extends AbstractController {
     }
 
     /**
-     * 블로그 댓글 삭제
-     * @todo 검증 리팩토링
-     * @Route("/blog/comment/del/{id}", name="blog_comment_del", methods={"GET","DELETE"}, requirements={"id":"\d+"})
-     * @access public
-     * @param ArticleComment $comment
-     * @param BlogService $blogService
-     * @param FlashUtils $flash
-     * @param Request $request
-     * @return JsonResposnse
-     */
-    public function comment_del(ArticleComment $comment, BlogService $blogService, FlashUtils $flash, Request $request): JsonResponse {
-    
-        $session = $request->getSession();
-        $comment_cert = $session->get('cert');
-        $comment_cert = isset($comment_cert['comment_del']) ? $comment_cert['comment_del'] : null;
-
-        switch(true) {
-            // 익명유저 : 세션 일치 확인
-            case $comment_cert != $comment->getId(): break;
-            // 멤버유저 : 작성자 확인
-            case $this->getUser() != $comment->getUser(): break;
-
-            default:
-                $isRemoved = $blogService->removeComment($comment);
-                $flash->whether($isRemoved, 'flash.front.blog.article.comment.del');
-                $session->remove('auth');
-        }
-        
-        $response = new JsonResponse;
-
-        return $this->getUser() ? $this->redirectToRoute('blog_article_show', ['id' => $article->getId()]) : $response;
-    }
-
-    /**
      * 블로그 댓글 검증
-     * @Route("/blog/comment/cert/{branch}/{id}", name="blog_comment_cert", methods={"GET","POST"}, requirements={"id":"\d+", "branch":"edit|del"})
+     * @Route("/blog/comment/cert/{branch}/{id}", name="blog_comment_cert", methods={"GET", "POST"}, requirements={"id":"\d+", "branch":"edit|del"})
      * @param ArticleComment $comment
      * @param BlogService $blogService
      * @param FlashUtils $flash
@@ -315,36 +281,34 @@ class BlogController extends AbstractController {
         $form->handleRequest($request);
         
         $response = new JsonResponse;
-        $responseData = [];
+        $content  = [];
     
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            /**
-             * @todo
-             * 이거 댓글 프로세스 잘못짠거같다
-             * 검증단에서 이루어져야할 검증이
-             * 삭제, 수정에서 하고 있다.
-             */
-    
             switch(strtoupper($branch)) {
                 // 삭제
-                case ArticleCommentType::BRANCH_DEL:
-                    $session->set('cert', ['comment_del'  => $comment->getId()]);
-                    return $this->redirect($this->generateUrl('blog_comment_del', ['id' => $comment->getId()])); 
-                // 수정
+                case ArticleCommentType::BRANCH_DEL: $this->comment_del($comment, $blogService); break; 
+                // 수정 리팩토링 예정
                 case ArticleCommentType::BRANCH_EDIT:
                     $session->set('cert', ['comment_edit' => $comment->getId()]);
                     return $this->redirect($this->generateUrl('blog_comment_edit', ['id' => $comment->getId()]));
                 // 유효하지 않은 브랜치
                 default: $response->setStatusCode(Response::HTTP_BAD_REQUEST);
             }
-
         } else {
-            $session->remove('auth');
-            $responseData['form'] =  $this->render('front/blog/comment/form_cert.twig', ['form' => $form->createView()])->getContent();
+            $content['form'] =  $this->render('front/blog/comment/form_cert.twig', ['form' => $form->createView()])->getContent();
         }
     
-        $response->setData($responseData);
+        $response->setData($content);
         return $response;
+    }
+    
+    /**
+     * 블로그 댓글 삭제
+     * @access private
+     * @param ArticleComment $comment
+     * @return bool
+     */
+    private function comment_del(ArticleComment $comment, BlogService $blogService): bool {
+        return $blogService->removeComment($comment);
     }
 }

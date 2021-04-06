@@ -26,61 +26,60 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ArticleCommentCertType extends AbstractType {
   
-  /**
-   * @var ParameterBagInterface
-   */
-  private $params;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $params;
 
-  /**
-   * @var TranslatorInterface
-   */
-  private $translator;
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
 
-  /**
-   * @var Security
-   */
-  private $security;
+    /**
+     * @var Security
+     */
+    private $security;
 
-  /**
-   * @access public
-   * @param ParameterBagInterface $params
-   * @param TranslatorInterface $translator
-   * @param Security $security
-   */
-  public function __construct(ParameterBagInterface $params, TranslatorInterface $translator, Security $security) {
-    $this->params = $params;
-    $this->translator = $translator;
-    $this->security = $security;
-  }
+    /**
+     * @access public
+     * @param ParameterBagInterface $params
+     * @param TranslatorInterface $translator
+     * @param Security $security
+     */
+    public function __construct(ParameterBagInterface $params, TranslatorInterface $translator, Security $security) {
+        $this->params = $params;
+        $this->translator = $translator;
+        $this->security = $security;
+    }
 
-  /**
-   * @todo 유효성검사
-   * @access public
-   * @param FormBuilderInterface $builder
-   * @param array $options
-   * @return void
-   */
-  public function buildForm(FormBuilderInterface $builder, array $options) {
-  
-    /** @var ArticleComment */
-    $comment = $options['comment'];
+    /**
+     * @todo 유효성검사
+     * @access public
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options) {
     
-    $builder
-    // 패스워드
-    ->add('password', PasswordType::class, [
-      'attr' => [
-        'placeholder' => $this->translator->trans('front.blog.article.comment.password'),
-      ],
-      'constraints' => $this->getCommentPasswordConstraints($comment),
-      'empty_data' => '',
-      'required' => true,
-      'mapped' => false
-    ])
-    // 전송
-    ->add('submit', SubmitType::class, [
-      'label' => $this->translator->trans('front.blog.article.comment.cert.submit'),
-    ]);
-  }
+        /** @var ArticleComment */
+        $comment = $options['comment'];
+        
+        $builder
+        // 패스워드
+        ->add('password', PasswordType::class, [
+            'attr' => [
+                'placeholder' => $this->translator->trans('front.blog.article.comment.password'),
+            ],
+            'constraints' => $this->getCommentPasswordConstraints($comment),
+            'required' => true,
+            'mapped' => false
+        ])
+        // 전송
+        ->add('submit', SubmitType::class, [
+            'label' => $this->translator->trans('front.blog.article.comment.cert.submit'),
+        ]);
+    }
 
   
   /**
@@ -89,27 +88,27 @@ class ArticleCommentCertType extends AbstractType {
    * @return array
    */
   private function getCommentPasswordConstraints(ArticleComment $comment): array {
-    return [
-      new Assert\NotBlank([
-        'message' => $this->translator->trans('assert.blog.article.comment.password.blank')
-      ]),
-      new CommentPassword([
-        'message' => $this->translator->trans('assert.blog.article.comment.password.invalid'),
-        'comment' => $comment
-      ]),
-    ];
+        return [
+            new Assert\NotBlank([
+                'message' => $this->translator->trans('assert.blog.article.comment.password.blank')
+            ]),
+            new CommentPassword([
+                'message' => $this->translator->trans('assert.blog.article.comment.password.invalid'),
+                'comment' => $comment
+            ]),
+        ];
   }
 
-  /**
-   * @access public
-   * @param OptionsResolver $resolver
-   * @return void
-   */
-  public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults([
-      'csrf_protection' => true,
-      'data_class' => ArticleComment::class,
-      'comment' => null
-    ]);
-  }
+    /**
+     * @access public
+     * @param OptionsResolver $resolver
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults([
+            'csrf_protection' => true,
+            'data_class' => ArticleComment::class,
+            'comment' => null,    
+        ]);
+    }
 }

@@ -61,7 +61,7 @@ front.blog.article.comment.deleted: 삭제된 댓글 입니다.
 
 modal.front.blog.article.comment.del: 해당 댓글을 삭제하시겠습니까?
 modal.front.blog.article.comment.edit: 해당 댓글을 수정하시겠습니까?
-
+modal.front.blog.article.comment.cert: 패스워드를 입력해 주세요.
 # 유저
 front.user.signin: 로그인
 front.user.signin.email: 이메일
