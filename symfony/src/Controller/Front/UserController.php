@@ -41,7 +41,9 @@ class UserController extends AbstractController {
      */
     public function signIn(AuthenticationUtils $authenticationUtils, EventDispatcherInterface $eventDispatcher) {
         
-        $eventDispatcher->dispatch(RedirectEvent::REDIRECT_IF_AUTH, new RedirectEvent);
+        if ($this->getUser()) {
+            return $this->redirectToRoute('blog_article_index');
+        }
 
         $lastAuthenticationError = $authenticationUtils->getLastAuthenticationError();
 
@@ -89,8 +91,10 @@ class UserController extends AbstractController {
         UserService $userService
     ) {
     
-        $eventDispatcher->dispatch(RedirectEvent::REDIRECT_IF_AUTH,  new RedirectEvent);
-    
+        if ($this->getUser()) {
+            return $this->redirectToRoute('blog_article_index');
+        }
+        
         $form = $this->createForm(UserType::class, new User);
         $form->handleRequest($request);
 
